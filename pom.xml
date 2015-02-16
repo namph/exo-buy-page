@@ -1,0 +1,166 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.exoplatform</groupId>
+  <artifactId>BuyPage</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>BuyPage eXo Platform</name>
+  <description>Buy Page projects.</description>
+
+  <scm>
+    <connection>scm:git:git://github.com/exoplatform/buypage.git</connection>
+    <developerConnection>scm:git:git@github.com:exoplatform/buypage.git</developerConnection>
+    <url>http://fisheye.exoplatform.org/browse/buypage/</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <properties>
+    <!-- **************************************** -->
+    <!-- javax.*                                  -->
+    <!-- **************************************** -->
+    <javax.inject.version>1</javax.inject.version>
+
+    <spring.version>3.1.4.RELEASE</spring.version>
+    <!-- Payment libs -->
+    <braintree.api.version>2.22.2</braintree.api.version>
+    <!-- overridding tomcat version -->
+    <org.apache.tomcat.version>7.0.42</org.apache.tomcat.version>
+    <!-- Logger libs -->
+    <org.slf4j.version>1.7.2</org.slf4j.version>
+    <ch.qos.logback.version>1.0.9</ch.qos.logback.version>
+    <log4j.version>1.2.16</log4j.version>
+
+    <configuration.version>1.8</configuration.version>
+  </properties>
+  <dependencies>
+
+
+    <!-- **************************************** -->
+    <!-- javax.* -->
+    <!-- **************************************** -->
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>${javax.inject.version}</version>
+    </dependency>
+
+    <!-- **************************************** -->
+    <!-- Spring Framework -->
+    <!-- **************************************** -->
+<!--    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-asm</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring.version}</version>
+    </dependency-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+<!--    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-expression</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+    </dependency>-->
+<!--    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-tx</artifactId>
+      <version>${spring.version}</version>
+    </dependency-->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+<!--
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+-->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- **************************************** -->
+    <!-- Tomcat -->
+    <!-- **************************************** -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-catalina</artifactId>
+      <version>${org.apache.tomcat.version}</version>
+      <type>jar</type>
+    </dependency>
+
+    <!-- **************************************** -->
+    <!-- Payment gateway -->
+    <!-- **************************************** -->
+    <dependency>
+      <groupId>com.braintreepayments.gateway</groupId>
+      <artifactId>braintree-java</artifactId>
+      <version>${braintree.api.version}</version>
+      <type>jar</type>
+    </dependency>
+
+    <!-- **************************************** -->
+    <!-- Apache* -->
+    <!-- **************************************** -->
+    <dependency>
+      <groupId>commons-configuration</groupId>
+      <artifactId>commons-configuration</artifactId>
+      <version>${configuration.version}</version>
+    </dependency>
+
+    <!-- **************************************** -->
+    <!-- Logs -->
+    <!-- **************************************** -->
+    <!-- SLF4J-->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${org.slf4j.version}</version>
+    </dependency>
+
+  </dependencies>
+  <build>
+    <finalName>BuyPage</finalName>
+  </build>
+</project>
