@@ -16,15 +16,15 @@
  */
 package com.exoplatform.buypage.gateway;
 
-import com.braintreegateway.AddOn;
-import com.braintreegateway.Discount;
-import com.braintreegateway.Plan;
+import com.braintreegateway.*;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 public class ServiceImpl implements IService {
@@ -43,11 +43,33 @@ public class ServiceImpl implements IService {
   public static final String ENCRYPT_KEY_PROPERTY = "provider.braintree.encryptionKey";
 
   private PropertiesConfiguration adminConfiguration;
+  private BraintreeGateway gateway;
   public ServiceImpl(){
     try {
       this.adminConfiguration = new PropertiesConfiguration("classpath:braintree-config.properties");
+
     } catch (ConfigurationException e) {
       log.error("Cannot load admin configuration file.");
+    }
+
+    if (this.adminConfiguration != null) {
+      Environment env;
+      String envp = this.adminConfiguration.getString(ENVIRONMENT_PROPERTY);
+      if ("PRODUCTION".equalsIgnoreCase(envp)) {
+        env = Environment.PRODUCTION;
+      } else if ("DEVELOPMENT".equalsIgnoreCase(envp)) {
+        env = Environment.DEVELOPMENT;
+      } else if ("SANDBOX".equalsIgnoreCase(envp)) {
+        env = Environment.SANDBOX;
+      } else {
+        log.warn("Braintree environment not specified, will use SANDBOX.");
+        env = Environment.SANDBOX;
+      }
+
+      String merchantId = this.adminConfiguration.getString(MERCHANT_ID_PROPERTY);
+      String publicKey = this.adminConfiguration.getString(PUBLIC_KEY_PROPERTY);
+      String privateKey = this.adminConfiguration.getString(PRIVATE_KEY_PROPERTY);
+      this.gateway = new BraintreeGateway(env, merchantId, publicKey,privateKey);
     }
   }
 
@@ -56,9 +78,20 @@ public class ServiceImpl implements IService {
     return null;
   }
 
+  private List<Plan> findActivePlans() {
+    List<Plan> plans = new ArrayList<Plan>();
+    for (Plan plan : gateway.plan().all()) {
+      if (!plan.getId().startsWith("DISABLED")
+              && !plan.getId().startsWith("OLD")) {
+        plans.add(plan);
+      }
+    }
+    return plans;
+  }
+
   @Override
   public Collection<Plan> getActivePlans() {
-    return null;
+    return this.findActivePlans();
   }
 
   @Override
@@ -84,5 +117,13 @@ public class ServiceImpl implements IService {
   @Override
   public Discount getDiscount(String discountID) {
     return null;
+  }
+
+  public BraintreeGateway getGateway() {
+    return gateway;
+  }
+
+  public void setGateway(BraintreeGateway gateway) {
+    this.gateway = gateway;
   }
 }

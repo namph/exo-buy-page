@@ -24,14 +24,13 @@
     <spring.version>3.1.4.RELEASE</spring.version>
     <!-- Payment libs -->
     <braintree.api.version>2.22.2</braintree.api.version>
-    <!-- overridding tomcat version -->
-    <org.apache.tomcat.version>7.0.42</org.apache.tomcat.version>
+
     <!-- Logger libs -->
     <org.slf4j.version>1.7.2</org.slf4j.version>
     <ch.qos.logback.version>1.0.9</ch.qos.logback.version>
     <log4j.version>1.2.16</log4j.version>
-
     <configuration.version>1.8</configuration.version>
+    <jackson2.version>2.2.2</jackson2.version>
   </properties>
   <dependencies>
 
@@ -105,13 +104,27 @@
       <artifactId>spring-web</artifactId>
       <version>${spring.version}</version>
     </dependency>
-<!--
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
       <version>${spring.version}</version>
     </dependency>
--->
+
+    <!-- **************************************** -->
+    <!-- Jackson 2 (needed for Spring MVC JSON mapping), needed for rest -->
+    <!-- **************************************** -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-core</artifactId>
+      <version>${jackson2.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>${jackson2.version}</version>
+    </dependency>
+
 
     <dependency>
       <groupId>junit</groupId>
@@ -120,15 +133,6 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- **************************************** -->
-    <!-- Tomcat -->
-    <!-- **************************************** -->
-    <dependency>
-      <groupId>org.apache.tomcat</groupId>
-      <artifactId>tomcat-catalina</artifactId>
-      <version>${org.apache.tomcat.version}</version>
-      <type>jar</type>
-    </dependency>
 
     <!-- **************************************** -->
     <!-- Payment gateway -->

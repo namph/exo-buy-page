@@ -1,9 +1,0 @@
-com/exoplatform/buypage/controllers/RESTPlanController.class
-com/exoplatform/buypage/model/Addon.class
-com/exoplatform/buypage/model/DTO/PlanDTO.class
-com/exoplatform/buypage/controllers/RESTAddonController.class
-com/exoplatform/buypage/gateway/ServiceImpl.class
-com/exoplatform/buypage/model/Plan.class
-com/exoplatform/buypage/model/DTO/AddonDTO.class
-com/exoplatform/buypage/gateway/IService.class
-com/exoplatform/buypage/model/DTO/OptionDTO.class

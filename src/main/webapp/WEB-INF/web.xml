@@ -4,11 +4,24 @@
 
 <web-app>
   <display-name>Buy Page</display-name>
+
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+      classpath*:spring/service-core.xml
+    </param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
   <!-- Friendly URL: hide extension .jsp -->
   <servlet>
     <servlet-name>confirmation</servlet-name>
     <jsp-file>/confirmation.jsp</jsp-file>
   </servlet>
+
   <welcome-file-list>
     <welcome-file>/index.jsp</welcome-file>
   </welcome-file-list>
