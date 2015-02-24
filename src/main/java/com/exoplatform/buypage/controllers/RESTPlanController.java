@@ -30,7 +30,7 @@ public class RESTPlanController {
    * @return
    * @throws Exception
    */
-  @RequestMapping(value = "plan", method = RequestMethod.GET)
+  @RequestMapping(value = "getActives", method = RequestMethod.GET)
   @ResponseBody
   public Collection<Plan> getActivePlans() throws Exception {
     Collection<Plan> plans = gatewayService.getActivePlans();

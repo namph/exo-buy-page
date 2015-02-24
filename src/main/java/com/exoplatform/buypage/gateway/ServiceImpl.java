@@ -46,8 +46,7 @@ public class ServiceImpl implements IService {
   private BraintreeGateway gateway;
   public ServiceImpl(){
     try {
-      this.adminConfiguration = new PropertiesConfiguration("classpath:braintree-config.properties");
-
+      this.adminConfiguration = new PropertiesConfiguration("braintree.properties");
     } catch (ConfigurationException e) {
       log.error("Cannot load admin configuration file.");
     }

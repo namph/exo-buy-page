@@ -84,5 +84,4 @@ public interface IService {
    * @return Discount
    */
   public Discount getDiscount(String discountID);
-
 }
