@@ -80,8 +80,7 @@ public class ServiceImpl implements IService {
   private List<Plan> findActivePlans() {
     List<Plan> plans = new ArrayList<Plan>();
     for (Plan plan : gateway.plan().all()) {
-      if (!plan.getId().startsWith("DISABLED")
-              && !plan.getId().startsWith("OLD")) {
+      if (!plan.getId().startsWith("DISABLED") && !plan.getId().startsWith("OLD") && plan.getId().startsWith("EXO_PLT_ENT")) {
         plans.add(plan);
       }
     }

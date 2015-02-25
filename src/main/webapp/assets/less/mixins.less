@@ -1,0 +1,547 @@
+//
+// MIXINS
+// --------------------------------------------------
+// MIXIN: Border Radius
+.border-radius(@radius) {
+  -webkit-border-radius: @radius;
+     -moz-border-radius: @radius;
+          border-radius: @radius;
+}
+
+// MIXIN: Generate Margin and Padding
+//---------------------------------------
+// @maxValue		Giá trị lớn nhất
+// @minValue		Giá trị nhỏ nhất
+// @counter			Giá trị đếm ngược lỗi lần lặp (giá trị mặc định là: 5)
+// @unit			Đơn vị sử dụng như px, pt, em .. (giá trị mặc định là: px)
+
+.marginAndPadding(@maxValue, @counter: 5, @minValue: 0, @unit: px)
+{
+
+	// The Loop
+	.loop_margin_padding (@index) when (@index >= @minValue) {
+
+		// Padding
+		.pd@{index} {padding: ~"@{index}@{unit}";}
+		.pdT@{index} {padding-top: ~"@{index}@{unit}";}
+		.pdR@{index} {padding-right: ~"@{index}@{unit}";}
+		.pdB@{index} {padding-bottom: ~"@{index}@{unit}";}
+		.pdL@{index} {padding-left: ~"@{index}@{unit}";}
+
+		// Padding Important
+		.pd@{index}-ipt {padding: ~"@{index}@{unit}!important";}
+		.pdT@{index}-ipt {padding-top: ~"@{index}@{unit}!important";}
+		.pdR@{index}-ipt {padding-right: ~"@{index}@{unit}!important";}
+		.pdB@{index}-ipt {padding-bottom: ~"@{index}@{unit}!important";}
+		.pdL@{index}-ipt {padding-left: ~"@{index}@{unit}!important";}
+
+		// Padding Horizatial
+		.pd-0-@{index} {padding: 0 ~"@{index}@{unit}";}
+		.pd-0-@{index}-ipt {padding: 0 ~"@{index}@{unit}!important";}
+
+
+		// Padding Vertical
+		.pd-@{index}-0 {padding: ~"@{index}@{unit}" 0;}
+		.pd-@{index}-0-ipt {padding: ~"@{index}@{unit}" 0!important;}
+
+		//-----------------------------------------------------------------
+		// Margin
+		.mg@{index} {margin: ~"@{index}@{unit}";}
+		.mgT@{index} {margin-top: ~"@{index}@{unit}";}
+		.mgR@{index} {margin-right: ~"@{index}@{unit}";}
+		.mgB@{index} {margin-bottom: ~"@{index}@{unit}";}
+		.mgL@{index} {margin-left: ~"@{index}@{unit}";}
+
+		// Margin Important
+		.mg@{index}-ipt {margin: ~"@{index}@{unit}!important";}
+		.mgT@{index}-ipt {margin-top: ~"@{index}@{unit}!important";}
+		.mgR@{index}-ipt {margin-right: ~"@{index}@{unit}!important";}
+		.mgB@{index}-ipt {margin-bottom: ~"@{index}@{unit}!important";}
+		.mgL@{index}-ipt {margin-left: ~"@{index}@{unit}!important";}
+
+		// margin Horizatial
+		.mg-0-@{index} {margin: 0 ~"@{index}@{unit}";}
+		.mg-0-@{index}-ipt {margin: 0 ~"@{index}@{unit}!important";}
+
+		// margin Vertical
+		.mg-@{index}-0 {margin: ~"@{index}@{unit}" 0;}
+		.mg-@{index}-0-ipt {margin: ~"@{index}@{unit}" 0!important;}
+
+		// next iteration
+		 .loop_margin_padding(@index - @counter);
+	}
+	// end the loop when index is 0
+	.loop_margin_padding (0) {}
+
+	// "call" the loopingClass the first time with highest value
+	.loop_margin_padding (@maxValue);
+}
+
+// MIXIN: Generate Font Size
+//---------------------------------------
+// @maxValue		Giá trị lớn nhất
+// @minValue		Giá trị nhỏ nhất
+// @counter			Giá trị đếm ngược lỗi lần lặp (giá trị mặc định là: 1)
+// @unit			Đơn vị sử dụng như px, pt, em .. (giá trị mặc định là: px)
+
+.fontSizeLoop(@maxValue, @minValue: 0, @counter: 1, @unit: px) {
+    // Nếu đơn vị sử dụng là px thì
+    .loopSize (@index) when (@index >= @minValue) and (@unit = px){
+      	.f@{index} {
+            // your resulting css
+            font-size: ~"@{index}@{unit}";
+        }
+
+        .f@{index}-ipt {
+            // your resulting css
+            font-size: ~"@{index}@{unit}"!important;
+        }
+
+        // next iteration
+        .loopSize(@index - @counter);
+    }
+
+  	// Nếu đơn vị ko phải là "px" thì tên class sẽ thêm vào tên class
+  	//vd: .f5em hoặc f5pt
+  	.loopSize (@index) when (@index >= @minValue) and not (@unit = px){
+  		.f@{index}@{unit} {
+            // your resulting css
+            font-size: ~"@{index}@{unit}";
+        }
+
+        .f@{index}@{unit}-ipt {
+            // your resulting css
+            font-size: ~"@{index}@{unit}"!important;
+        }
+
+        // next iteration
+        .loopSize(@index - @counter);
+  	}
+
+    // end the loop when index is 0
+    .loopSize (0) {}
+    .loopSize(@maxValue);
+}
+
+// MIXIN: Generate Width
+//---------------------------------------
+// @maxValue		Giá trị lớn nhất
+// @minValue		Giá trị nhỏ nhất
+// @counter			Giá trị đếm ngược lỗi lần lặp (giá trị mặc định là: 5)
+// @unit			Đơn vị sử dụng như px, pt, em .. (giá trị mặc định là: px)
+
+.widthSizeLoop(@maxValue, @minValue: 0, @counter: 5, @unit: px) {
+  	// Nếu đơn vị sử dụng là px thì
+    .loopSize (@index) when (@index >= @minValue) and (@unit = px){
+      	.w@{index} {
+            // your resulting css
+            width: ~"@{index}@{unit}";
+        }
+
+        .w@{index}-ipt {
+            // your resulting css
+            width: ~"@{index}@{unit}"!important;
+        }
+
+        // next iteration
+        .loopSize(@index - @counter);
+    }
+
+  	// Nếu đơn vị ko phải là "px" thì tên class sẽ thêm vào tên class
+  	//vd: .w5em hoặc w5pt
+  	.loopSize (@index) when (@index >= @minValue) and not (@unit = px){
+  		.w@{index}@{unit} {
+            // your resulting css
+            width: ~"@{index}@{unit}";
+        }
+
+        .w@{index}@{unit}-ipt {
+            // your resulting css
+            width: ~"@{index}@{unit}"!important;
+        }
+
+        // next iteration
+        .loopSize(@index - @counter);
+  	}
+
+
+    // end the loop when index is 0
+    .loopSize (0) {}
+    .loopSize(@maxValue);
+}
+
+
+// MIXIN: Liquid Layout
+//---------------------------------------
+#liquid-layout {
+	// Fixed - Fluid Layout use Overflow
+	.fixedFluidOverflow(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: left;
+			width: @widthFixedColum;
+			margin-right: @space;
+			+ .@{fluidColumName} {
+				overflow: hidden;
+			}
+			&.hidden, &.hide {
+				+ .@{fluidColumName} {
+					overflow: visible;
+				}
+			}
+		}
+	}
+	// Remove Fixed - Fluid Layout use Overflow
+	.unFixedFluidOverflow(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum){
+		> .@{fixedColumName} {
+			float: none;
+			width: auto;
+			margin-right: 0;
+			+ .@{fluidColumName} {
+				overflow: visible;
+			}
+		}
+	}
+
+	// Fluid - Fixed Layout use Overflow
+	.fluidFixedOverflow(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: right;
+			width: @widthFixedColum;
+			margin-left: @space;
+			+ .@{fluidColumName} {
+				overflow: hidden;
+			}
+			&.hidden, &.hide {
+				+ .@{fluidColumName} {
+					overflow: visible;
+				}
+			}
+		}
+	}
+	// Remove Fluid - Fixed Layout use Overflow
+	.unFluidFixedOverflow(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: none;
+			width: auto;
+			margin-left: 0;
+		}
+		> .@{fluidColumName} {
+			overflow: visible;
+		}
+	}
+
+	// Fixed - Fluid - Fixed Layout use Overflow
+	.fixedFluidFixedOverflow(@widthFixedLeftColum, @spaceLeft: 0, @widthFixedRightColum, @spaceRight: 0, @fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedLeftColumName} {
+			float: left;
+			width: @widthFixedLeftColum;
+			margin-right: @spaceLeft;
+		}
+		> .@{fixedRightColumName} {
+			float: right;
+			width: @widthFixedRightColum;
+			margin-left: @spaceRight;
+		}
+		> .@{fluidColumName} {
+			overflow: hidden;
+		}
+		> .@{fixedLeftColumName}.hide + .@{fixedRightColumName}.hide,
+		> .@{fixedLeftColumName}.hidden + .@{fixedRightColumName}.hidden {
+			+ .@{fluidColumName} {
+				overflow: visible;
+			}
+		}
+	}
+	// Remove Fixed - Fluid - Fixed Layout use Overflow
+	.unFixedFluidFixedOverflow(@fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedLeftColumName} {
+			float: none;
+			width: auto;
+			margin-right: 0;
+		}
+		> .@{fixedRightColumName} {
+			float: right;
+			width: auto;
+			margin-left: 0;
+		}
+		> .@{fluidColumName} {
+			overflow: visible;
+		}
+	}
+
+	// Fixed - Fluid Layout Dynamic
+	.fixedFluidDynamic(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: left;
+			width: 100%;
+			> .inner {
+				margin-left: @widthFixedColum + @space;
+			}
+		}
+		> .@{fixedColumName} {
+			float: left;
+			width: @widthFixedColum;
+			margin-left: -100%;
+		}
+	}
+	// Remove Fixed - Fluid Layout Dynamic
+	.unFixedFluidDynamic(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: none;
+			width: auto;
+			> .inner {
+				margin-left: 0;
+			}
+		}
+		> .@{fixedColumName} {
+			float: none;
+			width: auto;
+			margin-left: 0;
+		}
+	}
+
+	// Fluid - Fixed Layout Dynamic
+	.fluidFixedDynamic(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: left;
+			width: 100%;
+			> .inner {
+				margin-right: @widthFixedColum + @space;
+			}
+		}
+		> .@{fixedColumName} {
+			float: right;
+			width: @widthFixedColum;
+			margin-left: -@widthFixedColum;
+		}
+	}
+	// Remove Fluid - Fixed Layout Dynamic
+	.unFluidFixedDynamic(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: none;
+			width: auto;
+			> .inner {
+				margin-right: 0;
+			}
+		}
+		> .@{fixedColumName} {
+			float: right;
+			width: auto;
+			margin-left: 0;
+		}
+	}
+
+	// Fixed - Fluid - Fixed Layout Dynamic
+	.fixedFluidFixedDynamic(@widthFixedLeftColum, @spaceLeft: 0, @widthFixedRightColum, @spaceRight: 0, @fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: left;
+			width: 100%;
+			> .inner {
+				margin-left: @widthFixedLeftColum + @spaceLeft;
+				margin-right: @widthFixedRightColum + @spaceRight;
+			}
+		}
+		> .@{fixedLeftColumName} {
+			float: left;
+			margin-left: -100%;
+			width: @widthFixedLeftColum;
+		}
+		> .@{fixedRightColumName} {
+			float: right;
+			width: @widthFixedRightColum;
+			margin-left: -@widthFixedRightColum;
+		}
+	}
+	// Remove Fixed - Fluid - Fixed Layout Dynamic
+	.unFixedFluidFixedDynamic(@widthFixedLeftColum, @spaceLeft: 0, @widthFixedRightColum, @spaceRight: 0, @fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fluidColumName} {
+			float: none;
+			width: 100%;
+			> .inner {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+		> .@{fixedLeftColumName} {
+			float: none;
+			margin-left: 0;
+			width: auto;
+		}
+		> .@{fixedRightColumName} {
+			float: none;
+			width: auto;
+			margin-left: 0;
+		}
+	}
+
+	// Fixed - Fluid - Fixed Layout User Float and Margin
+	.fixedFluidUFM(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: left;
+			width: @widthFixedColum;
+			margin-right: @space;
+			+ .@{fluidColumName} {
+				margin-left: @widthFixedColum + @space;
+				> .inner {
+					display: inline-block;
+					width: 100%;
+				}
+			}
+		}
+	}
+	// Remove Fixed - Fluid - Fixed Layout User Float and Margin
+	.unFixedFluidUFM(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: none;
+			width: auto;
+			margin-right: 0;
+			+ .@{fluidColumName} {
+				margin-left: 0;
+				> .inner {
+					display: block;
+				}
+			}
+		}
+	}
+
+	// Fluid - Fixed Layout User Float and Margin
+	.fluidFixedUFM(@widthFixedColum, @space: 0, @fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: right;
+			width: @widthFixedColum;
+			margin-left: @space;
+			+ .@{fluidColumName} {
+				margin-right: @widthFixedColum + @space;
+				> .inner {
+					display: inline-block;
+					width: 100%;
+				}
+			}
+		}
+	}
+	// Remove Fluid - Fixed Layout User Float and Margin
+	.unFluidFixedUFM(@fixedColumName: fixed-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedColumName} {
+			float: none;
+			width: @widthFixedColum;
+			margin-left: @space;
+			+ .@{fluidColumName} {
+				margin-right: 0;
+				> .inner {
+					display: block;
+					width: auto;
+				}
+			}
+		}
+	}
+
+	// Fixed - Fluid - Fixed Layout User Float and Margin
+	.fixedFluidFixedUFM(@widthFixedLeftColum, @spaceLeft: 0, @widthFixedRightColum, @spaceRight: 0, @fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedLeftColumName} {
+			float: left;
+			width: @widthFixedLeftColum;
+			margin-right: @spaceLeft;
+			+ .@{fixedRightColumName} {
+			}
+		}
+		> .@{fixedLeftColumName},
+		> .@{fixedLeftColumName} + .@{fixedRightColumName}
+		 {
+			+ .@{fluidColumName} {
+				margin-left: @widthFixedLeftColum + @spaceLeft;
+			}
+		}
+		.@{fixedRightColumName} {
+			float: right;
+			width: @widthFixedRightColum;
+			margin-left: @spaceRight;
+				+ .@{fluidColumName} {
+					margin-right: @widthFixedRightColum + @spaceRight;
+				}
+		}
+		> .@{fluidColumName} {
+			> .inner {
+				display: inline-block;
+				width: 100%;
+			}
+		}
+		> .@{fixedLeftColumName}.hide + .@{fixedRightColumName}.hide,
+		> .@{fixedLeftColumName}.hidden + .@{fixedRightColumName}.hidden {
+			+ .@{fluidColumName} {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+		> .@{fixedLeftColumName}.hide + .@{fixedRightColumName} + .@{fluidColumName},
+		> .@{fixedLeftColumName}.hidden + .@{fixedRightColumName} + .@{fluidColumName} {
+			margin-left: 0;
+		}
+		> .@{fixedRightColumName}.hide + .@{fluidColumName},
+		> .@{fixedRightColumName}.hidden + .@{fluidColumName} {
+			margin-right: 0;
+		}
+	}
+	// Remove Fixed - Fluid - Fixed Layout User Float and Margin
+	.unFixedFluidFixedUFM(@widthFixedLeftColum, @spaceLeft: 0, @widthFixedRightColum, @spaceRight: 0, @fixedLeftColumName: fixed-left-colum, @fixedRightColumName: fixed-right-colum, @fluidColumName: fluid-colum) {
+		> .@{fixedLeftColumName} {
+			float: none;
+			width: auto;
+			margin-right: 0;
+			+ .@{fixedRightColumName} {
+			}
+		}
+		> .@{fixedLeftColumName},
+		> .@{fixedLeftColumName} + .@{fixedRightColumName}
+		 {
+			+ .@{fluidColumName} {
+				margin-left: 0;
+			}
+		}
+		> .@{fixedRightColumName} {
+			float: right;
+			width: auto;
+			margin-left: @spaceRight;
+				+ .@{fluidColumName} {
+					margin-right: 0;
+				}
+		}
+		> .@{fluidColumName} {
+			> .inner {
+				display: block;
+				width: auto;
+			}
+		}
+	}
+}
+
+// MIXIN : Transform CSS3
+.transform(@transform) {
+	-webkit-transform: @transform;
+     -moz-transform: @transform;
+      -ms-transform: @transform; // IE9 only
+          transform: @transform;
+}
+
+// MIXIN: Set Link Color
+.linkColor(@color: @link-color, @colorHover: @link-hover-color){
+    color: @color;
+    &:hover {
+        color: @colorHover;
+    }
+}
+
+// MIXIN: SEO Help
+.seo-helper () {
+	img:not([alt]), img[alt=""], img[alt^=" "], a[href=""], a[href^=" "], a[rel*="nofollow"] {
+	    outline: 2px solid red !important;
+	    outline-offset: 3px !important;
+    }
+	head, title:empty, link, meta {display: block;}
+	title:empty:before {content: "You've left the <title> empty!"}
+	link:before {content: "You don't have a <title>!"}
+	title ~ link {display: none;}
+	meta[name="description"][content=""]:before, meta[name="description"][content=" "]:before {content: "You've left description empty!";}
+}
+
+// MIXIN: MIXINS for this Project
+// Write new mixin for project here...

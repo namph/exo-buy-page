@@ -1,0 +1,245 @@
+//
+// MAIN STYLE
+// --------------------------------------------------
+//
+// COMMON: COMMON STYLE
+// -------------------------------------
+.ui-state-default .countValue, .ui-widget-content .ui-state-default .countValue, .ui-widget-header .ui-state-default .countValue{
+	margin-left: 0;
+	.translate(-50%, 0);
+}
+body {
+	background: url("@{img-patch}/parttern.jpg") repeat 0 0  transparent;
+}
+.heading-border {
+	margin-top: 0;
+	border-bottom: 1px solid @border-color;
+	padding-bottom: 8px;
+	margin-bottom: @grid-gutter-width;
+}
+.TitleForm {
+	color: #626262;
+	text-align: center;
+	margin: 24px 0 0;
+	text-shadow: 0 1px 0 #FFFFFF;
+	background: url("@{img-patch}/TitleFormBG.png") no-repeat bottom center;
+	line-height: 32px;
+	padding: 20px 0 25px;
+	margin-bottom: 20px;
+	position: relative;
+	.logo {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		.translate(0; -50%);
+	}
+}
+h2.TitleForm {
+	color: #333333;
+}
+.dropdown-box {
+	margin-top: 13px;
+	&:extend(.dropdown-menu);
+	padding: @grid-gutter-width/2;
+	color: @text-color;
+	.checkbox, .radio {
+		white-space: nowrap;
+	}
+	&:before, &:after {
+		position: absolute;
+		content: "";
+		bottom: 100%;
+	}
+	@arrow-width: 10px;
+	@arrow-left: 20px;
+	&:before {
+		border-left: @arrow-width+1 solid transparent;
+		border-right: @arrow-width+1 solid transparent;
+		border-bottom: @arrow-width+1 solid @dropdown-border;
+		left: @arrow-left - 1;
+	}
+	&:after {
+		border-left: @arrow-width solid transparent;
+		border-right: @arrow-width solid transparent;
+		border-bottom: @arrow-width solid #fff;
+		left: @arrow-left;
+	}
+}
+.bp-heading {
+	padding: 8px 8px 8px @grid-gutter-width+(@grid-gutter-width/2);
+	background-color: #EBEBEB;
+	position: relative;
+	.border-radius(3px);
+	margin-bottom: 20px;
+	.box-shadow(~"1px 1px 3px 0 rgba(0, 0, 0, 0.08) inset, 1px 1px 0 0 #fff");
+	.title {
+		margin: 0;
+		font-size: 18px;
+	}
+	.title-icon {
+		@size: 44px;
+		.square(@size);
+		.border-radius(@size);
+		.box-shadow(~"1px 1px 1px 0 rgba(0, 0, 0, 0.35) inset, 1px 1px 0 0 rgba(255, 255, 255, 0.8)");
+		font-size: 24px;
+		line-height: @size;
+		background-color: @bg-primary;
+		color: #fff;
+		text-align: center;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 50%;
+		.translate(-25%; -50%);
+	}
+}
+.bp-content {
+	padding-left: @grid-gutter-width;
+	margin-bottom: 20px;
+}
+.boxSlider {
+	padding-top: 50px;
+	margin-bottom: 30px;
+}
+.open > .dropdown-box {
+	&:extend(.open > .dropdown-menu all);
+}
+// LAYOUT: LAYOUT STYLE
+// -------------------------------------
+
+// MODULE: MODULE STYLE
+// -------------------------------------;
+.uiCloudCardSelect {
+    min-width: 181px;
+    display: inline-block;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    position: relative;
+    -webkit-box-shadow: 1px 1px 5px 0 rgba(35, 44, 48, 0.25);
+    -moz-box-shadow: 1px 1px 5px 0 rgba(35, 44, 48, 0.25);
+    box-shadow: 1px 1px 5px 0 rgba(35, 44, 48, 0.25);
+    cursor: pointer;
+    margin-right: 15px;
+    text-align: center;
+    > .inner {
+    	padding: 20px 25px;
+	    .fa {
+	    	font-size: 24px;
+	    	vertical-align: middle;
+	    }
+    }
+    + .uiCloudCardSelect {
+    	margin-right: 20px;
+    }
+    .iconSelect {
+    	@size: 20px;
+        display: inline-block;
+        .square(@size);
+        background: url('@{img-patch}/parttern.jpg');
+        .border-radius(@size);
+        position: absolute;
+        top: 3px;
+        right: 3px;
+        text-align: center;
+        line-height: @size;
+        .box-shadow(inset 1px 1px 3px 0 rgba(0, 0, 0, 0.2));
+        color: @link-color;
+    }
+    .headBox {
+        -webkit-border-top-right-radius: 5px;
+        -moz-border-radius-topright: 5px;
+        border-top-right-radius: 5px;
+        -webkit-border-top-left-radius: 5px;
+        -moz-border-radius-topleft: 5px;
+        border-top-left-radius: 5px;
+        position: relative;
+        margin: 0;
+        line-height: 18px;
+        text-align: center;
+    }
+    .headBox:after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: url('@{img-patch}/bgHeadCardSelect.png') no-repeat center bottom transparent;
+        background-size: 100%;
+        z-index: 100;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+    }
+    .contentBox{
+    }
+}
+.uiCloudCardSelect .iconSelect + .headBox,
+.uiCloudCardSelect .iconSelect + .contentBox,
+.uiCloudCardSelect .iconSelect + .headBox + .headBox{
+}
+.uiCloudCardSelect:hover,
+.uiCloudCardSelect.selected,
+.uiCloudCardSelect.open {
+    background-color: @bg-primary;
+    color: #fff;
+    box-shadow: none;
+}
+.uiCloudCardSelect:hover .iconSelect,
+.uiCloudCardSelect.selected .iconSelect {
+    box-shadow: none;
+}
+
+.intro-plan-box {
+	margin-bottom: 20px;
+	.nav {
+		text-align: center;
+	}
+	.tab-content {
+		background-color: #fff;
+		border: 1px solid @border-color;
+		.border-radius(3px);
+		padding: @grid-gutter-width/2 @grid-gutter-width;
+		min-height: 300px;
+	}
+	.nav-pills > li {
+		margin-bottom: @grid-gutter-width/2;
+		> div {
+			background-color: #fff;
+			&:extend(.nav-pills > li > a all);
+			&:extend(.nav > li > a all);
+			.border-right-radius(0);
+			cursor: pointer;
+		}
+	}
+	.nav-pills > li.active > div {
+		&:extend(.nav-pills > li.active > a all);
+	}
+	.nav-pills > li:hover > div {
+		&:extend(.nav-pills > li:hover > a all);
+	}
+	@media (min-width: @screen-sm-min) {
+		.intro-container {
+			position: relative;
+			margin: 0;
+			.nav-pills > li {
+				&:last-child{
+					margin-bottom: 0;
+				}
+			}
+			.intro-nav {
+				left: 0;
+				padding: 0;
+				position: absolute;
+				top: 50%;
+				.translate(0px, -50%);
+			}
+			.intro-content {
+				padding: 0;
+			}
+		}
+	}
+}
+
+
