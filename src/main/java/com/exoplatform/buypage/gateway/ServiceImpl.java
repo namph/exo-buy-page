@@ -99,7 +99,14 @@ public class ServiceImpl implements IService {
 
   @Override
   public Collection<AddOn> getActiveAddons() {
-    return null;
+    List<AddOn> addons = new ArrayList<AddOn>();
+    for (AddOn addon : gateway.addOn().all()) {
+      if (!addon.getId().startsWith("DISABLED")
+              && !addon.getId().startsWith("OLD")) {
+        addons.add(addon);
+      }
+    }
+    return addons;
   }
 
   @Override

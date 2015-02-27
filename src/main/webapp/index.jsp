@@ -32,37 +32,8 @@
             <h3 class="title">Enterprise plans</h3>
             <span class="title-icon"><i class="fa fa-th-large"></i></span>
         </div>
-        <div class="bp-content">
+        <div class="bp-content buypage-plans">
 
-            <div class="intro-plan-box" role="tabpanel">
-                <!-- list plans here -->
-            </div>
-
-            <div class="boxSlider">
-                <!-- <div class="percentage" id="progress"><strong>5 users</strong></div> -->
-                <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-                    <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 0%;"></div>
-                    <a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;">
-                        <span class="countValue" >15 users</span><!-- margin-left = - (width / 2)  -->
-                    </a>
-                    <input type="hidden" value="215" name="slider-value" id="slider-value">
-                </div>
-            </div>
-            <div class="boxSlider">
-                <!-- <div class="percentage" id="progress">
-                    <strong>161 users</strong>
-                </div> -->
-                <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
-                    <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 31.5152%;"></div>
-                    <a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 0%;">
-                        <span class="countValue" >500 users</span><!-- margin-left = - (width / 2)  -->
-                    </a>
-                    <a href="#" class="ui-slider-handle ui-state-default ui-corner-all" style="left: 31.5152%;">
-                        <span class="countValue" >15 users</span><!-- margin-left = - (width / 2)  -->
-                    </a>
-                </div>
-                <input type="hidden" value="161" name="slider-value" id="slider-value">
-            </div>
         </div>
 
         <div class="bp-heading">

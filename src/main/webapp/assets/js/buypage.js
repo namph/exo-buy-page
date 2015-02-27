@@ -15,7 +15,7 @@
       });
   };
   $(document).ready(function () {
-    _planContainerDOM = $(".intro-plan-box");
+    _planContainerDOM = $(".buypage-plans");
     _loadActivePlans();
     console.info("init js buy page")
   });

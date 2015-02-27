@@ -18,45 +18,19 @@ package com.exoplatform.buypage.model.DTO;
 
 import java.util.List;
 
-public class PlanDTO {
+public class PlanDTO extends DTO {
 
-  private String id;
-  private String name;
-  private String description;
   private List<OptionDTO> optionDTOs;
 
+  public PlanDTO(){
+
+  }
   public PlanDTO(String id, String name, String description){
-    this.setId(id);
-    this.setName(name);
-    this.setDescription(description);
+    super(id,name,description);
   }
   private void generateOptionDTOs(){
 
   }
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getDescription() {
-    return description;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
   public List<OptionDTO> getOptionDTOs() {
     return optionDTOs;
   }
@@ -64,4 +38,30 @@ public class PlanDTO {
   public void setOptionDTOs(List<OptionDTO> optionDTOs) {
     this.optionDTOs = optionDTOs;
   }
+  public String getActive(){
+    if(this.getId().contains("DEFAULT"))
+      return "active";
+    return "";
+  }
+  private String getCombinationValue(String type){
+    String[] combinations =  this.getId().split("-");
+    if (combinations.length > 0){
+      if ("type".equals(type))
+        return combinations[0];
+      else if ("user".equals(type) && combinations.length > 1)
+        return combinations[1];
+    }
+    return "";
+  }
+  public String getPlanType(){
+    return this.getCombinationValue("type");
+  }
+  public Integer getOptionUser(){
+    String options = this.getCombinationValue("user");
+    if (!"".equals(options) && options.contains("USER") && options.split("_").length > 0){
+      return Integer.parseInt(options.split("_")[1]);
+    }
+    return 5;
+  }
+
 }
