@@ -28,11 +28,32 @@
         console.log("Transaction Failed: " + err);
       });
   };
+  var _getDiscount = function(discountId){
+    $.ajax({
+      url: _baseRestUrl+"/Discount/get/"+discountId,
+      dataType: "text"
+    })
+    .done(function(data) {
+      console.info(data);
+    })
+    .fail(function (jqxhr, textStatus, error) {
+      var err = textStatus + ', ' + error;
+      console.log("Transaction Failed: " + err);
+    });
+  };
+  var _addEvent2BtnSubmitDiscount = function(){
+    $(document).on('click.discount.submit','button#btnSubmitDiscount',function(){
+      var discountId = $("#discountId").val();
+      if (typeof discountId !== undefined && discountId.length > 0 ){
+        _getDiscount(discountId);
+      }
+    })
+  };
   $(document).ready(function () {
     _planContainerDOM = $(".buypage-plans");
     _addonsContainerDOM = $(".buypage-addons");
     _loadActivePlans();
     _loadActiveAddons(null);
-    console.info("init js buy page")
+    _addEvent2BtnSubmitDiscount();
   });
 })($)

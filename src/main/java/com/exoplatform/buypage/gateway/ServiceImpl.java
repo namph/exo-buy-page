@@ -17,6 +17,7 @@
 package com.exoplatform.buypage.gateway;
 
 import com.braintreegateway.*;
+import com.braintreegateway.exceptions.UnexpectedException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
@@ -125,6 +126,20 @@ public class ServiceImpl implements IService {
 
   @Override
   public Discount getDiscount(String discountID) {
+    try {
+      Collection<Discount> discounts = gateway.discount().all();
+      for (Discount discount : discounts) {
+        String id = discount.getId();
+        if (!id.startsWith("DISABLED") && !id.startsWith("OLD")) {
+          if (id.equals(discountID)) {
+            return discount;
+          }
+        }
+      }
+    } catch (UnexpectedException e) {
+      log.error("Failed to connect to payment gateway", e.getMessage());
+    }
+    log.error("Cannot find discount with id or name: ", discountID);
     return null;
   }
 

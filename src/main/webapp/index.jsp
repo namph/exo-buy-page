@@ -47,10 +47,10 @@
         <div class="bp-content">
             <p>Do you have any coupon code ? user it here.</p>
             <div class="input-group col-md-8">
-                <input type="text" class="form-control" placeholder="Coupon">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">Add Coupon</button>
-                        </span>
+                <input type="text" class="form-control" placeholder="Coupon" id="discountId">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" id="btnSubmitDiscount" type="button">Add Coupon</button>
+                    </span>
             </div>
         </div>
         <div class="bp-heading">
