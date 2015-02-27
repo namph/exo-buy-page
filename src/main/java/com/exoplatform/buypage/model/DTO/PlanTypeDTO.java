@@ -15,7 +15,6 @@ public class PlanTypeDTO extends DTO {
     super(id, name, description);
     this.setPlanDTOs(new ArrayList<PlanDTO>());
     this.setActive("");
-    this.setDefaultNbUser(5);
     this.users = new ArrayList<Integer>();
   }
 
@@ -32,7 +31,7 @@ public class PlanTypeDTO extends DTO {
   public float numberUserPercent(){
     int total = this.getTotalUsers();
     if (total > 0){
-      return (this.getDefaultNbUser()/total)*100;
+      return ((float)this.getDefaultNbUser()/(float)total)*100;
     }
     return 0;
   }

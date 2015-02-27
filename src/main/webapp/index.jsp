@@ -32,60 +32,13 @@
             <h3 class="title">Enterprise plans</h3>
             <span class="title-icon"><i class="fa fa-th-large"></i></span>
         </div>
+        <!-- list plan here -->
         <div class="bp-content buypage-plans">
 
         </div>
+        <!-- list addons here -->
+        <div class="buypage-addons">
 
-        <div class="bp-heading">
-            <h3 class="title">Add-ons</h3>
-            <span class="title-icon"><i class="fa fa-plus-square-o"></i></span>
-        </div>
-        <div class="bp-content">
-            <p>Add powerful add-on to your Social Intranet</p>
-            <br>
-            <!-- User .uiCloudCardSelect with Grid System. You can not use with Grid System like Services section below  -->
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="uiCloudCardSelect">
-                        <span class="iconSelect"><i class="fa fa-check"></i></span>
-                        <div class="inner" data-toggle="dropdown">
-                            <h4><i class="fa fa-video-camera"></i> Video Call</h4>
-                        </div>
-                        <div class="dropdown-box">
-                            <p>This Add-on includes: </p>
-                            <div class="checkbox"><label><input type="checkbox"> license for 300 user</label></div>
-                            <div class="checkbox"><label><input type="checkbox"> 15 support tickets included</label></div>
-                            <div class="checkbox"><label><input type="checkbox"> Software Maintenace</label></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bp-heading">
-            <h3 class="title">Services</h3>
-            <span class="title-icon"><i class="fa fa-cog"></i></span>
-        </div>
-        <div class="bp-content">
-            <p>Add powerful add-on to your Social Intranet</p>
-            <br>
-            <div class="uiCloudCardSelect" >
-                <span class="iconSelect"><i class="fa fa-check"></i></span>
-                <div class="inner" data-toggle="dropdown">
-                    <h4><i class="fa fa-home"></i> Starting Park</h4>
-                </div>
-            </div>
-            <div class="uiCloudCardSelect selected">
-                <span class="iconSelect"><i class="fa fa-check"></i></span>
-                <div class="inner">
-                    <h4><i class="fa fa-smile-o"></i> 10 Support tickets</h4>
-                </div>
-                <div class="dropdown-box" data-toggle="dropdown">
-                    <p>This Add-on includes: </p>
-                    <div class="checkbox"><label><input type="checkbox"> license for 300 user</label></div>
-                    <div class="checkbox"><label><input type="checkbox"> 15 support tickets included</label></div>
-                    <div class="checkbox"><label><input type="checkbox"> Software Maintenace</label></div>
-                </div>
-            </div>
         </div>
         <div class="bp-heading">
             <h3 class="title">Discount</h3>

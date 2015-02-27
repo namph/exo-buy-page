@@ -42,6 +42,10 @@ public class ServiceImpl implements IService {
 
   public static final String ENCRYPT_KEY_PROPERTY = "provider.braintree.encryptionKey";
 
+  public static final String PREFIX_ADDON = "EXO_PLT";
+  public static final String PREFIX_SERVICE = "SV";
+  public static final String PREFIX_PLAN = "EXO_PLT_ENT";
+
   private PropertiesConfiguration adminConfiguration;
   private BraintreeGateway gateway;
   public ServiceImpl(){
@@ -80,7 +84,7 @@ public class ServiceImpl implements IService {
   private List<Plan> findActivePlans() {
     List<Plan> plans = new ArrayList<Plan>();
     for (Plan plan : gateway.plan().all()) {
-      if (!plan.getId().startsWith("DISABLED") && !plan.getId().startsWith("OLD") && plan.getId().startsWith("EXO_PLT_ENT")) {
+      if (!plan.getId().startsWith("DISABLED") && !plan.getId().startsWith("OLD") && plan.getId().startsWith(PREFIX_PLAN)) {
         plans.add(plan);
       }
     }

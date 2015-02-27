@@ -17,36 +17,21 @@
 package com.exoplatform.buypage.model.DTO;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 
-public class AddonDTO {
-  private String id;
-  private String name;
-  private String descrtiption;
+public class AddonDTO extends DTO {
+
+  public static final String PREFIX_ADDON = "EXO_PLT";
+  public static final String PREFIX_SERVICE = "SV";
+  public AddonDTO(){
+
+  }
   private List<OptionDTO> optionDTOs;
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getDescrtiption() {
-    return descrtiption;
-  }
-
-  public void setDescrtiption(String descrtiption) {
-    this.descrtiption = descrtiption;
+  public AddonDTO(String id, String name, String description, BigDecimal price) {
+    super(id,name,description);
+    super.setPrice(price);
   }
 
   public List<OptionDTO> getOptionDTOs() {
@@ -56,4 +41,11 @@ public class AddonDTO {
   public void setOptionDTOs(List<OptionDTO> optionDTOs) {
     this.optionDTOs = optionDTOs;
   }
+
+  public Boolean isService() {
+    if (this.getId().startsWith(PREFIX_SERVICE))
+      return true;
+    return false;
+  }
+
 }
