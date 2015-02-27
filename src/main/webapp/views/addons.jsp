@@ -13,15 +13,18 @@
     <div class="row">
         <div class="col-md-4">
             <c:forEach items="${addons}" var="addon">
-
-                <div class="uiCloudCardSelect">
+                <c:set var="id" value="${addon.getId()}"></c:set>
+                <c:set var="name" value="${addon.getName()}"></c:set>
+                <c:set var="description" value="${addon.getDescription()}"></c:set>
+                <c:set var="price" value="${addon.getPrice()}"></c:set>
+                <div class="uiCloudCardSelect addonItem" data-name="${name}" data-price="${price}" data-id="${id}">
                     <span class="iconSelect"><i class="fa fa-check"></i></span>
                     <div class="inner" data-toggle="dropdown">
-                        <h4><i class="fa fa-video-camera"></i>${addon.getName()}</h4>
+                        <h4><i class="fa fa-video-camera"></i>${name}</h4>
                     </div>
                     <div class="dropdown-box">
                         <p>This Add-on includes: </p>
-                        <div class="checkbox"><label><input type="checkbox">${addon.getDescription()}</label></div>
+                        <div class="checkbox"><label><input type="checkbox">${description}</label></div>
                     </div>
                 </div>
 

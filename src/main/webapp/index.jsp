@@ -113,6 +113,11 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.custom.js"></script>
 <script src="assets/js/buypage.js"></script>
+<script language="javascript">
+    $(document).ready(function () {
+        BuyPage.init();
+    });
+</script>
 </body>
 
 </html>

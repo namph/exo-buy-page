@@ -54,14 +54,18 @@ public class RESTPlanController {
     for (Plan plan:plans){
       planDTO = new PlanDTO(plan.getId(),plan.getName(),plan.getDescription());
       planDTO.setPrice(plan.getPrice());
-      planTypeDTO = new PlanTypeDTO(planDTO.getId(),planDTO.getName(),planDTO.getDescription());
       prefixPlanType = planDTO.getPlanType();
       if (!planTypeDTOMap.containsKey(prefixPlanType)){
+        planTypeDTO = new PlanTypeDTO(planDTO.getId(),planDTO.getName(),planDTO.getDescription());
+        planTypeDTO.setPrice(planDTO.getPrice());
+        planTypeDTO.setDefaultNbUser(planDTO.getOptionUser());
         planTypeDTOMap.put(prefixPlanType,planTypeDTO);
       }
       if (planTypeDTOMap.containsKey(prefixPlanType)  ){
         PlanTypeDTO currentPlanTypeDTO = planTypeDTOMap.get(prefixPlanType);
-        currentPlanTypeDTO.addNumberUser(planDTO.getOptionUser());
+        if (currentPlanTypeDTO.getMaxNbUser() < planDTO.getOptionUser()){
+          currentPlanTypeDTO.setMaxNbUser(planDTO.getOptionUser());
+        }
         currentPlanTypeDTO.getPlanDTOs().add(planDTO);
         if (!"".equals(planDTO.getActive())){
           currentPlanTypeDTO.setDefaultNbUser(planDTO.getOptionUser());
