@@ -43,25 +43,9 @@ public class PlanDTO extends DTO {
       return "active";
     return "";
   }
-  private String getCombinationValue(String type){
-    String[] combinations =  this.getId().split("-");
-    if (combinations.length > 0){
-      if ("type".equals(type))
-        return combinations[0];
-      else if ("user".equals(type) && combinations.length > 1)
-        return combinations[1];
-    }
-    return "";
-  }
   public String getPlanType(){
     return this.getCombinationValue("type");
   }
-  public Integer getOptionUser(){
-    String options = this.getCombinationValue("user");
-    if (!"".equals(options) && options.contains("USER") && options.split("_").length > 0){
-      return Integer.parseInt(options.split("_")[1]);
-    }
-    return 5;
-  }
+
 
 }

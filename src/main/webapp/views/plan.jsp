@@ -1,5 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<c:forEach items="${planTypes}" var="entry">
+    <c:set var="id" value="${entry.value.getId()}"></c:set>
+    <c:set var="name" value="${entry.value.getName()}"></c:set>
+    <c:set var="price" value="${entry.value.getPrice()}"></c:set>
+    <c:set var="active" value="${entry.value.getActive()}"></c:set>
+    <c:if test="${active == 'active'}">
+        <script language="javascript">
+            BuyPage.setPlanDefaultSelected('${id}','${name}','${price}');
+        </script>
+    </c:if>
+</c:forEach>
 <div class="intro-plan-box" role="tabpanel">
     <!-- Nav tabs -->
     <div class="row intro-container">

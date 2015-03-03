@@ -97,56 +97,8 @@
                 proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="panel panel-primary order-box" data-spy="affix" data-offset-top="110" data-offset-bottom="200">
-            <div class="panel-heading">
-                <h4>Your Order<br><small><a class="exo-icon-restore" href="#"></a> 02/20/2015 - 02/20/2016</small></h4>
-            </div>
-            <div class="panel-body">
-                <h5 class="price-head">Exo Platform Entrerprise</h5>
-                <div class="price-row">
-                    <div class="row">
-                        <div class="col-xs-7 price-label">
-                            1 Year Plan<br><strong>10</strong> users
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <span class="price">$4,000.00</span>
-                        </div>
-                    </div>
-                    <a href="#" class="fa fa-trash"></a>
-                </div>
-                <h5 class="price-head">Add-ons</h5>
-                <div class="price-row">
-                    <div class="row">
-                        <div class="col-xs-7 price-label">
-                            Video Call<br>Up to 100 users
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <span class="price link-color">$1,600.00</span>
-                        </div>
-                    </div>
-                    <a href="#" class="fa fa-trash"></a>
-                </div>
-                <h5 class="price-head">Service</h5>
-                <div class="price-row">
-                    <div class="row">
-                        <div class="col-xs-7 price-label">
-                            10 Support Tickets
-                        </div>
-                        <div class="col-xs-5 text-right">
-                            <span class="price link-color">$6,200.00</span>
-                        </div>
-                    </div>
-                    <a href="#" class="fa fa-trash"></a>
-                </div>
-            </div>
-            <div class="panel-footer">
-                <div class="row">
-                    <div class="col-xs-6 total-text">Total</div>
-                    <div class="col-xs-6 total-price"><span class="price">$10,800.00</span></div>
-                </div>
-            </div>
-        </div>
+    <div class="col-md-4 buypage-bill">
+
     </div>
 </div>
 </div>

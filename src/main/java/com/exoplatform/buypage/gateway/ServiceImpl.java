@@ -43,9 +43,11 @@ public class ServiceImpl implements IService {
 
   public static final String ENCRYPT_KEY_PROPERTY = "provider.braintree.encryptionKey";
 
-  public static final String PREFIX_ADDON = "EXO_PLT";
-  public static final String PREFIX_SERVICE = "SV";
+  public static final String PREFIX_ADDON = "PLT_";
+  public static final String PREFIX_SERVICE = "SV_";
   public static final String PREFIX_PLAN = "EXO_PLT_ENT";
+  public static final String PREFIX_DISABLED = "DISABLED";
+  public static final String PREFIX_OLD = "OLD";
 
   private PropertiesConfiguration adminConfiguration;
   private BraintreeGateway gateway;
@@ -106,8 +108,7 @@ public class ServiceImpl implements IService {
   public Collection<AddOn> getActiveAddons() {
     List<AddOn> addons = new ArrayList<AddOn>();
     for (AddOn addon : gateway.addOn().all()) {
-      if (!addon.getId().startsWith("DISABLED")
-              && !addon.getId().startsWith("OLD")) {
+      if (!addon.getId().startsWith(PREFIX_DISABLED) && !addon.getId().startsWith(PREFIX_OLD) && (addon.getId().startsWith(PREFIX_ADDON ) || addon.getId().startsWith(PREFIX_SERVICE ))) {
         addons.add(addon);
       }
     }
@@ -130,7 +131,7 @@ public class ServiceImpl implements IService {
       Collection<Discount> discounts = gateway.discount().all();
       for (Discount discount : discounts) {
         String id = discount.getId();
-        if (!id.startsWith("DISABLED") && !id.startsWith("OLD")) {
+        if (!id.startsWith(PREFIX_DISABLED) && !id.startsWith(PREFIX_OLD)) {
           if (id.equals(discountID)) {
             return discount;
           }

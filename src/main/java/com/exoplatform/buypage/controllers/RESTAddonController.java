@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "Addons")
+@RequestMapping(value = "/Addons")
 public class RESTAddonController {
   private static final Logger log = LoggerFactory.getLogger(RESTAddonController.class);
   @Inject
