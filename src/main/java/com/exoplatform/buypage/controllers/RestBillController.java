@@ -1,7 +1,6 @@
 package com.exoplatform.buypage.controllers;
 
 import com.exoplatform.buypage.gateway.IService;
-import com.exoplatform.buypage.model.DTO.ItemOrderDTO;
 import com.exoplatform.buypage.model.DTO.ItemOrderWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

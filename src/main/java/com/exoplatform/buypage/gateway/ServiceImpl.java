@@ -18,8 +18,10 @@ package com.exoplatform.buypage.gateway;
 
 import com.braintreegateway.*;
 import com.braintreegateway.exceptions.UnexpectedException;
+import com.exoplatform.buypage.model.SubscriptionCustomer;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,6 +115,77 @@ public class ServiceImpl implements IService {
       }
     }
     return addons;
+  }
+
+  @Override
+  public ArrayList<String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer){
+
+    ArrayList<String> result = new ArrayList<String>();
+   // user infos + addons ID + discout ID
+    Result<Subscription> subscriptionResult = null;
+
+    Result<Customer> customerResult = createOrUpdateCustomer(customerId, subsCustomer);
+
+    if (!customerResult.isSuccess()) {
+      return getCustomerRequestError(customerResult);
+    }
+    // return userID
+    // check subscrID
+    CreditCard card = customerResult.getTarget().getCreditCards().get(0);
+    String paymentMethodToken = card.getToken();
+    SubscriptionRequest subscriptionRequest = new SubscriptionRequest().paymentMethodToken(paymentMethodToken);
+    subscriptionRequest.planId(subsCustomer.getPlanId());
+
+
+    List<String> addonIds = subsCustomer.getAddonIds();
+    ModificationsRequest addonUpdate = subscriptionRequest.addOns();
+    for (String addonId:addonIds){
+      addonUpdate.add().inheritedFromId(addonId).done();
+    }
+
+    String discountId = subsCustomer.getDiscountId();
+    ModificationsRequest discountUpdate = subscriptionRequest.discounts();
+
+    subscriptionResult = gateway.subscription().create(subscriptionRequest);
+    result.add(subscriptionResult.getMessage());
+    return result;
+  }
+
+  private Result<Customer> createOrUpdateCustomer(String customerId, SubscriptionCustomer subsCustomer) {
+    CustomerRequest customerRequest = new CustomerRequest()
+            .firstName(subsCustomer.getFirstName())
+            .lastName(subsCustomer.getLastName()).phone(subsCustomer.getPhone())
+            .company(subsCustomer.getOrganization()).email(subsCustomer.getEmail())
+            .creditCard().billingAddress().done()
+            .number(subsCustomer.getCardNumber())
+            .cardholderName(subsCustomer.getCardHolder())
+            .expirationMonth(subsCustomer.getExpireMonth())
+            .expirationYear(subsCustomer.getExpireYear())
+            .cvv(subsCustomer.getCardCVV()).done();
+
+    Result<Customer> result = null;
+    if (StringUtils.isNotEmpty(customerId)) {
+      result = gateway.customer().update(customerId, customerRequest);
+    } else {
+      result = gateway.customer().create(customerRequest);
+    }
+    return result;
+  }
+
+  private ArrayList<String> getCustomerRequestError(Result<Customer> requestError) {
+    ArrayList<String> result = new ArrayList<String>();
+    List<ValidationError> errors = requestError.getErrors().getAllDeepValidationErrors();
+    for (ValidationError error : errors) {
+      if (error.getCode().toString().contains("CREDIT_CARD_NUMBER")) {
+        result.add("2005");
+      } else if (error.getCode().toString().contains("CREDIT_CARD_EXPIRATION_DATE")) {
+        result.add("2006");
+      } else if (error.getCode().toString().contains("CREDIT_CARD_CVV")) {
+        result.add("2010");
+      }
+    }
+    log.error("Cannot subscribe to braintree error:");
+    return result;
   }
 
   @Override

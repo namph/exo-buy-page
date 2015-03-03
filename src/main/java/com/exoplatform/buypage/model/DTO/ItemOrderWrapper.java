@@ -1,6 +1,7 @@
 package com.exoplatform.buypage.model.DTO;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 public class ItemOrderWrapper {
   private PlanDTO plan;
@@ -50,5 +51,15 @@ public class ItemOrderWrapper {
       total = total.add(service.getPrice());
     }
     return total;
+  }
+  public List<String> getAddonIds(){
+    List<String> addonIds = new ArrayList<String>();
+    for (AddonDTO addon:this.getAddons()){
+      addonIds.add(addon.getId());
+    }
+    for (AddonDTO service:this.getServices()){
+      addonIds.add(service.getId());
+    }
+    return addonIds;
   }
 }

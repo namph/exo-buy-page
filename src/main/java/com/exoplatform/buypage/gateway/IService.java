@@ -19,6 +19,7 @@ package com.exoplatform.buypage.gateway;
 import com.braintreegateway.AddOn;
 import com.braintreegateway.Discount;
 import com.braintreegateway.Plan;
+import com.exoplatform.buypage.model.SubscriptionCustomer;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -58,6 +59,17 @@ public interface IService {
    * @return Collection<Addon>
    */
   public Collection<AddOn> getActiveAddons();
+
+  /**
+   * Create or update subscription.
+   *
+   * @param subscriptionId
+   * @param subsCustomer {@link SubscriptionCustomer}
+   * @return
+   * @throws Exception
+   */
+  public ArrayList<String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer);
+
 
   /**
    * Return addon by id.

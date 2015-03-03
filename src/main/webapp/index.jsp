@@ -90,8 +90,8 @@
             <span class="title-icon"><i class="fa fa-shopping-cart"></i></span>
         </div>
         <div class="bp-content">
-            <input type="text" name="card_holder" />
-            <input type="text" name="card_number" />
+            holder<input type="text" name="card_holder" />
+            number <input type="text" name="card_number" />
             <select  name="month">
                 <% for(int i=1;i<13;i++){%>
                 <option value="<%=i%>"><%=i%></option>
@@ -102,6 +102,10 @@
                 <option value="<%=i%>"><%=i%></option>
                 <% } %>
             </select>
+            CVV <input type="text" name="card_cvv"/>
+            <br/>
+            <button class="btn subscribe">Subscribe</button>
+            <input type="button" class="subscribe" value="submit"/>
         </div>
     </div>
     <div class="col-md-4 buypage-bill">
