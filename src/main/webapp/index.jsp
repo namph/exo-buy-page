@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -89,12 +90,18 @@
             <span class="title-icon"><i class="fa fa-shopping-cart"></i></span>
         </div>
         <div class="bp-content">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <input type="text" name="card_holder" />
+            <input type="text" name="card_number" />
+            <select  name="month">
+                <% for(int i=1;i<13;i++){%>
+                <option value="<%=i%>"><%=i%></option>
+                <% } %>
+            </select>
+            <select  name="yeah">
+                <% for(int i=2015;i<2030;i++){%>
+                <option value="<%=i%>"><%=i%></option>
+                <% } %>
+            </select>
         </div>
     </div>
     <div class="col-md-4 buypage-bill">
