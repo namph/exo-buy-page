@@ -68,6 +68,9 @@ public class RESTPlanController {
         }
         currentPlanTypeDTO.getPlanDTOs().add(planDTO);
         if (!"".equals(planDTO.getActive())){
+          currentPlanTypeDTO.setId(planDTO.getId());
+          currentPlanTypeDTO.setName(planDTO.getName());
+          currentPlanTypeDTO.setDescription(planDTO.getDescription());
           currentPlanTypeDTO.setDefaultNbUser(planDTO.getOptionUser());
           currentPlanTypeDTO.setActive(planDTO.getActive());
           currentPlanTypeDTO.setPrice(planDTO.getPrice());

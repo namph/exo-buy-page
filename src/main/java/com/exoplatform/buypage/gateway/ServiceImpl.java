@@ -19,6 +19,7 @@ package com.exoplatform.buypage.gateway;
 import com.braintreegateway.*;
 import com.braintreegateway.exceptions.UnexpectedException;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
+import com.exoplatform.buypage.utils.CommonUtils;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
@@ -127,7 +128,8 @@ public class ServiceImpl implements IService {
     Result<Customer> customerResult = createOrUpdateCustomer(customerId, subsCustomer);
 
     if (!customerResult.isSuccess()) {
-      return getCustomerRequestError(customerResult);
+      result.add(CommonUtils.getMessageByBTCode(getCustomerRequestError(customerResult)));
+      return result;
     }
     // return userID
     // check subscrID
@@ -147,9 +149,39 @@ public class ServiceImpl implements IService {
     ModificationsRequest discountUpdate = subscriptionRequest.discounts();
 
     subscriptionResult = gateway.subscription().create(subscriptionRequest);
-    result.add(subscriptionResult.getMessage());
+    result = this.generateResponseFromBraintree(subscriptionResult);
     return result;
   }
+
+
+  private ArrayList<String> generateResponseFromBraintree(Result<Subscription> subsResult){
+    ArrayList<String> results = new ArrayList<String>();
+    if (subsResult.isSuccess()){
+      Subscription.Status targetStatus = subsResult.getTarget().getStatus();
+      // transaction successful
+      if(targetStatus.equals(subsResult.getTarget().getStatus().ACTIVE)){
+        results.add("ok");
+      }else{
+        // wait for confirmation email
+        results.add("pending");
+      }
+    }else{
+      //error for transaction
+      if (subsResult.getTransaction() != null) {
+        results.add(CommonUtils.getMessageByBTCode(subsResult.getTransaction().getProcessorResponseCode()));
+      }
+      // subs error
+      ValidationErrors errorLevel = subsResult.getErrors();
+      if (errorLevel != null) {
+        List<ValidationError> errors = errorLevel.getAllDeepValidationErrors();
+        for (ValidationError error : errors) {
+          results.add(CommonUtils.getMessageByBTCode(error.getCode().code));
+        }
+      }
+    }
+    return results;
+  }
+
 
   private Result<Customer> createOrUpdateCustomer(String customerId, SubscriptionCustomer subsCustomer) {
     CustomerRequest customerRequest = new CustomerRequest()
@@ -172,19 +204,18 @@ public class ServiceImpl implements IService {
     return result;
   }
 
-  private ArrayList<String> getCustomerRequestError(Result<Customer> requestError) {
-    ArrayList<String> result = new ArrayList<String>();
+  private String getCustomerRequestError(Result<Customer> requestError) {
+    String result = null;
     List<ValidationError> errors = requestError.getErrors().getAllDeepValidationErrors();
     for (ValidationError error : errors) {
       if (error.getCode().toString().contains("CREDIT_CARD_NUMBER")) {
-        result.add("2005");
+        result = "2005";
       } else if (error.getCode().toString().contains("CREDIT_CARD_EXPIRATION_DATE")) {
-        result.add("2006");
+        result = "2006";
       } else if (error.getCode().toString().contains("CREDIT_CARD_CVV")) {
-        result.add("2010");
+        result = "2010";
       }
     }
-    log.error("Cannot subscribe to braintree error:");
     return result;
   }
 

@@ -179,32 +179,52 @@
     });
   };
 
+  var _validateBillingForm = function(){
+    var info = new Array();
+    var i = 0;
+    var listInputDOM = $("#billingForm :text");
+    listInputDOM.each(function(){
+      var val = $(this).val();
+      var name = $(this).attr("name");
+      if(val.length > 0 && val != null ){
+        info[name] = val;
+        i++;
+      }
+    });
+    if (i < listInputDOM.length-1)
+      return null;
+
+    return info;
+  };
   var _addEvent2BtnSubscribe = function(){
     $(document).on('click.subscribe.submit','button.subscribe', function () {
-      var firstName = 'fname';
-      var lastName = "lname"
-      var organization = "exo";
-      var phone = "12345566";
-      var email = "tuan@anh.com";
-      var cardNumber = "$bt4|javascript_1_3_6$Q71IedNIO1dOEBnqIGrh576A7Dl6TQbRr8SpacJ34zNQrtGGNN+J3v4wE0ENp5cKYBug2b0oAiQzWKFMAftsCXI8BgUF0WRY1un5rlr5lgqVDQo1e7hsj2sGELj37KFsolpKLVODs04wf6wxgcKFraUcSVXshMOA2RvcOHX3Fo/XykhlK1OwuOCyW7nba5EDIAgZMoNFjiksp3Ek/6/1nMzFKIM/t8BQ0+0mIIuqdcNo58HSnq/6sEKs6ZPzv1zS8vJzlFs1raJqKd134ID0GsetFsFQeRWsVH9/nX8DcVmhBMnLJ6wNKtF4eZkMYQ9WPeKdcM6NLjv8ru3Liz/uZw==$zGEpX+9Jj1AU9HdGhk6FeTZ5FDor3TIGSRyvfPTHhiJbmAxQqcOAAcCZCj5fAHMA$yi4sIzV19lInJCkaqyjgyafESzu3EOvWe/CTlK/+i2I=";
-      var cardHolder = "$bt4|javascript_1_3_6$F+y72SZFl8fsC6MLCp1tvIfdzHM86WMw4bdbH7pUe5fTTV0rDfRj6s+PImmURZLPq0kr+oNEP9lks1usui6ECmSnJu+3/w6ZMa54jgMhtFrfxpqgdKosEVPyVzwSdeMMPSigRYw1EV/gHbEdW/no8BqwJJe9N71FVpE0uUlEquQ1o2w+Ra+k9gS7HaBeHV+W+9bo4q3HwYNVQU0ODSy+BiXGOrCpDiwniJomuM7DJkPF6CIoUpommHHPGRwWs3RJfGfkOBVpIV5UcXoo1dfbzOFFuTpDovGVPD7KEM4lGppoDzNyzafaZQDBiZyDvY42D1e/94gtMwFYmCen0S9IIA==$77Mw9eAfcB5qMYTwGnGueoSWqAPVonMb5zXHUuM7aM0=$HratFPCBpjTs50zacMCJm7Md+K6wGupApYlDj2l38UM=";
-      var expireMonth = 1;
-      var expireYear = 2015;
-      var cardCVV = "$bt4|javascript_1_3_6$m4Cvd8zuyyuyeabCqpEgTyQtAQ+WC1WJ0g6Is3un/Bv0RkgwUmMppgIBrWszNTtU/cPDKsepWyf6T15XyAXgKquqx5LfyX5dUfwZFalDiFh3rQVUAMxP+xyMMvandZjXOcqLALHwP2T4S6MNEpyzTcH2NEViBCSrX0HEFo6zYdLmn7kIvCa6i0YByHRMYlW5l8OP1YBp3cqKV3yy7KF67eLvI/+GSCeXnr0hI5glTjjO1iuAkaKq25G3JVReKfpyvH/ys8IeZzUbK3zzOhDqrz6tfeZaVX024AkpPtncweEKg/Z3WL+LDdaeRmF8Ht9lGwpDWdt25TAQ2dKASzjw0w==$/2E5MezfSRmWe0DOP82GY6UdeaqGQueYHLtl602bbvo=$MU5X+QMINpapI8Yqhrn5o9tIK3Y9AIRuSH/zjMkirqc=";
+      var subscriptionCustomer = _validateBillingForm();
+      if (subscriptionCustomer == null){
+        return;
+      }
+      var firstName = subscriptionCustomer['first_name'];
+      var lastName = subscriptionCustomer['last_name'];
+      var organization = subscriptionCustomer['organisation'];
+      var phone = subscriptionCustomer['phone'];
+      var email = subscriptionCustomer['billing_email'];
+      var cardNumber = $("#cardNumber").val();;
+      var cardHolder = $("#cardHolder").val();
+      var expireMonth = $("#expireMonth").val();
+      var expireYear = $("#expireYear").val();
+      var cardCVV = $("#cardCVV").val();
       var planId = _planSelected.id;
-
-      var addons = new Array();
+      var addonIds = new Array();
       for(var i=0;i<_listAddonsSelected.length;i++){
-        addons.push(_listAddonsSelected[i].id);
+        addonIds.push(_listAddonsSelected[i].id);
       }
       for(var i=0;i<_listServicesSelected.length;i++){
-        addons.push(_listServicesSelected[i].id);
+        addonIds.push(_listServicesSelected[i].id);
       }
 
-      var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"planId":planId,"addons":addons};
+      var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"planId":planId,"addonIds":addonIds};
       data = JSON.stringify(data);
       $.ajax({
-        url: _baseRestUrl+"/Bill/showFromClient",
+        url: _baseRestUrl+"/Subscribe/submit",
         dataType: "text",
         type:"POST",
         contentType:"application/json",

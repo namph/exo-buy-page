@@ -58,29 +58,29 @@
             <h3 class="title">Billing</h3>
             <span class="title-icon"><i class="fa fa-file-text-o"></i></span>
         </div>
-        <div class="bp-content">
+        <div class="bp-content" id="billingForm">
             <div class="alert alert-warning alert-dismissible" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong>Warning!</strong> Better check yourself, you're not looking too good.
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="First Name">
+                <input type="text" name="first_name" class="form-control" placeholder="First Name" value="Tuan Anh">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Last Name">
+                <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="VU">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Organisation">
+                <input type="text" name="organisation" class="form-control" placeholder="Organisation" value="exo">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Phone">
+                <input type="text" name="phone" class="form-control" placeholder="Phone" value="0123344555">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Billing Email">
+                <input type="text" name="billing_email" class="form-control" placeholder="Billing Email" value="anhvt@exoplatform.com">
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
+                    <input type="text" name="product_code" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
                     <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-question-circle"></i></span>
                 </div>
             </div>
@@ -90,22 +90,21 @@
             <span class="title-icon"><i class="fa fa-shopping-cart"></i></span>
         </div>
         <div class="bp-content">
-            holder<input type="text" name="card_holder" />
-            number <input type="text" name="card_number" />
-            <select  name="month">
+            holder<input type="text" name="card_holder" id="cardHolder" value="Tuan Anh VU"  />
+            number <input type="text" name="card_number" id="cardNumber" value="4111 1111 1111 1111" />
+            <select  name="month" id="expireMonth">
                 <% for(int i=1;i<13;i++){%>
                 <option value="<%=i%>"><%=i%></option>
                 <% } %>
             </select>
-            <select  name="yeah">
+            <select  name="yeah" id="expireYear">
                 <% for(int i=2015;i<2030;i++){%>
                 <option value="<%=i%>"><%=i%></option>
                 <% } %>
             </select>
-            CVV <input type="text" name="card_cvv"/>
+            CVV <input type="text" name="card_cvv" id = "cardCVV" value="123"/>
             <br/>
             <button class="btn subscribe">Subscribe</button>
-            <input type="button" class="subscribe" value="submit"/>
         </div>
     </div>
     <div class="col-md-4 buypage-bill">

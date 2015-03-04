@@ -28,7 +28,8 @@ public class RestSubscribeController {
   @Inject
   IService gatewayService;
 
-  @RequestMapping(value = "/showFromClient",method = RequestMethod.POST,consumes = {"application/json"},produces = {"application/json"})
+  @RequestMapping(value = "/submit",method = RequestMethod.POST,consumes = {"application/json"},produces = {"application/json"})
+  @ResponseBody
   public ArrayList<String> showBillFromClient(@RequestBody SubscriptionCustomer subscriptionCustomer){
     return gatewayService.subscribe("","",subscriptionCustomer);
   }
