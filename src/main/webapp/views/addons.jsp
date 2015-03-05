@@ -12,17 +12,17 @@
     <br>
     <!-- User .uiCloudCardSelect with Grid System. You can not use with Grid System like Services section below  -->
     <div class="row">
-
         <c:forEach items="${addons}" var="addon">
             <c:set var="id" value="${addon.getId()}"></c:set>
             <c:set var="name" value="${addon.getName()}"></c:set>
             <c:set var="description" value="${addon.getDescription()}"></c:set>
             <c:set var="price" value="${addon.getPrice()}"></c:set>
-            <div class="col-md-4">
+            <c:set var="user" value="${addon.getOptionUser()}"></c:set>
+            <div class="col-md-4 addon-bloc addon-${user}" style="display: none;">
                 <div class="uiCloudCardSelect" id="${id}">
                     <span class="iconSelect"><i class="fa fa-check"></i></span>
                     <div class="inner addonItem" data-toggle="dropdown" data-name="${name}" data-price="${price}" data-id="${id}">
-                        <h4><i class="fa fa-video-camera"></i>${name}</h4>
+                        <h4><i class="fa fa-video-camera"></i>${name} - ${id} - ${user}</h4>
                     </div>
                     <div class="dropdown-box">
                         <p>This Add-on includes: </p>

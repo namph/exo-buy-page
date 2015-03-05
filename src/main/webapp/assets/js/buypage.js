@@ -7,7 +7,7 @@
   var _listAddonsSelected = new Array();
   var _listServicesSelected = new Array();
   var _discountProvided;
-
+  var _addonUserDefault = 0;
   var BuyPage = {};
   BuyPage.tata = "";
   var _loadActivePlans = function(){
@@ -18,6 +18,7 @@
       .done(function(data) {
         _planContainerDOM.html(data);
         _loadBillFromClient();
+        _loadActiveAddons(null);
       })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ', ' + error;
@@ -31,6 +32,7 @@
     })
       .done(function(data) {
         _addonsContainerDOM.html(data);
+        _hideAllAddonsButOne();
       })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ', ' + error;
@@ -65,8 +67,11 @@
       var id = me.attr("data-id");
       var name = me.attr("data-name");
       var price = me.attr("data-price");
-      _planSelected = {id:id,name:name,price:price};
+      var user = me.attr("data-user");
+      _addonUserDefault = user;
+      _planSelected = {"id":id,"name":name,"price":price};
       _loadBillFromClient();
+      _hideAllAddonsButOne();
     });
   };
   var _addEventClick2AddonItem = function(){
@@ -240,9 +245,13 @@
 
     })
   };
-
-  BuyPage.setPlanDefaultSelected = function (id,name,price,users) {
-    _planSelected = {"id":id,"name":name,"price":price,"users":users};
+  var _hideAllAddonsButOne = function(){
+    $(".addon-bloc").hide();
+    $(".addon-"+_addonUserDefault).show();
+  };
+  BuyPage.setPlanDefaultSelected = function (id,name,price,user) {
+    _planSelected = {"id":id,"name":name,"price":price};
+    _addonUserDefault = user;
   };
 
   BuyPage.init = function () {
@@ -250,7 +259,6 @@
     _addonsContainerDOM = $(".buypage-addons");
     _billContainerDOM = $(".buypage-bill");
     _loadActivePlans();
-    _loadActiveAddons(null);
     _addEvent2BtnSubmitDiscount();
     _addEventClick2PlanTypeItem();
     _addEventClick2AddonItem();
