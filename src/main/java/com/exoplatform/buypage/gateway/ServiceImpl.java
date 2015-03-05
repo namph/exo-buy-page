@@ -20,12 +20,14 @@ import com.braintreegateway.*;
 import com.braintreegateway.exceptions.UnexpectedException;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import com.exoplatform.buypage.utils.CommonUtils;
+import com.sun.org.apache.xerces.internal.impl.dv.xs.DecimalDV;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -46,11 +48,13 @@ public class ServiceImpl implements IService {
 
   public static final String ENCRYPT_KEY_PROPERTY = "provider.braintree.encryptionKey";
 
+
   public static final String PREFIX_ADDON = "PLT_";
   public static final String PREFIX_SERVICE = "SV_";
   public static final String PREFIX_PLAN = "EXO_PLT_ENT";
   public static final String PREFIX_DISABLED = "DISABLED";
   public static final String PREFIX_OLD = "OLD";
+  public static final String PREFIX_DISCOUNT_TYPE = "_";
 
   private PropertiesConfiguration adminConfiguration;
   private BraintreeGateway gateway;
@@ -104,6 +108,16 @@ public class ServiceImpl implements IService {
 
   @Override
   public Plan getPlan(String id) {
+    try {
+      List<Plan> plans = findActivePlans();
+      for (Plan plan : plans) {
+        if (plan.getId().equals(id)) {
+          return plan;
+        }
+      }
+    } catch (Exception e) {
+      log.error("Failed to connect to payment gateway", e.getMessage());
+    }
     return null;
   }
 
@@ -144,9 +158,17 @@ public class ServiceImpl implements IService {
     for (String addonId:addonIds){
       addonUpdate.add().inheritedFromId(addonId).done();
     }
-
-    String discountId = subsCustomer.getDiscountId();
+    String couponCode = subsCustomer.getDiscountCode();
     ModificationsRequest discountUpdate = subscriptionRequest.discounts();
+
+    if (StringUtils.isNotEmpty(couponCode)) {
+      Plan plan = getPlan(subsCustomer.getPlanId());
+      if (null != plan){
+        BigDecimal planPrice =  getPlanPrice(plan);
+        discountUpdate = applyCoupon(plan.getBillingFrequency(),subsCustomer.getUserNumber(), planPrice, couponCode, discountUpdate);
+      }
+
+    }
 
     subscriptionResult = gateway.subscription().create(subscriptionRequest);
     result = this.generateResponseFromBraintree(subscriptionResult);
@@ -255,4 +277,70 @@ public class ServiceImpl implements IService {
   public void setGateway(BraintreeGateway gateway) {
     this.gateway = gateway;
   }
+
+  private ModificationsRequest applyCoupon(int planCycle, int userNumber, BigDecimal finalPrice, String discountId, ModificationsRequest discountUpdate) {
+    Discount discount = getDiscount(discountId);
+    if (null != discount){
+      String name = discount.getName();
+      String[] info = name.split(PREFIX_DISCOUNT_TYPE);
+      if (info.length >= 2 && info[1].indexOf("PERCENT") != -1) {
+        double percentage = (double) Integer.parseInt(info[2]) / 100;
+        BigDecimal discountPrice = finalPrice.multiply(new BigDecimal(Double.toString(percentage)));
+        discountUpdate.add().inheritedFromId(discount.getId()).amount(discountPrice).quantity(1).numberOfBillingCycles(1).done();
+      } else if (info.length >= 2 && info[1].indexOf("MONTH") != -1) {
+        discountUpdate.add().inheritedFromId(discount.getId()).quantity(userNumber).numberOfBillingCycles(1).done();
+      } else if (info.length >= 3 && info[1].indexOf("USER") != -1) {
+        discountUpdate.add().inheritedFromId(discount.getId()).amount(discount.getAmount().multiply(new BigDecimal(planCycle))).quantity(Integer.parseInt(info[2])).numberOfBillingCycles(1).done();
+
+      }
+    }
+    return discountUpdate;
+  }
+
+  @Override
+  public BigDecimal getDiscountAmount(BigDecimal planPrice,int planCycle, String discountId,int userNumber){
+    BigDecimal discountPrice = new BigDecimal(0);
+    Discount discount = getDiscount(discountId);
+    String name = discount.getName();
+    String[] info = name.split(PREFIX_DISCOUNT_TYPE);
+    if (info.length >= 2 && info[1].indexOf("PERCENT") != -1) {
+      double percentage = (double) Integer.parseInt(info[2]) / 100;
+      discountPrice = planPrice.multiply(new BigDecimal(Double.toString(percentage)));
+    } else if (info.length >= 2 && info[1].indexOf("MONTH") != -1) {
+      discountPrice = discount.getAmount().multiply(new BigDecimal(userNumber));
+    } else if (info.length >= 3 && info[1].indexOf("USER") != -1) {
+      discountPrice = discount.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
+    }
+    return discountPrice;
+  }
+
+  // get price of plan plus all addons linked to plan and subtract all discount linked to plan
+  @Override
+  public BigDecimal getPlanPrice(Plan plan) {
+
+    BigDecimal finalPrice = plan.getPrice();
+
+    for (AddOn addon : plan.getAddOns()) {
+      BigDecimal addonPrice = addon.getAmount();
+      finalPrice = finalPrice.add(addonPrice);
+    }
+
+    BigDecimal finalPriceOrgi = finalPrice;
+    List<Discount> discounts = plan.getDiscounts();
+    for (Discount discount : discounts) {
+      BigDecimal discountPrice = new BigDecimal(0);
+      String[] discountInfo = discount.getId().split(PREFIX_DISCOUNT_TYPE);
+      if (discountInfo[0].indexOf("PERCENT") != -1) {
+        double percentage = (double) Integer.parseInt(discountInfo[1]) / 100;
+        discountPrice = finalPriceOrgi.multiply(new BigDecimal(Double.toString(percentage)));
+      } else if (discountInfo[0].indexOf("MONTH") != -1) {
+        discountPrice = discount.getAmount();
+      }
+      finalPrice = finalPrice.subtract(discountPrice);
+    }
+
+    return finalPrice;
+  }
+
+
 }

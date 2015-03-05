@@ -1,7 +1,11 @@
 package com.exoplatform.buypage.utils;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+
 public class CommonUtils {
 
+  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00");
   public static String getMessageByBTCode(String strCode) {
     int code = Integer.valueOf(strCode);
     switch (code) {
@@ -28,4 +32,7 @@ public class CommonUtils {
     }
   }
 
+  public static String convertAmount2String(BigDecimal amount){
+    return DECIMAL_FORMAT.format(amount);
+  }
 }

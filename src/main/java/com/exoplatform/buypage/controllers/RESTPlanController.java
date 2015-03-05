@@ -53,12 +53,14 @@ public class RESTPlanController {
     Map<String,PlanTypeDTO> planTypeDTOMap = new HashMap<String, PlanTypeDTO>();
     for (Plan plan:plans){
       planDTO = new PlanDTO(plan.getId(),plan.getName(),plan.getDescription());
-      planDTO.setPrice(plan.getPrice());
+      planDTO.setPrice(gatewayService.getPlanPrice(plan));
+      planDTO.setPlanCycle(plan.getBillingFrequency());
       prefixPlanType = planDTO.getPlanType();
       if (!planTypeDTOMap.containsKey(prefixPlanType)){
         planTypeDTO = new PlanTypeDTO(planDTO.getId(),planDTO.getName(),planDTO.getDescription());
         planTypeDTO.setPrice(planDTO.getPrice());
         planTypeDTO.setDefaultNbUser(planDTO.getOptionUser());
+        planTypeDTO.setPlanCycle(planDTO.getPlanCycle());
         planTypeDTOMap.put(prefixPlanType,planTypeDTO);
       }
       if (planTypeDTOMap.containsKey(prefixPlanType)  ){
@@ -74,6 +76,7 @@ public class RESTPlanController {
           currentPlanTypeDTO.setDefaultNbUser(planDTO.getOptionUser());
           currentPlanTypeDTO.setActive(planDTO.getActive());
           currentPlanTypeDTO.setPrice(planDTO.getPrice());
+          currentPlanTypeDTO.setPlanCycle(planDTO.getPlanCycle());
         }
         planTypeDTOMap.remove(prefixPlanType);
         planTypeDTOMap.put(prefixPlanType,currentPlanTypeDTO);

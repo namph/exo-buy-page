@@ -5,9 +5,10 @@
     <c:set var="price" value="${entry.value.getPrice()}"></c:set>
     <c:set var="active" value="${entry.value.getActive()}"></c:set>
     <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
+    <c:set var="planCycle" value="${entry.value.getPlanCycle()}"></c:set>
     <c:if test="${active == 'active'}">
         <script language="javascript">
-            BuyPage.setPlanDefaultSelected('${id}','${name}','${price}','${user}');
+            BuyPage.setPlanDefaultSelected('${id}','${name}','${price}','${user}','${planCycle}');
         </script>
     </c:if>
 </c:forEach>
@@ -22,8 +23,9 @@
                     <c:set var="description" value="${entry.value.getDescription()}"></c:set>
                     <c:set var="price" value="${entry.value.getPrice()}"></c:set>
                     <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
+                    <c:set var="planCycle" value="${entry.value.getPlanCycle()}"></c:set>
                     <li role="presentation"  class="${entry.value.getActive()}">
-                        <div data-target=".${id}" aria-controls="profile" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}">
+                        <div data-target=".${id}" aria-controls="profile" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}" data-planCycle="${planCycle}">
                             <h5>${name}<br>${description}</h5>
                         </div>
                     </li>
@@ -63,7 +65,9 @@
                             <c:set var="price" value="${planDTO.getPrice()}"></c:set>
                             <c:set var="nbUser" value="${planDTO.getOptionUser()}"></c:set>
                             <c:set var="position" value="${nbUser/entry.value.getMaxNbUser()*100}"></c:set>
-                            <div class="ui-slider-handle ui-state-default ui-corner-all planTypeItem" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}">
+                            <c:set var="user" value="${planDTO.getOptionUser()}"></c:set>
+                            <c:set var="planCycle" value="${planDTO.getPlanCycle()}"></c:set>
+                            <div class="ui-slider-handle ui-state-default ui-corner-all planTypeItem" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}"  data-user="${user}" data-planCycle="${planCycle}">
                                 <span class="countValue" >${nbUser} users</span>
                             </div>
                         </c:forEach>

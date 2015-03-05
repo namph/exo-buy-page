@@ -45,7 +45,11 @@
       dataType: "text"
     })
     .done(function(data) {
-      console.info(data);
+      var obj = jQuery.parseJSON(data);
+       if(typeof data !== undefined){
+         _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description};
+         _loadBillFromClient();
+       }
     })
     .fail(function (jqxhr, textStatus, error) {
       var err = textStatus + ', ' + error;
@@ -54,6 +58,7 @@
   };
   var _addEvent2BtnSubmitDiscount = function(){
     $(document).on('click.discount.submit','button#btnSubmitDiscount',function(){
+      _discountProvided = null;
       var discountId = $("#discountId").val();
       if (typeof discountId !== undefined && discountId.length > 0 ){
         _getDiscount(discountId);
@@ -68,10 +73,15 @@
       var name = me.attr("data-name");
       var price = me.attr("data-price");
       var user = me.attr("data-user");
+      var planCycle = me.attr("data-planCycle");
       _addonUserDefault = user;
-      _planSelected = {"id":id,"name":name,"price":price};
-      _loadBillFromClient();
-      _hideAllAddonsButOne();
+      _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+        _hideAllAddonsButOne();
+      }
     });
   };
   var _addEventClick2AddonItem = function(){
@@ -89,7 +99,11 @@
         parent.addClass("selected");
         _addAddon2ListSelected(obj);
       }
-      _loadBillFromClient();
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+      }
     });
   };
   var _addEventClick2ServiceItem = function(){
@@ -107,7 +121,11 @@
         parent.addClass("selected");
         _addService2ListSelected(obj);
       }
-      _loadBillFromClient();
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+      }
     });
   };
   var _addAddon2ListSelected = function(obj){
@@ -128,6 +146,10 @@
     if ( pos != null)
       _listServicesSelected.splice(pos,1);
   };
+  var _removeDiscount = function(id){
+    _discountProvided = null;
+    _loadBillFromClient();
+  };
   var _checkItemExistsInList = function(id,list){
     var index = null;
     $.each(list, function (i,v) {
@@ -139,7 +161,7 @@
   };
   var _loadBillFromClient = function(){
 
-    var data = {"plan":_planSelected,"addons":_listAddonsSelected,"services":_listServicesSelected,"discountId":"toto"};
+    var data = {"plan":_planSelected,"addons":_listAddonsSelected,"services":_listServicesSelected,"discount":_discountProvided};
     data = JSON.stringify(data);
     $.ajax({
       url: _baseRestUrl+"/Bill/showFromClient",
@@ -170,7 +192,11 @@
       var id = me.attr("data-id");
       $("#"+id).removeClass("selected");
       _removeAddonFromListSelected(id);
-      _loadBillFromClient();
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+      }
     });
   };
   var _addEvent2LinkRemoveService = function(){
@@ -179,11 +205,20 @@
       var id = me.attr("data-id");
       $("#"+id).removeClass("selected");
       _removeServiceFromListSelected(id);
-
-      _loadBillFromClient();
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+      }
     });
   };
 
+  var _addEvent2LinkRemoveDiscount = function(){
+    $(document).on('click.discount.remove','a.remove-discountItem',function(){
+      var id = $(this).attr("data-id");
+      _removeDiscount(id);
+    });
+  };
   var _validateBillingForm = function(){
     var info = new Array();
     var i = 0;
@@ -218,6 +253,10 @@
       var expireYear = $("#expireYear").val();
       var cardCVV = $("#cardCVV").val();
       var planId = _planSelected.id;
+
+      var discountCode = null;
+      if(typeof _discountProvided !== undefined && null != _discountProvided)
+        discountCode = _discountProvided.id;
       var addonIds = new Array();
       for(var i=0;i<_listAddonsSelected.length;i++){
         addonIds.push(_listAddonsSelected[i].id);
@@ -226,7 +265,7 @@
         addonIds.push(_listServicesSelected[i].id);
       }
 
-      var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"planId":planId,"addonIds":addonIds};
+      var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"planId":planId,"addonIds":addonIds,"discountCode":discountCode};
       data = JSON.stringify(data);
       $.ajax({
         url: _baseRestUrl+"/Subscribe/submit",
@@ -249,8 +288,8 @@
     $(".addon-bloc").hide();
     $(".addon-"+_addonUserDefault).show();
   };
-  BuyPage.setPlanDefaultSelected = function (id,name,price,user) {
-    _planSelected = {"id":id,"name":name,"price":price};
+  BuyPage.setPlanDefaultSelected = function (id,name,price,user,planCycle) {
+    _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
     _addonUserDefault = user;
   };
 
@@ -266,6 +305,7 @@
     _addEvent2LinkRemoveAddon();
     _addEvent2LinkRemoveService();
     _addEvent2BtnSubscribe();
+    _addEvent2LinkRemoveDiscount();
   };
 
   return window.BuyPage = BuyPage;

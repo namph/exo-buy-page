@@ -22,6 +22,7 @@ import com.braintreegateway.Plan;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -96,4 +97,15 @@ public interface IService {
    * @return Discount
    */
   public Discount getDiscount(String discountID);
+
+  /**
+   * Get final price of Plan (include all addons linked, discount linked)
+   *
+   * @param plan
+   * @return BigDecimal
+   */
+
+  public BigDecimal getPlanPrice(Plan plan);
+
+  public BigDecimal getDiscountAmount(BigDecimal planPrice,int planCycle, String discountId,int userNumber);
 }

@@ -15,9 +15,9 @@ public class SubscriptionCustomer {
   private String expireYear;
   private String cardCVV;
   private String planId;
-  private String userNumber;
+  private int userNumber;
   private List<String> addonIds;
-  private String discountId;
+  private String discountCode;
 
   public String getFirstName() {
     return firstName;
@@ -107,11 +107,11 @@ public class SubscriptionCustomer {
     this.planId = planId;
   }
 
-  public String getUserNumber() {
+  public int getUserNumber() {
     return userNumber;
   }
 
-  public void setUserNumber(String userNumber) {
+  public void setUserNumber(int userNumber) {
     this.userNumber = userNumber;
   }
 
@@ -123,11 +123,11 @@ public class SubscriptionCustomer {
     this.addonIds = addonIds;
   }
 
-  public String getDiscountId() {
-    return discountId;
+  public String getDiscountCode() {
+    return discountCode;
   }
 
-  public void setDiscountId(String discountId) {
-    this.discountId = discountId;
+  public void setDiscountCode(String discountCode) {
+    this.discountCode = discountCode;
   }
 }

@@ -10,7 +10,7 @@ public class PlanTypeDTO extends DTO {
   private String active;
   private int defaultNbUser;
   private int maxNbUser;
-
+  private int planCycle;
   public PlanTypeDTO(String id, String name, String description) {
     super(id, name, description);
     this.setPlanDTOs(new ArrayList<PlanDTO>());
@@ -54,5 +54,13 @@ public class PlanTypeDTO extends DTO {
 
   public void setMaxNbUser(int maxNbUser) {
     this.maxNbUser = maxNbUser;
+  }
+
+  public int getPlanCycle() {
+    return planCycle;
+  }
+
+  public void setPlanCycle(int planCycle) {
+    this.planCycle = planCycle;
   }
 }

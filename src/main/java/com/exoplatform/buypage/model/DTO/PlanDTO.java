@@ -21,7 +21,7 @@ import java.util.List;
 public class PlanDTO extends DTO {
 
   private List<OptionDTO> optionDTOs;
-
+  private int planCycle;
   public PlanDTO(){
 
   }
@@ -48,4 +48,11 @@ public class PlanDTO extends DTO {
   }
 
 
+  public int getPlanCycle() {
+    return planCycle;
+  }
+
+  public void setPlanCycle(int planCycle) {
+    this.planCycle = planCycle;
+  }
 }
