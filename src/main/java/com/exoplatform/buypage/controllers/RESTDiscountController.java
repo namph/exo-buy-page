@@ -27,6 +27,7 @@ public class RESTDiscountController {
     DiscountDTO discountDTO = null;
     if (discount != null){
       discountDTO = new DiscountDTO(discount.getId(),discount.getName(),discount.getDescription());
+      discountDTO.setAmount(discount.getAmount());
     }
     return discountDTO;
   }

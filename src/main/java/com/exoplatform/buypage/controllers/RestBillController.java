@@ -36,7 +36,7 @@ public class RestBillController {
     BigDecimal orderAmount = itemOrderWrapper.getTotal();
     DiscountDTO discountDTO = itemOrderWrapper.getDiscount();
     if (null != discountDTO){
-      BigDecimal discountAmount = gatewayService.getDiscountAmount(orderAmount,itemOrderWrapper.getPlan().getPlanCycle(),discountDTO.getId(),itemOrderWrapper.getPlan().getOptionUser());
+      BigDecimal discountAmount = gatewayService.getDiscountAmount(discountDTO,orderAmount,itemOrderWrapper.getPlan().getPlanCycle(),itemOrderWrapper.getPlan().getOptionUser());
       discountDTO.setAmount(discountAmount);
       mav.addObject("discount",discountDTO);
       orderAmount = orderAmount.subtract(discountAmount);

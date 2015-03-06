@@ -70,7 +70,7 @@
     .done(function(data) {
       var obj = jQuery.parseJSON(data);
        if(typeof data !== undefined){
-         _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description};
+         _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
          _loadBillFromClient();
        }
     })
