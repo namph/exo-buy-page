@@ -10,6 +10,7 @@
 
     <!-- Bootstrap -->
     <link href="assets/css/jquery-ui.css" rel="stylesheet">
+    <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -117,6 +118,7 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.custom.js"></script>
+<script src="assets/js/bootstrap-slider.min.js"></script>
 <script src="assets/js/buypage.js"></script>
 <script language="javascript">
     $(document).ready(function () {

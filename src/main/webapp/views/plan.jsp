@@ -54,7 +54,10 @@
 <!-- Tab panes -->
 <div class="tab-content">
     <c:forEach items="${planTypes}" var="entry">
-        <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}">
+
+        <div id="slider-number-users" type="text" data-slider-ticks="[1, 2, 3, 4]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="['25 users', '50 users', '100 users', '250 users']" data-slider-value="3" style=" display:block;"></div>
+        
+        <!-- <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}">
             <div class="boxSlider">
                 <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
                     <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: ${entry.value.numberUserPercent()}%;"></div>
@@ -73,6 +76,6 @@
                         </c:forEach>
                 </div>
             </div>
-        </div>
+        </div> -->
     </c:forEach>
 </div>

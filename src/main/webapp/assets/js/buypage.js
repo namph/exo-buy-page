@@ -19,6 +19,29 @@
         _planContainerDOM.html(data);
         _loadBillFromClient();
         _loadActiveAddons(null);
+
+        $("#slider-number-users").slider({
+          ticks: [1, 2, 3, 4],
+          ticks_labels: ['25 users', '50 users', '100 users', '250 users'],
+          ticks_snap_bounds: 1,
+          min: 0,
+          max: 4,
+          tooltip: 'always',
+          formatter: function(value) {
+            var numberUsers = 0;
+            if(value == "1") {
+              numberUsers = "25 users";
+            } else if(value == "2") {
+              numberUsers = "50 users";
+            } else if(value == "4") {
+              numberUsers = "250 users";
+            } else {
+              numberUsers = "100 users";                
+            }
+            return numberUsers;
+          }
+        });
+
       })
       .fail(function (jqxhr, textStatus, error) {
         var err = textStatus + ', ' + error;
