@@ -61,10 +61,10 @@
         <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
         <c:set var="active" value="${entry.value.getActive()}"></c:set>
         <c:set var="invisible" value="block"></c:set>
-        <c:if test="${active=='active'}">
+        <c:if test="${active==\"active\"}">
             <c:set var="invisible" value="none"></c:set>
         </c:if>
-        <div id="slider-number-users-${id}" type="text" data-slider-ticks="${tick}" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="${label}" data-slider-value="${user}" style=" display:${invisible};"></div>
+        <div class="slider-plan-type" id="slider-number-users-${id}" type="text" data-slider-ticks="${tick}" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="${label}" data-slider-value="${user}" style=" display:${invisible};"></div>
 
         <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}" style="display: none;">
             <div class="boxSlider">

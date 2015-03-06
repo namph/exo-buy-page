@@ -12,6 +12,7 @@
     <link href="assets/css/jquery-ui.css" rel="stylesheet">
     <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/creditcardjs-v0.10.12.min.css" rel="stylesheet">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,20 +92,76 @@
             <span class="title-icon"><i class="fa fa-shopping-cart"></i></span>
         </div>
         <div class="bp-content">
-            holder<input type="text" name="card_holder" id="cardHolder" value="Tuan Anh VU"  />
-            number <input type="text" name="card_number" id="cardNumber" value="4111 1111 1111 1111" />
-            <select  name="month" id="expireMonth">
-                <% for(int i=1;i<13;i++){%>
-                <option value="<%=i%>"><%=i%></option>
-                <% } %>
-            </select>
-            <select  name="yeah" id="expireYear">
-                <% for(int i=2015;i<2030;i++){%>
-                <option value="<%=i%>"><%=i%></option>
-                <% } %>
-            </select>
-            CVV <input type="text" name="card_cvv" id = "cardCVV" value="123"/>
-            <br/>
+
+            <!-- credit js -->
+
+            <div class="ccjs-card">
+                <label class="ccjs-number">
+                    Card Number
+                    <input name="card-number" id="cardNumber" class="ccjs-number" placeholder="•••• •••• •••• ••••" value="4111 1111 1111 1111">
+                </label>
+
+                <label class="ccjs-csc">
+                    Security Code
+                    <input name="csc" id = "cardCVV" class="ccjs-csc" placeholder="•••" value="123">
+                </label>
+
+                <button type="button" class="ccjs-csc-help">?</button>
+
+                <label class="ccjs-name">
+                    Name on Card
+                    <input name="name" id="cardHolder" class="ccjs-name" value="Tuan Anh VU">
+                </label>
+
+                <fieldset class="ccjs-expiration">
+                    <legend>Expiration</legend>
+                    <select name="month" id="expireMonth" class="ccjs-month">
+                        <option selected disabled>MM</option>
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+
+                    <select name="year" id="expireYear" class="ccjs-year">
+                        <option selected disabled>YY</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                    </select>
+                </fieldset>
+
+                <select name="card-type" class="ccjs-hidden-card-type">
+                    <option value="amex" class="ccjs-amex">American Express</option>
+                    <option value="discover" class="ccjs-discover">Discover</option>
+                    <option value="mastercard" class="ccjs-mastercard">MasterCard</option>
+                    <option value="visa" class="ccjs-visa">Visa</option>
+                    <option value="diners-club" class="ccjs-diners-club">Diners Club</option>
+                    <option value="jcb" class="ccjs-jcb">JCB</option>
+                    <!--<option value="laser" class="laser">Laser</option>-->
+                    <!--<option value="maestro" class="maestro">Maestro</option>-->
+                    <!--<option value="unionpay" class="unionpay">UnionPay</option>-->
+                    <!--<option value="visa-electron" class="visa-electron">Visa Electron</option>-->
+                    <!--<option value="dankort" class="dankort">Dankort</option>-->
+                </select>
+            </div>
+            <!-- credit js -->
             <button class="btn subscribe">Subscribe</button>
         </div>
     </div>
@@ -120,6 +177,7 @@
 <script src="assets/js/bootstrap.custom.js"></script>
 <script src="assets/js/bootstrap-slider.min.js"></script>
 <script src="assets/js/buypage.js"></script>
+<script src="assets/js/creditcardjs-v0.10.12.min.js"></script>
 <script language="javascript">
     $(document).ready(function () {
         BuyPage.init();

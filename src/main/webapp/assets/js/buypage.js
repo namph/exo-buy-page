@@ -20,6 +20,12 @@
         _loadBillFromClient();
         _loadActiveAddons(null);
 
+        $(".slider-plan-type").slider({
+          ticks_snap_bounds: 1,
+          tooltip: 'always'
+        });
+/*
+
         $("#slider-number-users").slider({
           ticks: [1, 2, 3, 4],
           ticks_labels: ['25 users', '50 users', '100 users', '250 users'],
@@ -41,6 +47,7 @@
             return numberUsers;
           }
         });
+*/
 
       })
       .fail(function (jqxhr, textStatus, error) {
