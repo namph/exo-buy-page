@@ -7,8 +7,6 @@ import com.exoplatform.buypage.model.DTO.PlanTypeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -65,6 +63,7 @@ public class RESTPlanController {
       }
       if (planTypeDTOMap.containsKey(prefixPlanType)  ){
         PlanTypeDTO currentPlanTypeDTO = planTypeDTOMap.get(prefixPlanType);
+        currentPlanTypeDTO.getUsers().add(planDTO.getOptionUser());
         if (currentPlanTypeDTO.getMaxNbUser() < planDTO.getOptionUser()){
           currentPlanTypeDTO.setMaxNbUser(planDTO.getOptionUser());
         }

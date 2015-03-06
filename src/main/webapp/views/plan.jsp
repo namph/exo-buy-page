@@ -53,11 +53,20 @@
 </div>
 <!-- Tab panes -->
 <div class="tab-content">
-    <c:forEach items="${planTypes}" var="entry">
 
-        <div id="slider-number-users" type="text" data-slider-ticks="[1, 2, 3, 4]" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="['25 users', '50 users', '100 users', '250 users']" data-slider-value="3" style=" display:block;"></div>
-        
-        <!-- <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}">
+    <c:forEach items="${planTypes}" var="entry">
+        <c:set var="id" value="${entry.value.getId()}"></c:set>
+        <c:set var="tick" value="${entry.value.generateUserSliderTick()}"></c:set>
+        <c:set var="label" value="${entry.value.generateUserSliderLabel()}"></c:set>
+        <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
+        <c:set var="active" value="${entry.value.getActive()}"></c:set>
+        <c:set var="invisible" value="block"></c:set>
+        <c:if test="${active=='active'}">
+            <c:set var="invisible" value="none"></c:set>
+        </c:if>
+        <div id="slider-number-users-${id}" type="text" data-slider-ticks="${tick}" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="${label}" data-slider-value="${user}" style=" display:${invisible};"></div>
+
+        <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}" style="display: none;">
             <div class="boxSlider">
                 <div id="slider" class="ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" aria-disabled="false">
                     <div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: ${entry.value.numberUserPercent()}%;"></div>
@@ -76,6 +85,6 @@
                         </c:forEach>
                 </div>
             </div>
-        </div> -->
+        </div>
     </c:forEach>
 </div>
