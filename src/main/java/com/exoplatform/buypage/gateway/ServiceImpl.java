@@ -18,6 +18,7 @@ package com.exoplatform.buypage.gateway;
 
 import com.braintreegateway.*;
 import com.braintreegateway.exceptions.UnexpectedException;
+import com.exoplatform.buypage.model.DTO.DiscountDTO;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import com.exoplatform.buypage.utils.CommonUtils;
 import com.sun.org.apache.xerces.internal.impl.dv.xs.DecimalDV;
@@ -164,7 +165,16 @@ public class ServiceImpl implements IService {
     if (StringUtils.isNotEmpty(couponCode)) {
       Plan plan = getPlan(subsCustomer.getPlanId());
       if (null != plan){
+        AddOn addOn = null;
+        BigDecimal totalAddonsPrice = new BigDecimal(0);
+        for (String addonId:addonIds){
+          addOn = getAddon(addonId);
+          if (null != addOn){
+            totalAddonsPrice = totalAddonsPrice.add(addOn.getAmount());
+          }
+        }
         BigDecimal planPrice =  getPlanPrice(plan);
+        planPrice = planPrice.add(totalAddonsPrice);
         discountUpdate = applyCoupon(plan.getBillingFrequency(),subsCustomer.getUserNumber(), planPrice, couponCode, discountUpdate);
       }
 
@@ -243,6 +253,17 @@ public class ServiceImpl implements IService {
 
   @Override
   public AddOn getAddon(String id) {
+    if (StringUtils.isEmpty(id)) return null;
+    try {
+      Collection<AddOn> addons = getActiveAddons();
+      for (AddOn addon : addons) {
+        if (addon.getId().equals(id)) {
+          return addon;
+        }
+      }
+    } catch (Exception e) {
+      log.error("Failed to connect to payment gateway", e.getMessage());
+    }
     return null;
   }
 
@@ -298,18 +319,17 @@ public class ServiceImpl implements IService {
   }
 
   @Override
-  public BigDecimal getDiscountAmount(BigDecimal planPrice,int planCycle, String discountId,int userNumber){
+  public BigDecimal getDiscountAmount(DiscountDTO discountDTO, BigDecimal planPrice,int planCycle, int userNumber){
     BigDecimal discountPrice = new BigDecimal(0);
-    Discount discount = getDiscount(discountId);
-    String name = discount.getName();
+    String name = discountDTO.getName();
     String[] info = name.split(PREFIX_DISCOUNT_TYPE);
     if (info.length >= 2 && info[1].indexOf("PERCENT") != -1) {
       double percentage = (double) Integer.parseInt(info[2]) / 100;
       discountPrice = planPrice.multiply(new BigDecimal(Double.toString(percentage)));
     } else if (info.length >= 2 && info[1].indexOf("MONTH") != -1) {
-      discountPrice = discount.getAmount().multiply(new BigDecimal(userNumber));
+      discountPrice = discountDTO.getAmount().multiply(new BigDecimal(userNumber));
     } else if (info.length >= 3 && info[1].indexOf("USER") != -1) {
-      discountPrice = discount.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
+      discountPrice = discountDTO.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
     }
     return discountPrice;
   }
