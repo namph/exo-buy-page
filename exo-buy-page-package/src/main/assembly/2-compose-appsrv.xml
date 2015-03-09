@@ -7,11 +7,12 @@
   <includeBaseDirectory>true</includeBaseDirectory>
   <baseDirectory>${project.build.finalName}</baseDirectory>
   <fileSets>
+    <!-- Unix shell scripts with exec rights -->
     <fileSet>
       <outputDirectory>/</outputDirectory>
       <directory>${project.build.directory}/${project.build.finalName}/dependencies/apache-tomcat/apache-tomcat-${org.apache.tomcat.version}/</directory>
       <directoryMode>0755</directoryMode>
-      <fileMode>0644</fileMode>
+      <fileMode>0755</fileMode>
       <filtered>false</filtered>
       <lineEnding>keep</lineEnding>
     </fileSet>
