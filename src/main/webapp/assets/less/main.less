@@ -44,9 +44,6 @@ h2.TitleForm {
 	&:extend(.dropdown-menu);
 	padding: @grid-gutter-width/2;
 	color: @text-color;
-	.checkbox, .radio {
-		white-space: nowrap;
-	}
 	&:before, &:after {
 		position: absolute;
 		content: "";
@@ -134,6 +131,67 @@ h2.TitleForm {
 .exo-icon-trash {
 	background-position: -18px 0;
 }
+// Restyle Sider
+.slider {
+	margin-bottom: 30px;
+	margin-top: 50px;
+}
+.slider.slider-horizontal {
+	width: 100%;
+}
+.slider-selection.tick-slider-selection {
+	background: @brand-primary;
+}
+
+.slider-tick{
+	.opacity(1);
+	.box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.3) inset);
+}
+.slider-tick {
+	#gradient > .vertical(#fff, #f2f2f2);
+}
+.slider-tick.in-selection {
+	#gradient > .vertical(lighten(@brand-primary, 5%), @brand-primary);
+}
+.slider-handle {
+	.box-shadow(0 1px 2px 0 rgba(0, 0, 0, 0.3) inset);
+	#gradient > .vertical(@brand-primary, darken(@brand-primary, 5%));
+}
+.slider-tick-label-container {
+	margin-top: -50px;
+}
+.buypage-plans {
+	.tooltip.in {
+		.opacity(1);
+		&.top {
+			.tooltip-arrow {
+				border-top-color: #bebebe;
+			}
+		}
+	}
+	.tooltip-arrow {
+		&:before {
+		    border-left: 5px solid transparent;
+		    border-right: 5px solid transparent;
+		    border-top: 5px solid #f2f2f2;
+		    content: "";
+		    display: inline-block;
+		    left: 50%;
+		    margin-left: -5px;
+		    position: absolute;
+		    top: -6px;
+		}
+	}
+	.tooltip-inner {
+		#gradient > .vertical(#fafafa, #f1f1f1);
+		.box-shadow(0 0 0 1px #bebebe);
+		color: @text-color;
+		font-weight: bold;
+		font-size: @font-size-base;
+		.opacity(1);
+		.border-radius(3px);
+	}
+}
 
 // LAYOUT: LAYOUT STYLE
 // -------------------------------------
@@ -203,7 +261,8 @@ h2.TitleForm {
         bottom: 0;
         left: 0;
     }
-    .contentBox{
+    .dropdown-box {
+    	min-width: 360px;
     }
 }
 .uiCloudCardSelect:hover,
@@ -416,6 +475,18 @@ h2.TitleForm {
 	&.affix {
 		top: 20px;
 		min-width: 307px;
+	}
+}
+
+.list-card-supported {
+	padding: 5px 0;
+	padding-left: 0;
+	> li {
+		list-style: none;
+		float: left;
+		+ li {
+			margin-left: 37.3px;
+		}
 	}
 }
 

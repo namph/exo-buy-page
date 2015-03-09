@@ -94,72 +94,100 @@
         <div class="bp-content">
 
             <!-- credit js -->
-
             <div class="ccjs-card">
-                <label class="ccjs-number">
-                    Card Number
-                    <input name="card-number" id="cardNumber" class="ccjs-number" placeholder="•••• •••• •••• ••••" value="4111 1111 1111 1111">
-                </label>
+                <div class="row">
+                    <div class="ccjs-number form-group col-sm-8">
+                        <input name="card-number" class="ccjs-number form-control" placeholder="Card Number">
+                    </div>
+                    <div class="ccjs-csc form-group col-sm-4">
+                        <input name="csc" class="ccjs-csc form-control" placeholder="Security Code">
+                        <button type="button" class="ccjs-csc-help"><i class="fa fa-question-circle"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-7">
+                        <div class="form-group ccjs-name">
+                            <input name="name" class="ccjs-name form-control" placeholder="Name on Card">
+                        </div>
+                    </div>
+                    <div class="col-sm-5">
+                        <fieldset class="ccjs-expiration row">
+                            <div class="col-md-4"><p class="form-control-static">Expiration</p></div>
+                            <div class="col-sm-4 form-group">
+                                <select name="month" class="ccjs-month form-control">
+                                    <option selected disabled>MM</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="03">03</option>
+                                    <option value="04">04</option>
+                                    <option value="05">05</option>
+                                    <option value="06">06</option>
+                                    <option value="07">07</option>
+                                    <option value="08">08</option>
+                                    <option value="09">09</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <select name="year" class="ccjs-year form-control">
+                                    <option selected disabled>YY</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                    <option value="24">24</option>
+                                </select>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
 
-                <label class="ccjs-csc">
-                    Security Code
-                    <input name="csc" id = "cardCVV" class="ccjs-csc" placeholder="•••" value="123">
-                </label>
+                <div class="form-group">
+                    <ul class="list-card-supported clearfix">
+                        <li class="mastercard"><img src="assets/img/logoMasterCard.png" alt="logoMasterCard"></li>
+                        <li class="visa"><img src="assets/img/logoVisa.png" alt="logoVisa"></li>
+                        <li class="discover"><img src="assets/img/logoDiscover.png" alt="logoDiscover"></li>
+                        <li class="american"><img src="assets/img/LogoAmericanExpress.png" alt="LogoAmericanExpress"></li>
+                        <li class="dinersclub"><img src="assets/img/logoDinersClub.png" alt="logoDinersClub"></li>
+                        <li class="jcb"><img src="assets/img/logoJCB.png" alt="logoJCB"></li>
+                    </ul>
+                </div>
 
-                <button type="button" class="ccjs-csc-help">?</button>
-
-                <label class="ccjs-name">
-                    Name on Card
-                    <input name="name" id="cardHolder" class="ccjs-name" value="Tuan Anh VU">
-                </label>
-
-                <fieldset class="ccjs-expiration">
-                    <legend>Expiration</legend>
-                    <select name="month" id="expireMonth" class="ccjs-month">
-                        <option selected disabled>MM</option>
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
+                <div class="text-right hide">
+                    <select name="card-type" class="ccjs-hidden-card-type form-control">
+                        <option value="amex" class="ccjs-amex">American Express</option>
+                        <option value="discover" class="ccjs-discover">Discover</option>
+                        <option value="mastercard" class="ccjs-mastercard">MasterCard</option>
+                        <option value="visa" class="ccjs-visa">Visa</option>
+                        <option value="diners-club" class="ccjs-diners-club">Diners Club</option>
+                        <option value="jcb" class="ccjs-jcb">JCB</option>
+                        <!--<option value="laser" class="laser">Laser</option>-->
+                        <!--<option value="maestro" class="maestro">Maestro</option>-->
+                        <!--<option value="unionpay" class="unionpay">UnionPay</option>-->
+                        <!--<option value="visa-electron" class="visa-electron">Visa Electron</option>-->
+                        <!--<option value="dankort" class="dankort">Dankort</option>-->
                     </select>
+                </div>
 
-                    <select name="year" id="expireYear" class="ccjs-year">
-                        <option selected disabled>YY</option>
-                        <option value="14">14</option>
-                        <option value="15">15</option>
-                        <option value="16">16</option>
-                        <option value="17">17</option>
-                        <option value="18">18</option>
-                        <option value="19">19</option>
-                        <option value="20">20</option>
-                        <option value="21">21</option>
-                        <option value="22">22</option>
-                        <option value="23">23</option>
-                        <option value="24">24</option>
-                    </select>
-                </fieldset>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> I have read and agreed to the <a href="#">terms and conditions</a>.
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <button class="btn btn-primary btn-lg">Confirm purchase</button>
 
-                <select name="card-type" class="ccjs-hidden-card-type">
-                    <option value="amex" class="ccjs-amex">American Express</option>
-                    <option value="discover" class="ccjs-discover">Discover</option>
-                    <option value="mastercard" class="ccjs-mastercard">MasterCard</option>
-                    <option value="visa" class="ccjs-visa">Visa</option>
-                    <option value="diners-club" class="ccjs-diners-club">Diners Club</option>
-                    <option value="jcb" class="ccjs-jcb">JCB</option>
-                    <!--<option value="laser" class="laser">Laser</option>-->
-                    <!--<option value="maestro" class="maestro">Maestro</option>-->
-                    <!--<option value="unionpay" class="unionpay">UnionPay</option>-->
-                    <!--<option value="visa-electron" class="visa-electron">Visa Electron</option>-->
-                    <!--<option value="dankort" class="dankort">Dankort</option>-->
-                </select>
             </div>
             <!-- credit js -->
             <button class="btn subscribe">Subscribe</button>
