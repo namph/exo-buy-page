@@ -27,7 +27,7 @@
   </dependencies>
 
   <build>
-    <finalName>buy-page-${project.version}</finalName>
+    <finalName>exo-buy-page</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
