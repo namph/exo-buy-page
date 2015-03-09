@@ -2511,7 +2511,8 @@ output {
   line-height: 1.42857143;
   color: #555555;
 }
-.form-control {
+.form-control,
+.ccjs-number-formatted {
   display: block;
   width: 100%;
   height: 34px;
@@ -2529,30 +2530,38 @@ output {
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
-.form-control:focus {
+.form-control:focus,
+.ccjs-number-formatted:focus {
   border-color: #66afe9;
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
-.form-control::-moz-placeholder {
+.form-control::-moz-placeholder,
+.ccjs-number-formatted::-moz-placeholder {
   color: #999999;
   opacity: 1;
 }
-.form-control:-ms-input-placeholder {
+.form-control:-ms-input-placeholder,
+.ccjs-number-formatted:-ms-input-placeholder {
   color: #999999;
 }
-.form-control::-webkit-input-placeholder {
+.form-control::-webkit-input-placeholder,
+.ccjs-number-formatted::-webkit-input-placeholder {
   color: #999999;
 }
 .form-control[disabled],
 .form-control[readonly],
-fieldset[disabled] .form-control {
+fieldset[disabled] .form-control,
+.ccjs-number-formatted[disabled],
+.ccjs-number-formatted[readonly],
+fieldset[disabled] .ccjs-number-formatted {
   cursor: not-allowed;
   background-color: #eeeeee;
   opacity: 1;
 }
-textarea.form-control {
+textarea.form-control,
+textarea.ccjs-number-formatted {
   height: auto;
 }
 input[type="search"] {
@@ -2675,19 +2684,23 @@ textarea.input-sm,
 select[multiple].input-sm {
   height: auto;
 }
-.form-group-sm .form-control {
+.form-group-sm .form-control,
+.form-group-sm .ccjs-number-formatted {
   height: 30px;
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
 }
-select.form-group-sm .form-control {
+select.form-group-sm .form-control,
+select.form-group-sm .ccjs-number-formatted {
   height: 30px;
   line-height: 30px;
 }
 textarea.form-group-sm .form-control,
-select[multiple].form-group-sm .form-control {
+select[multiple].form-group-sm .form-control,
+textarea.form-group-sm .ccjs-number-formatted,
+select[multiple].form-group-sm .ccjs-number-formatted {
   height: auto;
 }
 .form-group-sm .form-control-static {
@@ -2711,19 +2724,23 @@ textarea.input-lg,
 select[multiple].input-lg {
   height: auto;
 }
-.form-group-lg .form-control {
+.form-group-lg .form-control,
+.form-group-lg .ccjs-number-formatted {
   height: 46px;
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.3333333;
   border-radius: 6px;
 }
-select.form-group-lg .form-control {
+select.form-group-lg .form-control,
+select.form-group-lg .ccjs-number-formatted {
   height: 46px;
   line-height: 46px;
 }
 textarea.form-group-lg .form-control,
-select[multiple].form-group-lg .form-control {
+select[multiple].form-group-lg .form-control,
+textarea.form-group-lg .ccjs-number-formatted,
+select[multiple].form-group-lg .ccjs-number-formatted {
   height: auto;
 }
 .form-group-lg .form-control-static {
@@ -2735,7 +2752,8 @@ select[multiple].form-group-lg .form-control {
 .has-feedback {
   position: relative;
 }
-.has-feedback .form-control {
+.has-feedback .form-control,
+.has-feedback .ccjs-number-formatted {
   padding-right: 42.5px;
 }
 .form-control-feedback {
@@ -2772,12 +2790,14 @@ select[multiple].form-group-lg .form-control {
 .has-success.checkbox-inline label {
   color: #3c763d;
 }
-.has-success .form-control {
+.has-success .form-control,
+.has-success .ccjs-number-formatted {
   border-color: #3c763d;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-.has-success .form-control:focus {
+.has-success .form-control:focus,
+.has-success .ccjs-number-formatted:focus {
   border-color: #2b542c;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #67b168;
@@ -2802,12 +2822,14 @@ select[multiple].form-group-lg .form-control {
 .has-warning.checkbox-inline label {
   color: #8a6d3b;
 }
-.has-warning .form-control {
+.has-warning .form-control,
+.has-warning .ccjs-number-formatted {
   border-color: #8a6d3b;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-.has-warning .form-control:focus {
+.has-warning .form-control:focus,
+.has-warning .ccjs-number-formatted:focus {
   border-color: #66512c;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #c0a16b;
@@ -2832,12 +2854,14 @@ select[multiple].form-group-lg .form-control {
 .has-error.checkbox-inline label {
   color: #a94442;
 }
-.has-error .form-control {
+.has-error .form-control,
+.has-error .ccjs-number-formatted {
   border-color: #a94442;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 }
-.has-error .form-control:focus {
+.has-error .form-control:focus,
+.has-error .ccjs-number-formatted:focus {
   border-color: #843534;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
@@ -2868,7 +2892,8 @@ select[multiple].form-group-lg .form-control {
     margin-bottom: 0;
     vertical-align: middle;
   }
-  .form-inline .form-control {
+  .form-inline .form-control,
+  .form-inline .ccjs-number-formatted {
     display: inline-block;
     width: auto;
     vertical-align: middle;
@@ -2882,10 +2907,12 @@ select[multiple].form-group-lg .form-control {
   }
   .form-inline .input-group .input-group-addon,
   .form-inline .input-group .input-group-btn,
-  .form-inline .input-group .form-control {
+  .form-inline .input-group .form-control,
+  .form-inline .input-group .ccjs-number-formatted {
     width: auto;
   }
-  .form-inline .input-group > .form-control {
+  .form-inline .input-group > .form-control,
+  .form-inline .input-group > .ccjs-number-formatted {
     width: 100%;
   }
   .form-inline .control-label {
@@ -3691,7 +3718,8 @@ tbody.collapse.in {
   padding-left: 0;
   padding-right: 0;
 }
-.input-group .form-control {
+.input-group .form-control,
+.input-group .ccjs-number-formatted {
   position: relative;
   z-index: 2;
   float: left;
@@ -3700,7 +3728,8 @@ tbody.collapse.in {
 }
 .input-group-lg > .form-control,
 .input-group-lg > .input-group-addon,
-.input-group-lg > .input-group-btn > .btn {
+.input-group-lg > .input-group-btn > .btn,
+.input-group-lg > .ccjs-number-formatted {
   height: 46px;
   padding: 10px 16px;
   font-size: 18px;
@@ -3709,7 +3738,8 @@ tbody.collapse.in {
 }
 select.input-group-lg > .form-control,
 select.input-group-lg > .input-group-addon,
-select.input-group-lg > .input-group-btn > .btn {
+select.input-group-lg > .input-group-btn > .btn,
+select.input-group-lg > .ccjs-number-formatted {
   height: 46px;
   line-height: 46px;
 }
@@ -3718,12 +3748,15 @@ textarea.input-group-lg > .input-group-addon,
 textarea.input-group-lg > .input-group-btn > .btn,
 select[multiple].input-group-lg > .form-control,
 select[multiple].input-group-lg > .input-group-addon,
-select[multiple].input-group-lg > .input-group-btn > .btn {
+select[multiple].input-group-lg > .input-group-btn > .btn,
+textarea.input-group-lg > .ccjs-number-formatted,
+select[multiple].input-group-lg > .ccjs-number-formatted {
   height: auto;
 }
 .input-group-sm > .form-control,
 .input-group-sm > .input-group-addon,
-.input-group-sm > .input-group-btn > .btn {
+.input-group-sm > .input-group-btn > .btn,
+.input-group-sm > .ccjs-number-formatted {
   height: 30px;
   padding: 5px 10px;
   font-size: 12px;
@@ -3732,7 +3765,8 @@ select[multiple].input-group-lg > .input-group-btn > .btn {
 }
 select.input-group-sm > .form-control,
 select.input-group-sm > .input-group-addon,
-select.input-group-sm > .input-group-btn > .btn {
+select.input-group-sm > .input-group-btn > .btn,
+select.input-group-sm > .ccjs-number-formatted {
   height: 30px;
   line-height: 30px;
 }
@@ -3741,17 +3775,21 @@ textarea.input-group-sm > .input-group-addon,
 textarea.input-group-sm > .input-group-btn > .btn,
 select[multiple].input-group-sm > .form-control,
 select[multiple].input-group-sm > .input-group-addon,
-select[multiple].input-group-sm > .input-group-btn > .btn {
+select[multiple].input-group-sm > .input-group-btn > .btn,
+textarea.input-group-sm > .ccjs-number-formatted,
+select[multiple].input-group-sm > .ccjs-number-formatted {
   height: auto;
 }
 .input-group-addon,
 .input-group-btn,
-.input-group .form-control {
+.input-group .form-control,
+.input-group .ccjs-number-formatted {
   display: table-cell;
 }
 .input-group-addon:not(:first-child):not(:last-child),
 .input-group-btn:not(:first-child):not(:last-child),
-.input-group .form-control:not(:first-child):not(:last-child) {
+.input-group .form-control:not(:first-child):not(:last-child),
+.input-group .ccjs-number-formatted:not(:first-child):not(:last-child) {
   border-radius: 0;
 }
 .input-group-addon,
@@ -3791,7 +3829,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-btn:first-child > .btn-group > .btn,
 .input-group-btn:first-child > .dropdown-toggle,
 .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
-.input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+.input-group-btn:last-child > .btn-group:not(:last-child) > .btn,
+.input-group .ccjs-number-formatted:first-child {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
@@ -3804,7 +3843,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .input-group-btn:last-child > .btn-group > .btn,
 .input-group-btn:last-child > .dropdown-toggle,
 .input-group-btn:first-child > .btn:not(:first-child),
-.input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+.input-group-btn:first-child > .btn-group:not(:first-child) > .btn,
+.input-group .ccjs-number-formatted:last-child {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
@@ -4253,7 +4293,8 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-bottom: 0;
     vertical-align: middle;
   }
-  .navbar-form .form-control {
+  .navbar-form .form-control,
+  .navbar-form .ccjs-number-formatted {
     display: inline-block;
     width: auto;
     vertical-align: middle;
@@ -4267,10 +4308,12 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
   .navbar-form .input-group .input-group-addon,
   .navbar-form .input-group .input-group-btn,
-  .navbar-form .input-group .form-control {
+  .navbar-form .input-group .form-control,
+  .navbar-form .input-group .ccjs-number-formatted {
     width: auto;
   }
-  .navbar-form .input-group > .form-control {
+  .navbar-form .input-group > .form-control,
+  .navbar-form .input-group > .ccjs-number-formatted {
     width: 100%;
   }
   .navbar-form .control-label {
@@ -8343,6 +8386,536 @@ button.close {
 .fa-medium:before {
   content: "\f23a";
 }
+.ccjs-card input::-webkit-input-placeholder,
+.ccjs-card-style input::-webkit-input-placeholder {
+  letter-spacing: .15em;
+  color: #999;
+}
+.ccjs-card input:-moz-placeholder,
+.ccjs-card-style input:-moz-placeholder {
+  letter-spacing: .15em;
+  color: #999;
+  line-height: 1.75;
+}
+.ccjs-card input::-moz-placeholder,
+.ccjs-card-style input::-moz-placeholder {
+  letter-spacing: .15em;
+  color: #999;
+  line-height: 1.75;
+}
+.ccjs-card fieldset,
+.ccjs-card-style fieldset {
+  border: 0;
+}
+.ccjs-card input:focus,
+.ccjs-card-style input:focus,
+.ccjs-card select:focus,
+.ccjs-card-style select:focus,
+.ccjs-card button:focus,
+.ccjs-card-style button:focus {
+  color: #333333;
+}
+.ccjs-card input::-ms-clear,
+.ccjs-card-style input::-ms-clear {
+  display: none;
+}
+.ccjs-card select,
+.ccjs-card-style select {
+  color: #767f86;
+  height: 1.5em\9;
+  padding: .25em 0\9;
+}
+.ccjs-card input::-webkit-autofill,
+.ccjs-card-style input::-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #fff inset;
+  box-shadow: 0 0 0 1000px #fff inset;
+}
+.ccjs-card .ccjs-csc-diagram,
+.ccjs-card-style .ccjs-csc-diagram,
+.ccjs-card .ccjs-csc-diagram-amex,
+.ccjs-card-style .ccjs-csc-diagram-amex {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  visibility: hidden;
+  -webkit-transition: opacity .3s 0s,visibility 0s .3s;
+  -moz-transition: opacity .3s 0s,visibility 0s .3s;
+  -o-transition: opacity .3s 0s,visibility 0s .3s;
+  transition: opacity .3s 0s,visibility 0s .3s;
+  z-index: 1;
+  font-size: .6875em;
+  position: absolute;
+  left: 100%;
+  margin-left: 1em;
+  -webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+  background-color: #fff;
+  color: #767f86;
+  z-index: 1000000;
+  width: 300px;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-card-code,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-card-code,
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-card-code,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-card-code {
+  color: #78d216;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-explanation,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-explanation,
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-explanation,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-explanation {
+  padding: .5em;
+  font-size: 1.2em;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-close,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-close,
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-close,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-close {
+  color: rgba(0, 0, 0, 0.4);
+  top: 0;
+  left: 100%;
+  margin-left: -0.45em;
+  margin-top: -0.45em;
+  background: #fff;
+  -webkit-border-radius: .2em;
+  -moz-border-radius: .2em;
+  border-radius: .2em;
+  border: 0;
+  position: absolute;
+  -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  padding: 0 6px 1px;
+  font-size: 18px;
+  font-weight: bold;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-close:hover,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-close:hover,
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-close:hover,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-close:hover {
+  cursor: pointer;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-close:active,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-close:active,
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-close:active,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-close:active {
+  background: #e6e6e6;
+}
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-close,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-close {
+  display: none;
+}
+.ccjs-card .ccjs-csc-diagram,
+.ccjs-card-style .ccjs-csc-diagram {
+  bottom: 52%;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-barcode,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-barcode {
+  height: 2em;
+  width: 100%;
+  background-color: #5e656b;
+  margin-top: 2em;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-signature,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-signature {
+  background-color: #fafafa;
+  display: inline-block;
+  padding: .5em;
+  margin-top: 1em;
+  margin-left: 1em;
+}
+.ccjs-card .ccjs-csc-diagram .ccjs-card-code,
+.ccjs-card-style .ccjs-csc-diagram .ccjs-card-code {
+  padding: .5em 1em;
+  display: inline-block;
+  background-color: #fff;
+}
+.ccjs-card .ccjs-csc-diagram-amex,
+.ccjs-card-style .ccjs-csc-diagram-amex {
+  top: 52%;
+}
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-card-number,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-card-number {
+  margin-top: 3.85em;
+  text-align: center;
+  width: 100%;
+  font-size: 1.5em;
+  letter-spacing: .15em;
+}
+.ccjs-card .ccjs-csc-diagram-amex .ccjs-card-code,
+.ccjs-card-style .ccjs-csc-diagram-amex .ccjs-card-code {
+  position: absolute;
+  top: 0;
+  margin-top: 4.8125em;
+  margin-right: 3em;
+  right: 0;
+}
+.ccjs-card .ccjs-csc-diagram-wrapper.ccjs-active .ccjs-csc-diagram,
+.ccjs-card-style .ccjs-csc-diagram-wrapper.ccjs-active .ccjs-csc-diagram,
+.ccjs-card .ccjs-csc-diagram-wrapper.ccjs-active .ccjs-csc-diagram-amex,
+.ccjs-card-style .ccjs-csc-diagram-wrapper.ccjs-active .ccjs-csc-diagram-amex {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  visibility: visible;
+  -webkit-transition: opacity .3s 0s,visibility 0s 0s;
+  -moz-transition: opacity .3s 0s,visibility 0s 0s;
+  -o-transition: opacity .3s 0s,visibility 0s 0s;
+  transition: opacity .3s 0s,visibility 0s 0s;
+}
+.ccjs-card .ccjs-csc {
+  position: relative;
+}
+.ccjs-card button.ccjs-csc-help,
+.ccjs-card-style button.ccjs-csc-help,
+.ccjs-card label.ccjs-csc-help,
+.ccjs-card-style label.ccjs-csc-help {
+  background: none;
+  border: none;
+  position: absolute;
+  right: 15px;
+  color: #999999;
+  font-size: 18px;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  padding: 4px 6px;
+}
+.ccjs-card button.ccjs-csc-help:focus,
+.ccjs-card-style button.ccjs-csc-help:focus,
+.ccjs-card label.ccjs-csc-help:focus,
+.ccjs-card-style label.ccjs-csc-help:focus {
+  z-index: 4;
+}
+.ccjs-card button.ccjs-csc-help:active:after,
+.ccjs-card-style button.ccjs-csc-help:active:after,
+.ccjs-card label.ccjs-csc-help:active:after,
+.ccjs-card-style label.ccjs-csc-help:active:after,
+.ccjs-card button.ccjs-csc-help.ccjs-active:after,
+.ccjs-card-style button.ccjs-csc-help.ccjs-active:after,
+.ccjs-card label.ccjs-csc-help.ccjs-active:after,
+.ccjs-card-style label.ccjs-csc-help.ccjs-active:after {
+  display: block;
+}
+.ccjs-card button.ccjs-csc-help:hover,
+.ccjs-card-style button.ccjs-csc-help:hover,
+.ccjs-card label.ccjs-csc-help:hover,
+.ccjs-card-style label.ccjs-csc-help:hover {
+  cursor: pointer;
+}
+.ccjs-card.ccjs-card-type-set .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-card-type-set .ccjs-csc-diagram {
+  display: block;
+  top: 3.18181818em;
+}
+.ccjs-card.ccjs-card-type-set .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-card-type-set .ccjs-csc-diagram-amex {
+  display: none;
+}
+.ccjs-card.ccjs-amex .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-amex .ccjs-csc-diagram {
+  display: none;
+}
+.ccjs-card.ccjs-amex .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-amex .ccjs-csc-diagram-amex {
+  display: block;
+  top: 3.18181818em;
+}
+.ccjs-card.ccjs-amex .ccjs-csc-diagram-amex .ccjs-close,
+.ccjs-card-style.ccjs-amex .ccjs-csc-diagram-amex .ccjs-close {
+  display: block;
+}
+@media (max-width: 57.2em) {
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram,
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram-amex,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram-amex {
+    margin-left: 0;
+    right: 0;
+    left: auto;
+  }
+  .ccjs-csc-diagram-wrapper {
+    position: relative;
+  }
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram-amex,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram-amex {
+    top: 100%;
+    margin-top: 1em;
+  }
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled) .ccjs-csc-diagram {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 1em;
+  }
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled).ccjs-card-type-set .ccjs-csc-diagram,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled).ccjs-card-type-set .ccjs-csc-diagram,
+  .ccjs-card .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled).ccjs-card-type-set .ccjs-csc-diagram-amex,
+  .ccjs-card-style .ccjs-csc-diagram-wrapper:not(.ccjs-media-query-disabled).ccjs-card-type-set .ccjs-csc-diagram-amex {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 1em;
+  }
+}
+.ccjs-card.ccjs-card-type-error .ccjs-type-read-only,
+.ccjs-card-style.ccjs-card-type-error .ccjs-type-read-only {
+  color: #f54828;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-visa .ccjs-type-read-only,
+.ccjs-card-style.ccjs-visa .ccjs-type-read-only,
+.ccjs-card.ccjs-visa-electron .ccjs-type-read-only,
+.ccjs-card-style.ccjs-visa-electron .ccjs-type-read-only {
+  color: #1261cd;
+  background-color: rgba(18, 97, 205, 0.05);
+  border: 1px solid rgba(18, 97, 205, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-laser .ccjs-type-read-only,
+.ccjs-card-style.ccjs-laser .ccjs-type-read-only {
+  color: #b266ff;
+  background-color: rgba(178, 102, 255, 0.05);
+  border: 1px solid rgba(178, 102, 255, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-maestro .ccjs-type-read-only,
+.ccjs-card-style.ccjs-maestro .ccjs-type-read-only {
+  color: #0066cb;
+  background-color: rgba(0, 102, 203, 0.05);
+  border: 1px solid rgba(0, 102, 203, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-unionpay .ccjs-type-read-only,
+.ccjs-card-style.ccjs-unionpay .ccjs-type-read-only {
+  color: #f03;
+  background-color: rgba(255, 0, 51, 0.05);
+  border: 1px solid rgba(255, 0, 51, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-jcb .ccjs-type-read-only,
+.ccjs-card-style.ccjs-jcb .ccjs-type-read-only {
+  color: #2b9738;
+  background-color: rgba(42, 151, 56, 0.05);
+  border: 1px solid rgba(42, 151, 56, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-diners-club .ccjs-type-read-only,
+.ccjs-card-style.ccjs-diners-club .ccjs-type-read-only {
+  color: #0079be;
+  background-color: rgba(0, 121, 190, 0.05);
+  border: 1px solid rgba(0, 121, 190, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-amex .ccjs-type-read-only,
+.ccjs-card-style.ccjs-amex .ccjs-type-read-only {
+  color: #2e77bc;
+  background-color: rgba(46, 119, 188, 0.05);
+  border: 1px solid rgba(46, 119, 188, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-discover .ccjs-type-read-only,
+.ccjs-card-style.ccjs-discover .ccjs-type-read-only {
+  color: #f79b00;
+  background-color: rgba(247, 155, 0, 0.05);
+  border: 1px solid rgba(247, 155, 0, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-mastercard .ccjs-type-read-only,
+.ccjs-card-style.ccjs-mastercard .ccjs-type-read-only {
+  color: #f67214;
+  background-color: rgba(246, 114, 20, 0.05);
+  border: 1px solid rgba(246, 114, 20, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card.ccjs-dankort .ccjs-type-read-only,
+.ccjs-card-style.ccjs-dankort .ccjs-type-read-only {
+  color: #ed1c24;
+  background-color: rgba(237, 28, 36, 0.05);
+  border: 1px solid rgba(237, 28, 36, 0.15);
+  border-bottom: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.ccjs-card .ccjs-type-read-only,
+.ccjs-card-style .ccjs-type-read-only {
+  opacity: 0;
+  filter: alpha(opacity=0);
+  -webkit-transition: all .5s;
+  -moz-transition: all .5s;
+  -o-transition: all .5s;
+  transition: all .5s;
+  content: ' ';
+  position: absolute;
+  bottom: 0;
+  right: 1.36363636em;
+  color: #fff;
+  background: 0;
+  font-size: 1.1em;
+  padding: .18181818em .45454545em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-bottom: 0;
+  z-index: 1;
+  width: auto!important;
+  margin: 0;
+}
+.ccjs-card .ccjs-hidden-card-type,
+.ccjs-card-style .ccjs-hidden-card-type {
+  position: absolute;
+  bottom: 0;
+  right: 1.5em;
+  font-size: 1em;
+  display: none!important;
+}
+.ccjs-card.ccjs-center-csc-diagram .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-center-csc-diagram .ccjs-csc-diagram,
+.ccjs-card.ccjs-center-csc-diagram .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-center-csc-diagram .ccjs-csc-diagram-amex {
+  left: auto!important;
+  top: auto!important;
+  bottom: auto!important;
+  margin: 0!important;
+  right: 6em!important;
+}
+.ccjs-card.ccjs-center-csc-diagram .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-center-csc-diagram .ccjs-csc-diagram {
+  bottom: 52%!important;
+}
+.ccjs-card.ccjs-center-csc-diagram .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-center-csc-diagram .ccjs-csc-diagram-amex {
+  top: 52%!important;
+}
+.ccjs-card.ccjs-center-csc-diagram.ccjs-card-type-set .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-center-csc-diagram.ccjs-card-type-set .ccjs-csc-diagram {
+  display: block;
+  top: 3.18181818em!important;
+}
+.ccjs-card.ccjs-center-csc-diagram.ccjs-card-type-set .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-center-csc-diagram.ccjs-card-type-set .ccjs-csc-diagram-amex {
+  display: none;
+}
+.ccjs-card.ccjs-center-csc-diagram.ccjs-amex .ccjs-csc-diagram,
+.ccjs-card-style.ccjs-center-csc-diagram.ccjs-amex .ccjs-csc-diagram {
+  display: none;
+}
+.ccjs-card.ccjs-center-csc-diagram.ccjs-amex .ccjs-csc-diagram-amex,
+.ccjs-card-style.ccjs-center-csc-diagram.ccjs-amex .ccjs-csc-diagram-amex {
+  display: block;
+  top: 3.18181818em!important;
+}
+.ccjs-card {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+  /*@media(max-width: 767px) {
+		>.row {
+			.form-control {
+				margin-bottom: 12px;
+			}
+		}
+	}*/
+}
+.ccjs-card .ccjs-csc-diagram,
+.ccjs-card .ccjs-csc-diagram-amex {
+  border: 1px solid #c2c2c2;
+}
+.ccjs-card .ccjs-number input.ccjs-hidden {
+  visibility: hidden;
+  position: absolute;
+}
+.ccjs-card .ccjs-number input.ccjs-number-formatted {
+  z-index: 1;
+}
+.ccjs-card .ccjs-expiration select {
+  font-size: 1em;
+  *font-size: 1.5em;
+}
+.ccjs-card .ccjs-expiration legend {
+  *left: -0.5em;
+}
+.ccjs-card .ccjs-expiration .ccjs-year {
+  right: 0;
+}
+.ccjs-card:not(:-moz-handler-blocked) select {
+  padding: .25em 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.ccjs-incomplete.ccjs-startedProgress {
+  border: 1px solid #ffa712;
+}
+fieldset.ccjs-incomplete.ccjs-startedProgress {
+  border: 0;
+}
+.ccjs-show-warnings input.ccjs-incomplete,
+.ccjs-show-warnings select.ccjs-incomplete,
+.ccjs-show-warnings fieldset.ccjs-incomplete select,
+.ccjs-show-warnings fieldset.ccjs-incomplete input {
+  border: 1px solid #ffa712;
+  -webkit-box-shadow: 0 0 3px #f79b00;
+  -moz-box-shadow: 0 0 3px #f79b00;
+  box-shadow: 0 0 3px #f79b00;
+}
+.ccjs-always-show-warnings input.ccjs-incomplete,
+.ccjs-always-show-warnings select.ccjs-incomplete,
+.ccjs-always-show-warnings fieldset.ccjs-incomplete select,
+.ccjs-always-show-warnings fieldset.ccjs-incomplete input {
+  border: 1px solid #ffa712;
+}
+input.ccjs-complete,
+select.ccjs-complete,
+fieldset.ccjs-complete select,
+fieldset.ccjs-complete input {
+  border: 1px solid #78d216!important;
+}
+input.ccjs-complete:focus,
+select.ccjs-complete:focus,
+fieldset.ccjs-complete select:focus,
+fieldset.ccjs-complete input:focus {
+  -webkit-box-shadow: inset 0 0 3px rgba(107, 187, 20, 0.5);
+  -moz-box-shadow: inset 0 0 3px rgba(107, 187, 20, 0.5);
+  box-shadow: inset 0 0 3px rgba(107, 187, 20, 0.5);
+}
+input.ccjs-error,
+select.ccjs-error,
+fieldset.ccjs-error select,
+fieldset.ccjs-error input {
+  border: 1px solid #fa9b89!important;
+}
+input.ccjs-error:focus,
+select.ccjs-error:focus,
+fieldset.ccjs-error select:focus,
+fieldset.ccjs-error input:focus {
+  -webkit-box-shadow: inset 0 0 3px #f54828;
+  -moz-box-shadow: inset 0 0 3px #f54828;
+  box-shadow: inset 0 0 3px #f54828;
+}
 body {
   background: url("../img/parttern.jpg") repeat 0 0 transparent;
 }
@@ -8388,10 +8961,6 @@ h2.TitleForm {
   margin-top: 13px;
   padding: 15px;
   color: #333333;
-}
-.dropdown-box .checkbox,
-.dropdown-box .radio {
-  white-space: nowrap;
 }
 .dropdown-box:before,
 .dropdown-box:after {
@@ -8492,6 +9061,83 @@ h2.TitleForm {
 .exo-icon-trash {
   background-position: -18px 0;
 }
+.slider {
+  margin-bottom: 30px;
+  margin-top: 50px;
+}
+.slider.slider-horizontal {
+  width: 100%;
+}
+.slider-selection.tick-slider-selection {
+  background: #4f72ac;
+}
+.slider-tick {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) inset;
+}
+.slider-tick {
+  background-image: -webkit-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
+  background-image: -o-linear-gradient(top, #ffffff 0%, #f2f2f2 100%);
+  background-image: linear-gradient(to bottom, #ffffff 0%, #f2f2f2 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff2f2f2', GradientType=0);
+}
+.slider-tick.in-selection {
+  background-image: -webkit-linear-gradient(top, #5f80b6 0%, #4f72ac 100%);
+  background-image: -o-linear-gradient(top, #5f80b6 0%, #4f72ac 100%);
+  background-image: linear-gradient(to bottom, #5f80b6 0%, #4f72ac 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff5f80b6', endColorstr='#ff4f72ac', GradientType=0);
+}
+.slider-handle {
+  -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) inset;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) inset;
+  background-image: -webkit-linear-gradient(top, #4f72ac 0%, #47669b 100%);
+  background-image: -o-linear-gradient(top, #4f72ac 0%, #47669b 100%);
+  background-image: linear-gradient(to bottom, #4f72ac 0%, #47669b 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff4f72ac', endColorstr='#ff47669b', GradientType=0);
+}
+.slider-tick-label-container {
+  margin-top: -50px;
+}
+.buypage-plans .tooltip.in {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.buypage-plans .tooltip.in.top .tooltip-arrow {
+  border-top-color: #bebebe;
+}
+.buypage-plans .tooltip-arrow:before {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid #f2f2f2;
+  content: "";
+  display: inline-block;
+  left: 50%;
+  margin-left: -5px;
+  position: absolute;
+  top: -6px;
+}
+.buypage-plans .tooltip-inner {
+  background-image: -webkit-linear-gradient(top, #fafafa 0%, #f1f1f1 100%);
+  background-image: -o-linear-gradient(top, #fafafa 0%, #f1f1f1 100%);
+  background-image: linear-gradient(to bottom, #fafafa 0%, #f1f1f1 100%);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffafafa', endColorstr='#fff1f1f1', GradientType=0);
+  -webkit-box-shadow: 0 0 0 1px #bebebe;
+  box-shadow: 0 0 0 1px #bebebe;
+  color: #333333;
+  font-weight: bold;
+  font-size: 14px;
+  opacity: 1;
+  filter: alpha(opacity=100);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
 .uiCloudCardSelect {
   min-width: 181px;
   display: inline-block;
@@ -8558,6 +9204,9 @@ h2.TitleForm {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+.uiCloudCardSelect .dropdown-box {
+  min-width: 360px;
 }
 .uiCloudCardSelect:hover,
 .uiCloudCardSelect.selected,
@@ -8753,6 +9402,17 @@ h2.TitleForm {
 .panel.order-box.affix {
   top: 20px;
   min-width: 307px;
+}
+.list-card-supported {
+  padding: 5px 0;
+  padding-left: 0;
+}
+.list-card-supported > li {
+  list-style: none;
+  float: left;
+}
+.list-card-supported > li + li {
+  margin-left: 37.3px;
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {

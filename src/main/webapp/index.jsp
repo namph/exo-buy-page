@@ -12,8 +12,6 @@
     <link href="assets/css/jquery-ui.css" rel="stylesheet">
     <link href="assets/css/bootstrap-slider.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/creditcardjs-v0.10.12.min.css" rel="stylesheet">
-
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,6 +27,11 @@
 <body>
 <div class="container buy-page-container">
 <h2 class="TitleForm"><img class="logo" src="assets/img/logo-exo.png" alt="Logo Exo">Buy EXO Platform</h2>
+<!-- message callback -->
+<div class="alert alert-dismissible" id="buypage-alert-general" role="alert" style="display: none">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>Warning!</strong>Something went wrong, please try again.
+</div>
 <div class="row">
     <div class="col-md-8">
         <div class="bp-heading">
@@ -37,7 +40,7 @@
         </div>
         <!-- list plan here -->
         <div class="bp-content buypage-plans">
-
+            <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
         </div>
         <!-- list addons here -->
         <div class="buypage-addons">
@@ -48,6 +51,11 @@
             <span class="title-icon"><i class="fa fa-cut"></i></span>
         </div>
         <div class="bp-content">
+            <!-- message callback -->
+            <div class="alert alert-dismissible" id="buypage-alert-coupon" role="alert" style="display: none">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> Coupon invaidated.
+            </div>
             <p>Do you have any coupon code ? user it here.</p>
             <div class="input-group col-md-8">
                 <input type="text" class="form-control" placeholder="Coupon" id="discountId">
@@ -61,9 +69,10 @@
             <span class="title-icon"><i class="fa fa-file-text-o"></i></span>
         </div>
         <div class="bp-content" id="billingForm">
-            <div class="alert alert-warning alert-dismissible" role="alert">
+            <!-- message callback -->
+            <div class="alert alert-dismissible" id="buypage-alert-billing" role="alert" style="display: none;">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>Warning!</strong> Better check yourself, you're not looking too good.
+                <strong>Warning!</strong> billing info.
             </div>
             <div class="form-group">
                 <input type="text" name="first_name" class="form-control" placeholder="First Name" value="Tuan Anh">
@@ -82,8 +91,22 @@
             </div>
             <div class="form-group">
                 <div class="input-group">
-                    <input type="text" name="product_code" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
-                    <span class="input-group-addon" id="sizing-addon2"><i class="fa fa-question-circle"></i></span>
+                    <input type="text" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
+							<span class="input-group-addon popover-manual-toggle" data-toggle="dropdown" id="sizing-addon2">
+								<i class="fa fa-question-circle f18"></i>
+								<div role="tooltip" class="popover fade in">
+                                    <div class="arrow"></div>
+                                    <div class="popover-content">
+                                        <h4>Product Code</h4>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                                        <strong>3HJDF234</strong>
+                                        <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                                        <p>Officia deserunt mollit</p>
+                                        <p>In reprehenderit in voluptate velit esse</p>
+                                    </div>
+                                </div>
+							</span>
                 </div>
             </div>
         </div>
@@ -92,7 +115,11 @@
             <span class="title-icon"><i class="fa fa-shopping-cart"></i></span>
         </div>
         <div class="bp-content">
-
+            <!-- message callback -->
+            <div class="alert alert-dismissible" id="buypage-alert-credit" role="alert" style="display: none">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Warning!</strong> credit.
+            </div>
             <!-- credit js -->
             <div class="ccjs-card">
                 <div class="row">
@@ -112,7 +139,7 @@
                     </div>
                     <div class="col-sm-5">
                         <fieldset class="ccjs-expiration row">
-                            <div class="col-md-4"><p class="form-control-static">Expiration</p></div>
+                            <div class="col-md-4"><p class="form-control-static">Expiration:</p></div>
                             <div class="col-sm-4 form-group">
                                 <select name="month" class="ccjs-month form-control">
                                     <option selected disabled>MM</option>
@@ -186,16 +213,18 @@
                 </div>
                 <br>
                 <br>
-                <button class="btn btn-primary btn-lg">Confirm purchase</button>
+                <button class="btn btn-primary btn-lg subscribe">Confirm purchase</button>
 
             </div>
             <!-- credit js -->
-            <button class="btn subscribe">Subscribe</button>
         </div>
     </div>
     <div class="col-md-4 buypage-bill">
-
+        <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
     </div>
+</div>
+<div id="BuyPageLoadingContainer" style="display: none">
+    <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
 </div>
 </div>
 

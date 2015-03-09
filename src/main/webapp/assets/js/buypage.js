@@ -11,6 +11,49 @@
   var _currentSlider;
   var BuyPage = {};
 
+  var _messageConfirmCBController = function (typeParent, type,message) {
+
+    var buypageAlertGeneral = $("#buypage-alert-general");
+    var buypageAlertCoupon = $("#buypage-alert-coupon");
+    var buypageAlertBilling = $("#buypage-alert-billing");
+    var buypageAlertCredit = $("#buypage-alert-credit");
+    var alertDOM = buypageAlertGeneral;
+
+    if(typeParent == "coupon"){
+      alertDOM = buypageAlertCoupon;
+    }else if(typeParent == "billing"){
+      alertDOM = buypageAlertBilling;
+    } else if(typeParent == "credit"){
+      alertDOM = buypageAlertCredit;
+    }
+    if(alertDOM != null){
+
+      if(type != null && type != "") {
+        alertDOM.removeClass();
+        alertDOM.addClass('alert');
+        alertDOM.addClass('alert-' + type);
+        alertDOM.append("<strong>"+type+"!</strong> "+message);
+        alertDOM.show();
+/*        alertDOM.css('visibility', 'visible');
+        setTimeout(function() {
+          alertDOM.css("visibility" , "hidden");
+        }, 5000);*/
+      }
+    }
+  };
+  var _disPlayInfoMsgCB = function(typeParent,msg){
+    _messageConfirmCBController(typeParent,'info',msg);
+  };
+  var _disPlayWarningMsgCB = function(typeParent,msg){
+    _messageConfirmCBController(typeParent,'warning',msg);
+  };
+  var _disPlayErrorMsgCB = function(typeParent,msg){
+    _messageConfirmCBController(typeParent,'danger',msg);
+  };
+  var _disPlaySuccessMsgCB = function(typeParent,msg){
+    _messageConfirmCBController(typeParent,'success',msg);
+  };
+
   var _showSliderAssociated2PlanSelected = function(){
     $(".slider-plan-type").each(function(){
       var sliderDOM = $(this);
@@ -89,7 +132,9 @@
        if(typeof data !== undefined){
          _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
          _loadBillFromClient();
+         _disPlaySuccessMsgCB("coupon","The coupon is valid");
        }
+       _disPlayWarningMsgCB("coupon","The coupon is unknown")
     })
     .fail(function (jqxhr, textStatus, error) {
       var err = textStatus + ', ' + error;
@@ -300,6 +345,7 @@
     $(document).on('click.subscribe.submit','button.subscribe', function () {
       var subscriptionCustomer = _validateBillingForm();
       if (subscriptionCustomer == null){
+        _disPlayInfoMsgCB("billing","Please fill all mandatory fields");
         return;
       }
       var firstName = subscriptionCustomer['first_name'];
@@ -335,11 +381,16 @@
         data:data
       })
         .done(function(data) {
-          console.info(data);
+          var obj = jQuery.parseJSON(data);
+          if(obj == "ok"){
+            _disPlaySuccessMsgCB("credit","Transaction ok");
+          }else{
+            _disPlayInfoMsgCB("credit",obj);
+          }
         })
         .fail(function (jqxhr, textStatus, error) {
           var err = textStatus + ', ' + error;
-          console.log("Transaction Failed: " + err);
+          _disPlayErrorMsgCB("credit",err);
         });
 
     })
@@ -357,6 +408,7 @@
     _planContainerDOM = $(".buypage-plans");
     _addonsContainerDOM = $(".buypage-addons");
     _billContainerDOM = $(".buypage-bill");
+
     _loadActivePlans();
     _addEvent2BtnSubmitDiscount();
     _addEventClick2PlanTypeItem();
