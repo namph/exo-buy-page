@@ -1,0 +1,50 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+  <id>create-appsrv</id>
+  <formats>
+    <format>dir</format>
+  </formats>
+  <includeBaseDirectory>true</includeBaseDirectory>
+  <baseDirectory>${project.build.finalName}</baseDirectory>
+  <fileSets>
+    <fileSet>
+      <outputDirectory>/</outputDirectory>
+      <directory>${project.build.directory}/${project.build.finalName}/dependencies/apache-tomcat/apache-tomcat-${org.apache.tomcat.version}/</directory>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0644</fileMode>
+      <filtered>false</filtered>
+      <lineEnding>keep</lineEnding>
+    </fileSet>
+  </fileSets>
+  <dependencySets>
+    <!-- ================================ -->
+    <!-- Additional libraries for Tomcat  -->
+    <!-- ================================ -->
+    <!-- Adding Mail -->
+    <dependencySet>
+      <outputDirectory>/lib</outputDirectory>
+      <includes>
+        <!-- This artifact isn't by default in tomcat -->
+        <include>javax.mail:mail</include>
+      </includes>
+      <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
+      <useProjectArtifact>false</useProjectArtifact>
+    </dependencySet>
+    <!-- ================================ -->
+    <!-- we reference each war to package -->
+    <!-- ================================ -->
+    <!-- BuyPage webapp -->
+    <dependencySet>
+      <includes>
+        <include>com.exoplatform.buypage:buy-page-webapp:war</include>
+      </includes>
+      <scope>provided</scope>
+      <outputDirectory>/webapps</outputDirectory>
+      <outputFileNameMapping>BuyPage.war</outputFileNameMapping>
+      <useProjectArtifact>false</useProjectArtifact>
+    </dependencySet>
+
+  </dependencySets>
+  <componentDescriptors>
+  </componentDescriptors>
+</assembly>
