@@ -8,8 +8,46 @@
   var _listServicesSelected = new Array();
   var _discountProvided;
   var _addonUserDefault = 0;
+  var _currentSlider;
   var BuyPage = {};
-  BuyPage.tata = "";
+
+  var _showSliderAssociated2PlanSelected = function(){
+    $(".slider-plan-type").each(function(){
+      var sliderDOM = $(this);
+      if(sliderDOM.attr("id") == "slider-number-users-"+_planSelected.id){
+        _loadSlider(_planSelected.id);
+      }
+    });
+  };
+  var _convertSliderData2Array = function(strData){
+    return strData.split(",");
+  };
+  var _loadSlider = function(sliderID){
+    if( _currentSlider != null)
+      _currentSlider.slider("destroy");
+    var sliderDOM = $("#slider-number-users-"+sliderID);
+    var ticks = sliderDOM.attr("data-slider-ticks");
+    var labels = sliderDOM.attr("data-slider-ticks-labels");
+    ticks = _convertSliderData2Array(ticks);
+    labels = _convertSliderData2Array(labels);
+    _currentSlider = $("#slider-number-users-"+sliderID).slider({
+      ticks: ticks,
+      ticks_labels: labels,
+      ticks_snap_bounds: 1,
+      tooltip: 'always',
+      formatter: function(value) {
+        var i = value - 1;
+        if (i < 0)
+          i = 0;
+        return labels[i];
+      }
+    }).on('change',function(objValue){
+      var newVal=objValue.value.newValue;
+      var lbl = labels[newVal-1];
+      var nbUser = lbl.match(/\d+/);
+      _selectSubPlanItem(sliderID+"-"+nbUser);
+    });
+  };
   var _loadActivePlans = function(){
     $.ajax({
       url: _baseRestUrl+"/Plan/getActives",
@@ -17,37 +55,9 @@
     })
       .done(function(data) {
         _planContainerDOM.html(data);
+        _showSliderAssociated2PlanSelected();
         _loadBillFromClient();
         _loadActiveAddons(null);
-
-        $(".slider-plan-type").slider({
-          ticks_snap_bounds: 1,
-          tooltip: 'always'
-        });
-/*
-
-        $("#slider-number-users").slider({
-          ticks: [1, 2, 3, 4],
-          ticks_labels: ['25 users', '50 users', '100 users', '250 users'],
-          ticks_snap_bounds: 1,
-          min: 0,
-          max: 4,
-          tooltip: 'always',
-          formatter: function(value) {
-            var numberUsers = 0;
-            if(value == "1") {
-              numberUsers = "25 users";
-            } else if(value == "2") {
-              numberUsers = "50 users";
-            } else if(value == "4") {
-              numberUsers = "250 users";
-            } else {
-              numberUsers = "100 users";                
-            }
-            return numberUsers;
-          }
-        });
-*/
 
       })
       .fail(function (jqxhr, textStatus, error) {
@@ -110,10 +120,30 @@
         _getDiscount(_discountProvided.id);
       }else{
         _loadBillFromClient();
+        _showSliderAssociated2PlanSelected();
         _hideAllAddonsButOne();
       }
     });
   };
+  var _selectSubPlanItem = function(elementId){
+    var me = $("#"+elementId);
+    if(me.length > 0){
+      var id = me.attr("data-id");
+      var name = me.attr("data-name");
+      var price = me.attr("data-price");
+      var user = me.attr("data-user");
+      var planCycle = me.attr("data-planCycle");
+      _addonUserDefault = user;
+      _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
+      if(typeof _discountProvided !== undefined && null != _discountProvided){
+        _getDiscount(_discountProvided.id);
+      }else{
+        _loadBillFromClient();
+        _hideAllAddonsButOne();
+      }
+    }
+  };
+
   var _addEventClick2AddonItem = function(){
     $(document).on('click.addonItem.select','div.addonItem',function(){
       var me = $(this);
@@ -336,6 +366,7 @@
     _addEvent2LinkRemoveService();
     _addEvent2BtnSubscribe();
     _addEvent2LinkRemoveDiscount();
+
   };
 
   return window.BuyPage = BuyPage;

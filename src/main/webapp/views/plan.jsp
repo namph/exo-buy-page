@@ -55,16 +55,16 @@
 <div class="tab-content">
 
     <c:forEach items="${planTypes}" var="entry">
-        <c:set var="id" value="${entry.value.getId()}"></c:set>
+        <c:set var="planTypeId" value="${entry.value.getId()}"></c:set>
         <c:set var="tick" value="${entry.value.generateUserSliderTick()}"></c:set>
         <c:set var="label" value="${entry.value.generateUserSliderLabel()}"></c:set>
-        <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
+        <c:set var="userPosition" value="${entry.value.getCurrentUserPositionInSlider()}"></c:set>
         <c:set var="active" value="${entry.value.getActive()}"></c:set>
         <c:set var="invisible" value="block"></c:set>
         <c:if test="${active==\"active\"}">
             <c:set var="invisible" value="none"></c:set>
         </c:if>
-        <div class="slider-plan-type" id="slider-number-users-${id}" type="text" data-slider-ticks="${tick}" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="${label}" data-slider-value="${user}" style=" display:${invisible};"></div>
+        <div class="slider-plan-type" id="slider-number-users-${planTypeId}" type="text" data-slider-ticks="${tick}" data-slider-ticks-snap-bounds="1" data-slider-ticks-labels="${label}" data-slider-value="${userPosition}" style=" display:${invisible};"></div>
 
         <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${entry.value.getId()}" style="display: none;">
             <div class="boxSlider">
@@ -79,7 +79,7 @@
                             <c:set var="position" value="${nbUser/entry.value.getMaxNbUser()*100}"></c:set>
                             <c:set var="user" value="${planDTO.getOptionUser()}"></c:set>
                             <c:set var="planCycle" value="${planDTO.getPlanCycle()}"></c:set>
-                            <div class="ui-slider-handle ui-state-default ui-corner-all planTypeItem" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}"  data-user="${user}" data-planCycle="${planCycle}">
+                            <div class="ui-slider-handle ui-state-default ui-corner-all subPlanItem" id="${planTypeId}-${nbUser}" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}"  data-user="${user}" data-planCycle="${planCycle}">
                                 <span class="countValue" >${nbUser} users</span>
                             </div>
                         </c:forEach>

@@ -75,7 +75,7 @@ public class PlanTypeDTO extends DTO {
   }
   public String generateUserSliderTick(){
     List<Integer> users = this.getUsers();
-    String tick = "[";
+    String tick = "";
     for (int i = 1;i <= users.size();i++){
       tick +=i;
       if (i < users.size()){
@@ -83,12 +83,11 @@ public class PlanTypeDTO extends DTO {
       }
 
     }
-    tick +="]";
     return tick;
   }
   public String generateUserSliderLabel(){
     List<Integer> users = this.getUsers();
-    String label = "[";
+    String label = "";
     int i = 0;
     for (Integer nb:users){
       label +=nb.toString()+" users";
@@ -97,7 +96,16 @@ public class PlanTypeDTO extends DTO {
         label +=",";
       }
     }
-    label +="]";
     return label;
+  }
+  public int getCurrentUserPositionInSlider(){
+    int i = 1;
+    for (Integer nb:this.getUsers()){
+      if (nb == this.getDefaultNbUser()){
+        return i;
+      }
+      i++;
+    }
+    return i;
   }
 }
