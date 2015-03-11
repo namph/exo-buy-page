@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Buy Page</title>
+    <title>Buy eXo Platform</title>
 
     <!-- Bootstrap -->
     <link href="assets/css/jquery-ui.css" rel="stylesheet">
@@ -26,7 +26,7 @@
 
 <body>
 <div class="container buy-page-container">
-    <h2 class="TitleForm"><img class="logo" src="assets/img/logo-exo.png" alt="Logo Exo">Buy EXO Platform</h2>
+    <h2 class="TitleForm"><img class="logo" src="assets/img/logo-exo.png" alt="eXo Logo">Buy eXo Platform</h2>
     <!-- message callback -->
     <div class="alert alert-dismissible" id="buypage-alert-general" role="alert" style="display: none">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
