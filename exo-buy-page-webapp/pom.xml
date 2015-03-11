@@ -4,7 +4,7 @@
   <parent>
     <artifactId>exo-buy-page</artifactId>
     <groupId>com.exoplatform.buypage</groupId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.x-SNAPSHOT</version>
   </parent>
   <artifactId>buy-page-webapp</artifactId>
   <packaging>war</packaging>
