@@ -16,11 +16,9 @@
     <module>exo-buy-page-webapp</module>
     <module>exo-buy-page-package</module>
   </modules>
-
   <properties>
     <org.apache.tomcat.version>7.0.57</org.apache.tomcat.version>
   </properties>
- 
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -35,7 +33,6 @@
         <version>${org.apache.tomcat.version}</version>
         <type>zip</type>
       </dependency>
-   </dependencies>
+    </dependencies>
   </dependencyManagement>
 </project>
-
