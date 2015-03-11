@@ -181,6 +181,13 @@
       <scope>runtime</scope>
     </dependency>
 
+    <dependency>
+      <groupId>javax.mail</groupId>
+      <artifactId>mail</artifactId>
+      <version>1.4.7</version>
+      <type>jar</type>
+    </dependency>
+
     <!--dependency>
       <groupId>taglibs</groupId>
       <artifactId>standard</artifactId>
