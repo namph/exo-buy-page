@@ -19,6 +19,7 @@ package com.exoplatform.buypage.gateway;
 import com.braintreegateway.AddOn;
 import com.braintreegateway.Discount;
 import com.braintreegateway.Plan;
+import com.braintreegateway.Transaction;
 import com.exoplatform.buypage.model.DTO.DiscountDTO;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import org.springframework.stereotype.Service;
@@ -109,4 +110,6 @@ public interface IService {
   public BigDecimal getPlanPrice(Plan plan);
 
   public BigDecimal getDiscountAmount(DiscountDTO discountDTO, BigDecimal planPrice,int planCycle, int userNumber);
+
+  public Transaction getTransaction(String transactionId);
 }

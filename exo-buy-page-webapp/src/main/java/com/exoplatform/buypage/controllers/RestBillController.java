@@ -30,19 +30,22 @@ public class RestBillController {
   public ModelAndView showBillFromClient(@RequestBody ItemOrderWrapper itemOrderWrapper){
     ModelAndView mav = new ModelAndView();
     mav.setViewName("bill");
-    mav.addObject("plan",itemOrderWrapper.getPlan());
-    mav.addObject("addons",itemOrderWrapper.getAddons());
-    mav.addObject("services",itemOrderWrapper.getServices());
-    BigDecimal orderAmount = itemOrderWrapper.getTotal();
-    DiscountDTO discountDTO = itemOrderWrapper.getDiscount();
-    if (null != discountDTO){
-      BigDecimal discountAmount = gatewayService.getDiscountAmount(discountDTO,orderAmount,itemOrderWrapper.getPlan().getPlanCycle(),itemOrderWrapper.getPlan().getOptionUser());
-      discountDTO.setAmount(discountAmount);
-      mav.addObject("discount",discountDTO);
-      orderAmount = orderAmount.subtract(discountAmount);
+    if (itemOrderWrapper.getPlan() != null){
+      mav.addObject("plan",itemOrderWrapper.getPlan());
+      mav.addObject("addons",itemOrderWrapper.getAddons());
+      mav.addObject("services",itemOrderWrapper.getServices());
+      BigDecimal orderAmount = itemOrderWrapper.getTotal();
+      DiscountDTO discountDTO = itemOrderWrapper.getDiscount();
+      if (null != discountDTO){
+        BigDecimal discountAmount = gatewayService.getDiscountAmount(discountDTO,orderAmount,itemOrderWrapper.getPlan().getPlanCycle(),itemOrderWrapper.getPlan().getOptionUser());
+        discountDTO.setAmount(discountAmount);
+        mav.addObject("discount",discountDTO);
+        orderAmount = orderAmount.subtract(discountAmount);
+      }
+      mav.addObject("total", CommonUtils.convertAmount2String(orderAmount));
+    }else{
+      mav.addObject("error","service unavailable");
     }
-    mav.addObject("total", CommonUtils.convertAmount2String(orderAmount));
-
     return mav;
   }
 

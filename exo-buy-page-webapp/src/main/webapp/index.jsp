@@ -124,24 +124,24 @@
             <div class="ccjs-card">
                 <div class="row">
                     <div class="ccjs-number form-group col-sm-8">
-                        <input name="card-number" class="ccjs-number form-control" placeholder="Card Number">
+                        <input name="card-number" id="cardNumber" class="ccjs-number form-control" placeholder="Card Number">
                     </div>
                     <div class="ccjs-csc form-group col-sm-4">
-                        <input name="csc" class="ccjs-csc form-control" placeholder="Security Code">
+                        <input name="csc" id="cardCVV" class="ccjs-csc form-control" placeholder="Security Code">
                         <button type="button" class="ccjs-csc-help"><i class="fa fa-question-circle"></i></button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-7">
                         <div class="form-group ccjs-name">
-                            <input name="name" class="ccjs-name form-control" placeholder="Name on Card">
+                            <input name="name" id="cardHolder" class="ccjs-name form-control" placeholder="Name on Card">
                         </div>
                     </div>
                     <div class="col-sm-5">
                         <fieldset class="ccjs-expiration row">
                             <div class="col-md-4"><p class="form-control-static">Expiration:</p></div>
                             <div class="col-sm-4 form-group">
-                                <select name="month" class="ccjs-month form-control">
+                                <select name="month" id="expireMonth" class="ccjs-month form-control">
                                     <option selected disabled>MM</option>
                                     <option value="01">01</option>
                                     <option value="02">02</option>
@@ -158,7 +158,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4 form-group">
-                                <select name="year" class="ccjs-year form-control">
+                                <select name="year" id="expireYear" class="ccjs-year form-control">
                                     <option selected disabled>YY</option>
                                     <option value="14">14</option>
                                     <option value="15">15</option>

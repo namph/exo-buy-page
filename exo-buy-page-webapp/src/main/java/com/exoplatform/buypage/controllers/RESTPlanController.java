@@ -1,11 +1,13 @@
 package com.exoplatform.buypage.controllers;
 
 import com.braintreegateway.Plan;
+import com.braintreegateway.Transaction;
 import com.exoplatform.buypage.gateway.IService;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
 import com.exoplatform.buypage.model.DTO.PlanTypeDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,14 +15,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Plan controller handler.
  *
  */
 @Controller
-@RequestMapping(value = "/Plan")
+@RequestMapping(value = "Plan")
 public class RESTPlanController {
 
   private Logger log = LoggerFactory.getLogger(RESTPlanController.class);
@@ -40,8 +44,9 @@ public class RESTPlanController {
     return plans;
   }
 
-  @RequestMapping(value = "/getActives", method = RequestMethod.GET)
+  @RequestMapping(value = "getActives", method = RequestMethod.GET)
   public ModelAndView getActives(){
+    String msgError = "";
     ModelAndView mav = new ModelAndView();
     mav.setViewName("plan");
     Collection<Plan> plans = gatewayService.getActivePlans();
@@ -81,7 +86,10 @@ public class RESTPlanController {
         planTypeDTOMap.put(prefixPlanType,currentPlanTypeDTO);
       }
     }
-    // need to get max number user for each plan type
+    if (planTypeDTOMap.size() == 0){
+      msgError = "Sorry, Service unavailable, Please try it later !";
+    }
+    mav.addObject("error",msgError);
     mav.addObject("planTypes",planTypeDTOMap);
     return mav;
   }

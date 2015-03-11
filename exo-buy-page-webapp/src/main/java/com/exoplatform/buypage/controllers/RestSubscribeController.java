@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class RestSubscribeController {
 
   @RequestMapping(value = "/submit",method = RequestMethod.POST,consumes = {"application/json"},produces = {"application/json"})
   @ResponseBody
-  public ArrayList<String> showBillFromClient(@RequestBody SubscriptionCustomer subscriptionCustomer){
+  public ArrayList<String> showBillFromClient(HttpSession httpSession, @RequestBody SubscriptionCustomer subscriptionCustomer){
     return gatewayService.subscribe("","",subscriptionCustomer);
   }
 }

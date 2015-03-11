@@ -95,7 +95,7 @@ public class ServiceImpl implements IService {
   private List<Plan> findActivePlans() {
     List<Plan> plans = new ArrayList<Plan>();
     for (Plan plan : gateway.plan().all()) {
-      if (!plan.getId().startsWith("DISABLED") && !plan.getId().startsWith("OLD") && plan.getId().startsWith(PREFIX_PLAN)) {
+      if (!plan.getId().startsWith(PREFIX_DISABLED) && !plan.getId().startsWith(PREFIX_OLD) && plan.getId().startsWith(PREFIX_PLAN)) {
         plans.add(plan);
       }
     }
@@ -187,6 +187,7 @@ public class ServiceImpl implements IService {
 
 
   private ArrayList<String> generateResponseFromBraintree(Result<Subscription> subsResult){
+
     ArrayList<String> results = new ArrayList<String>();
     if (subsResult.isSuccess()){
       Subscription.Status targetStatus = subsResult.getTarget().getStatus();
@@ -332,6 +333,11 @@ public class ServiceImpl implements IService {
       discountPrice = discountDTO.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
     }
     return discountPrice;
+  }
+
+  @Override
+  public Transaction getTransaction(String transactionId) {
+    return gateway.transaction().find(transactionId);
   }
 
   // get price of plan plus all addons linked to plan and subtract all discount linked to plan
