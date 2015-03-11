@@ -2,7 +2,7 @@
   var _planContainerDOM;
   var _addonsContainerDOM;
   var _billContainerDOM;
-  var _baseRestUrl = "/BuyPage/rest";
+  var _baseRestUrl = "/buy/rest";
   var _planSelected;
   var _listAddonsSelected = new Array();
   var _listServicesSelected = new Array();

@@ -41,7 +41,7 @@
       </includes>
       <scope>provided</scope>
       <outputDirectory>/webapps</outputDirectory>
-      <outputFileNameMapping>BuyPage.war</outputFileNameMapping>
+      <outputFileNameMapping>buy.war</outputFileNameMapping>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
 

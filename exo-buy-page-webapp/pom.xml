@@ -190,6 +190,6 @@
 
   </dependencies>
   <build>
-    <finalName>BuyPage</finalName>
+    <finalName>buy</finalName>
   </build>
 </project>
