@@ -4,6 +4,7 @@ import com.exoplatform.buypage.gateway.IService;
 import com.exoplatform.buypage.model.DTO.AddonDTO;
 import com.exoplatform.buypage.model.DTO.ItemOrderWrapper;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
+import com.exoplatform.buypage.model.DTO.TransactionDTO;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +36,15 @@ public class RestSubscribeController {
   public Map<String,String> showBillFromClient(HttpSession httpSession, @RequestBody SubscriptionCustomer subscriptionCustomer){
     Map<String,String> result =  gatewayService.subscribe("","",subscriptionCustomer);
     if (null != result && "ok".equals(result.get("msg"))){
-      httpSession.setAttribute("transactionId",result.get("transactionId"));
+      TransactionDTO transactionDTO = new TransactionDTO();
+      transactionDTO.setId(result.get("transactionId"));
+      transactionDTO.setPlanDTO(subscriptionCustomer.getPlan());
+      transactionDTO.setAddonDTOs(subscriptionCustomer.getAddons());
+      transactionDTO.setAmount(subscriptionCustomer.getAmount());
+      transactionDTO.setCustomer_email(subscriptionCustomer.getEmail());
+      transactionDTO.setCustomer_organization(subscriptionCustomer.getOrganization());
+      transactionDTO.setDiscountDTO(subscriptionCustomer.getDiscount());
+      httpSession.setAttribute("transaction",transactionDTO);
     }
     return result;
   }

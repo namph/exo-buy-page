@@ -31,6 +31,7 @@
     <configuration.version>1.8</configuration.version>
     <jackson2.version>2.2.2</jackson2.version>
     <jstl.version>2.2.2</jstl.version>
+    <mecache.version>3.1.0</mecache.version>
   </properties>
   <dependencies>
     <!-- **************************************** -->
@@ -171,12 +172,24 @@
       <version>1.4.7</version>
       <type>jar</type>
     </dependency>
-    <!--dependency>
-      <groupId>taglibs</groupId>
-      <artifactId>standard</artifactId>
-      <version>1.1.2</version>
-      <scope>runtime</scope>
-    </dependency-->
+    <!-- memcache -->
+    <dependency>
+      <groupId>com.google.code.simple-spring-memcached</groupId>
+      <artifactId>spring-cache</artifactId>
+      <version>${mecache.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.code.simple-spring-memcached</groupId>
+      <artifactId>xmemcached-provider</artifactId>
+      <version>${mecache.version}</version>
+    </dependency>
+    <!-- for issue related to proxy -->
+    <dependency>
+      <groupId>cglib</groupId>
+      <artifactId>cglib</artifactId>
+      <version>2.2.2</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>buy</finalName>

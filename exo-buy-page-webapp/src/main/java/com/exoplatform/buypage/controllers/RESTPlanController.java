@@ -1,17 +1,14 @@
 package com.exoplatform.buypage.controllers;
 
 import com.braintreegateway.Plan;
-import com.braintreegateway.Transaction;
 import com.exoplatform.buypage.gateway.IService;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
 import com.exoplatform.buypage.model.DTO.PlanTypeDTO;
+import com.exoplatform.buypage.model.DTO.TransactionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
@@ -25,6 +22,7 @@ import java.util.ArrayList;
  */
 @Controller
 @RequestMapping(value = "Plan")
+@SessionAttributes("obj-mem")
 public class RESTPlanController {
 
   private Logger log = LoggerFactory.getLogger(RESTPlanController.class);
@@ -93,5 +91,16 @@ public class RESTPlanController {
     mav.addObject("planTypes",planTypeDTOMap);
     return mav;
   }
+  @RequestMapping(value = "/set",method = RequestMethod.GET,produces = "application/json")
+  @ResponseBody
+  public String set(HttpSession httpSession){
+    TransactionDTO transactionDTO = new TransactionDTO();
+    transactionDTO.setId("trans-sess");
+    PlanDTO planDTO = new PlanDTO("planid","toto","tata");
+    transactionDTO.setPlanDTO(planDTO);
+    httpSession.setAttribute("trans",transactionDTO);
+    return transactionDTO.getId();
+  }
+
 
 }

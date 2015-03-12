@@ -25,7 +25,6 @@ public class PlanDTO extends DTO {
   private List<AddonDTO> services;
   private List<AddonDTO> addons;
 
-  private List<OptionDTO> optionDTOs;
   private int planCycle;
   public PlanDTO(){
 
@@ -34,16 +33,6 @@ public class PlanDTO extends DTO {
     super(id, name, description);
     this.setAddons(new ArrayList<AddonDTO>());
     this.setServices(new ArrayList<AddonDTO>());
-  }
-  private void generateOptionDTOs(){
-
-  }
-  public List<OptionDTO> getOptionDTOs() {
-    return optionDTOs;
-  }
-
-  public void setOptionDTOs(List<OptionDTO> optionDTOs) {
-    this.optionDTOs = optionDTOs;
   }
   public String getActive(){
     if(this.getId().contains("DEFAULT"))

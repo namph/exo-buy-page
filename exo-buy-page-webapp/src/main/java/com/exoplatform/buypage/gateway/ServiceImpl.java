@@ -18,6 +18,7 @@ package com.exoplatform.buypage.gateway;
 
 import com.braintreegateway.*;
 import com.braintreegateway.exceptions.UnexpectedException;
+import com.exoplatform.buypage.model.DTO.AddonDTO;
 import com.exoplatform.buypage.model.DTO.DiscountDTO;
 import com.exoplatform.buypage.model.SubscriptionCustomer;
 import com.exoplatform.buypage.utils.CommonUtils;
@@ -149,33 +150,35 @@ public class ServiceImpl implements IService {
     CreditCard card = customerResult.getTarget().getCreditCards().get(0);
     String paymentMethodToken = card.getToken();
     SubscriptionRequest subscriptionRequest = new SubscriptionRequest().paymentMethodToken(paymentMethodToken);
-    subscriptionRequest.planId(subsCustomer.getPlanId());
+    subscriptionRequest.planId(subsCustomer.getPlan().getId());
 
 
-    List<String> addonIds = subsCustomer.getAddonIds();
+    List<AddonDTO> addonDTOs = subsCustomer.getAddons();
     ModificationsRequest addonUpdate = subscriptionRequest.addOns();
-    for (String addonId:addonIds){
-      addonUpdate.add().inheritedFromId(addonId).done();
+    for (AddonDTO addon:addonDTOs){
+      addonUpdate.add().inheritedFromId(addon.getId()).done();
     }
-    String couponCode = subsCustomer.getDiscountCode();
-    ModificationsRequest discountUpdate = subscriptionRequest.discounts();
+    if (null != subsCustomer.getDiscount()){
 
-    if (StringUtils.isNotEmpty(couponCode)) {
-      Plan plan = getPlan(subsCustomer.getPlanId());
-      if (null != plan){
-        AddOn addOn = null;
-        BigDecimal totalAddonsPrice = new BigDecimal(0);
-        for (String addonId:addonIds){
-          addOn = getAddon(addonId);
-          if (null != addOn){
-            totalAddonsPrice = totalAddonsPrice.add(addOn.getAmount());
+      String couponCode = subsCustomer.getDiscount().getId();
+      ModificationsRequest discountUpdate = subscriptionRequest.discounts();
+
+      if (StringUtils.isNotEmpty(couponCode)) {
+        Plan plan = getPlan(subsCustomer.getPlan().getId());
+        if (null != plan){
+          AddOn addOn = null;
+          BigDecimal totalAddonsPrice = new BigDecimal(0);
+          for (AddonDTO addon:addonDTOs){
+            addOn = getAddon(addon.getId());
+            if (null != addOn){
+              totalAddonsPrice = totalAddonsPrice.add(addOn.getAmount());
+            }
           }
+          BigDecimal planPrice =  getPlanPrice(plan);
+          planPrice = planPrice.add(totalAddonsPrice);
+          discountUpdate = applyCoupon(plan.getBillingFrequency(),subsCustomer.getUserNumber(), planPrice, couponCode, discountUpdate);
         }
-        BigDecimal planPrice =  getPlanPrice(plan);
-        planPrice = planPrice.add(totalAddonsPrice);
-        discountUpdate = applyCoupon(plan.getBillingFrequency(),subsCustomer.getUserNumber(), planPrice, couponCode, discountUpdate);
       }
-
     }
 
     subscriptionResult = gateway.subscription().create(subscriptionRequest);

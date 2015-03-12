@@ -1,16 +1,23 @@
 package com.exoplatform.buypage.model.DTO;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.math.BigDecimal;
 import java.util.List;
 
-public class TransactionDTO extends DTO {
+@Component
+@Scope("session")
+public class TransactionDTO{
 
+  private String id;
   private PlanDTO planDTO;
   private List<AddonDTO> addonDTOs;
-  private List<DiscountDTO> discountDTOs;
+  private DiscountDTO discountDTO;
   private int total;
   private String customer_email;
   private String customer_organization;
-  private String period;
+  private BigDecimal amount;
 
   public PlanDTO getPlanDTO() {
     return planDTO;
@@ -26,14 +33,6 @@ public class TransactionDTO extends DTO {
 
   public void setAddonDTOs(List<AddonDTO> addonDTOs) {
     this.addonDTOs = addonDTOs;
-  }
-
-  public List<DiscountDTO> getDiscountDTOs() {
-    return discountDTOs;
-  }
-
-  public void setDiscountDTOs(List<DiscountDTO> discountDTOs) {
-    this.discountDTOs = discountDTOs;
   }
 
   public int getTotal() {
@@ -59,12 +58,27 @@ public class TransactionDTO extends DTO {
   public void setCustomer_organization(String customer_organization) {
     this.customer_organization = customer_organization;
   }
-
-  public String getPeriod() {
-    return period;
+  public String getId() {
+    return id;
   }
 
-  public void setPeriod(String period) {
-    this.period = period;
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public BigDecimal getAmount() {
+    return amount;
+  }
+
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
+
+  public DiscountDTO getDiscountDTO() {
+    return discountDTO;
+  }
+
+  public void setDiscountDTO(DiscountDTO discountDTO) {
+    this.discountDTO = discountDTO;
   }
 }

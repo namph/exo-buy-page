@@ -1,6 +1,11 @@
 package com.exoplatform.buypage.model;
 
 
+import com.exoplatform.buypage.model.DTO.AddonDTO;
+import com.exoplatform.buypage.model.DTO.DiscountDTO;
+import com.exoplatform.buypage.model.DTO.PlanDTO;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 public class SubscriptionCustomer {
@@ -14,10 +19,11 @@ public class SubscriptionCustomer {
   private String expireMonth;
   private String expireYear;
   private String cardCVV;
-  private String planId;
+  private PlanDTO plan;
   private int userNumber;
-  private List<String> addonIds;
-  private String discountCode;
+  private List<AddonDTO> addons;
+  private DiscountDTO discount;
+  private BigDecimal amount;
 
   public String getFirstName() {
     return firstName;
@@ -99,14 +105,6 @@ public class SubscriptionCustomer {
     this.cardCVV = cardCVV;
   }
 
-  public String getPlanId() {
-    return planId;
-  }
-
-  public void setPlanId(String planId) {
-    this.planId = planId;
-  }
-
   public int getUserNumber() {
     return userNumber;
   }
@@ -115,19 +113,34 @@ public class SubscriptionCustomer {
     this.userNumber = userNumber;
   }
 
-  public List<String> getAddonIds() {
-    return addonIds;
+  public BigDecimal getAmount() {
+    return amount;
   }
 
-  public void setAddonIds(List<String> addonIds) {
-    this.addonIds = addonIds;
+  public void setAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
+  public PlanDTO getPlan() {
+    return plan;
   }
 
-  public String getDiscountCode() {
-    return discountCode;
+  public void setPlan(PlanDTO plan) {
+    this.plan = plan;
   }
 
-  public void setDiscountCode(String discountCode) {
-    this.discountCode = discountCode;
+  public List<AddonDTO> getAddons() {
+    return addons;
+  }
+
+  public void setAddons(List<AddonDTO> addons) {
+    this.addons = addons;
+  }
+
+  public DiscountDTO getDiscount() {
+    return discount;
+  }
+
+  public void setDiscount(DiscountDTO discount) {
+    this.discount = discount;
   }
 }
