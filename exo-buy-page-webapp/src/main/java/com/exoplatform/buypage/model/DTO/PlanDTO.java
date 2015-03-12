@@ -16,9 +16,14 @@
  */
 package com.exoplatform.buypage.model.DTO;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class PlanDTO extends DTO {
+
+  private List<AddonDTO> services;
+  private List<AddonDTO> addons;
 
   private List<OptionDTO> optionDTOs;
   private int planCycle;
@@ -26,7 +31,9 @@ public class PlanDTO extends DTO {
 
   }
   public PlanDTO(String id, String name, String description){
-    super(id,name,description);
+    super(id, name, description);
+    this.setAddons(new ArrayList<AddonDTO>());
+    this.setServices(new ArrayList<AddonDTO>());
   }
   private void generateOptionDTOs(){
 
@@ -54,5 +61,28 @@ public class PlanDTO extends DTO {
 
   public void setPlanCycle(int planCycle) {
     this.planCycle = planCycle;
+  }
+
+  public String getPeriod() {
+    String period = "";
+    Calendar now = Calendar.getInstance();
+    now.add(Calendar.YEAR,this.getPlanCycle()/12);
+    period = (now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/" + now.get(Calendar.YEAR) + " - "+(now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/" + now.get(Calendar.YEAR);
+    return period;
+  }
+  public List<AddonDTO> getServices() {
+    return services;
+  }
+
+  public void setServices(List<AddonDTO> services) {
+    this.services = services;
+  }
+
+  public List<AddonDTO> getAddons() {
+    return addons;
+  }
+
+  public void setAddons(List<AddonDTO> addons) {
+    this.addons = addons;
   }
 }

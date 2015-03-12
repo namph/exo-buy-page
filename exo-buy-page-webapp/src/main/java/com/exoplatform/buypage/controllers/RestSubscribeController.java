@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by anhvt on 03/03/15.
@@ -31,7 +32,11 @@ public class RestSubscribeController {
 
   @RequestMapping(value = "/submit",method = RequestMethod.POST,consumes = {"application/json"},produces = {"application/json"})
   @ResponseBody
-  public ArrayList<String> showBillFromClient(HttpSession httpSession, @RequestBody SubscriptionCustomer subscriptionCustomer){
-    return gatewayService.subscribe("","",subscriptionCustomer);
+  public Map<String,String> showBillFromClient(HttpSession httpSession, @RequestBody SubscriptionCustomer subscriptionCustomer){
+    Map<String,String> result =  gatewayService.subscribe("","",subscriptionCustomer);
+    if (null != result && "ok".equals(result.get("msg"))){
+      httpSession.setAttribute("transactionId",result.get("transactionId"));
+    }
+    return result;
   }
 }

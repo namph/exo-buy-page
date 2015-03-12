@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * General contract between Product service and billing providers.
@@ -71,7 +72,7 @@ public interface IService {
    * @return
    * @throws Exception
    */
-  public ArrayList<String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer);
+  public Map<String,String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer);
 
 
   /**

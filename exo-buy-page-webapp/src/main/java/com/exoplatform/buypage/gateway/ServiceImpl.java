@@ -29,9 +29,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
 public class ServiceImpl implements IService {
@@ -134,16 +132,16 @@ public class ServiceImpl implements IService {
   }
 
   @Override
-  public ArrayList<String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer){
+  public Map<String,String> subscribe(String customerId, String subscriptionId, SubscriptionCustomer subsCustomer){
 
-    ArrayList<String> result = new ArrayList<String>();
+    Map<String,String> result = new HashMap<String,String>();
    // user infos + addons ID + discout ID
     Result<Subscription> subscriptionResult = null;
 
     Result<Customer> customerResult = createOrUpdateCustomer(customerId, subsCustomer);
 
     if (!customerResult.isSuccess()) {
-      result.add(CommonUtils.getMessageByBTCode(getCustomerRequestError(customerResult)));
+      result.put("msg", CommonUtils.getMessageByBTCode(getCustomerRequestError(customerResult)));
       return result;
     }
     // return userID
@@ -186,29 +184,32 @@ public class ServiceImpl implements IService {
   }
 
 
-  private ArrayList<String> generateResponseFromBraintree(Result<Subscription> subsResult){
+  private Map<String,String> generateResponseFromBraintree(Result<Subscription> subsResult){
 
-    ArrayList<String> results = new ArrayList<String>();
+    Map<String,String> results = new HashMap<String,String>();
     if (subsResult.isSuccess()){
       Subscription.Status targetStatus = subsResult.getTarget().getStatus();
       // transaction successful
       if(targetStatus.equals(subsResult.getTarget().getStatus().ACTIVE)){
-        results.add("ok");
+        results.put("msg", "ok");
+        List<Transaction> transactions= subsResult.getTarget().getTransactions();
+        if (transactions.size() > 0)
+        results.put("transactionId",subsResult.getTarget().getTransactions().get(transactions.size()-1).getId());
       }else{
         // wait for confirmation email
-        results.add("pending");
+        results.put("msg", "pending");
       }
     }else{
       //error for transaction
       if (subsResult.getTransaction() != null) {
-        results.add(CommonUtils.getMessageByBTCode(subsResult.getTransaction().getProcessorResponseCode()));
+        results.put("msg", CommonUtils.getMessageByBTCode(subsResult.getTransaction().getProcessorResponseCode()));
       }
       // subs error
       ValidationErrors errorLevel = subsResult.getErrors();
       if (errorLevel != null) {
         List<ValidationError> errors = errorLevel.getAllDeepValidationErrors();
         for (ValidationError error : errors) {
-          results.add(CommonUtils.getMessageByBTCode(error.getCode().code));
+          results.put("msg", CommonUtils.getMessageByBTCode(error.getCode().code));
         }
       }
     }
@@ -337,8 +338,13 @@ public class ServiceImpl implements IService {
 
   @Override
   public Transaction getTransaction(String transactionId) {
-    return gateway.transaction().find(transactionId);
-  }
+    try {
+      return gateway.transaction().find(transactionId);
+    }catch (Exception e){
+      log.error("Failed to connect to payment gateway", e.getMessage());
+    }
+    return null;
+    }
 
   // get price of plan plus all addons linked to plan and subtract all discount linked to plan
   @Override
