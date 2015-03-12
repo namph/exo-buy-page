@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Buy Page</title>
+    <title>Buy eXo Platform</title>
 
     <!-- Bootstrap -->
     <link href="assets/css/jquery-ui.css" rel="stylesheet">
@@ -26,7 +26,7 @@
 
 <body>
 <div class="container buy-page-container">
-    <h2 class="TitleForm"><img class="logo" src="assets/img/logo-exo.png" alt="Logo Exo">Buy EXO Platform</h2>
+    <h2 class="TitleForm"><img class="logo" src="assets/img/logo-exo.png" alt="eXo Logo">Buy eXo Platform</h2>
     <!-- message callback -->
     <div class="alert alert-dismissible" id="buypage-alert-general" role="alert" style="display: none">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -71,24 +71,26 @@
 
             <div class="bp-content" id="billingForm">
                 <!-- message callback -->
-                <div class="alert alert-dismissible" id="buypage-alert-billing" role="alert" style="display: none;">
+                <div class="alert alert-danger" id="buypage-alert-billing" role="alert" style="display: none;">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Warning!</strong> billing info.
+                    <div class="alert-message">
+                        
+                    </div>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="first_name" class="form-control" placeholder="First Name" value="Tuan Anh">
+                    <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="last_name" class="form-control" placeholder="Last Name" value="VU">
+                    <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" value="">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="organisation" class="form-control" placeholder="Organisation" value="exo">
+                    <input type="text" id="organisation" name="organisation" class="form-control" placeholder="Organisation" value="">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="phone" class="form-control" placeholder="Phone" value="0123344555">
+                    <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone" value="">
                 </div>
                 <div class="form-group">
-                    <input type="text" name="billing_email" class="form-control" placeholder="Billing Email" value="anhvt@exoplatform.com">
+                    <input type="text" id="billing_email" name="billing_email" class="form-control" placeholder="Billing Email" value="">
                 </div>
                 <div class="form-group">
                     <div class="input-group">
@@ -221,7 +223,7 @@
                     </div>
                     <br>
                     <br>
-                    <button class="btn btn-primary btn-lg">Confirm purchase</button>
+                    <button class="btn btn-primary btn-lg subscribe">Confirm purchase</button>
                     <!-- credit js -->
                 </div>
             </div>

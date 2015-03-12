@@ -128,7 +128,7 @@
       dataType: "text"
     })
     .done(function(data) {
-      var obj = jQuery.parseJSON(data);
+      var obj = $.parseJSON(data);
        if(typeof data !== undefined){
          _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
          _loadBillFromClient();
@@ -344,10 +344,13 @@
   var _addEvent2BtnSubscribe = function(){
     $(document).on('click.subscribe.submit','button.subscribe', function () {
       var subscriptionCustomer = _validateBillingForm();
-      if (subscriptionCustomer == null){
-        _disPlayInfoMsgCB("billing","Please fill all mandatory fields");
+      var isValidBillingForm = _isValidBillingForm();
+      if (subscriptionCustomer == null || !isValidBillingForm){
+        //_disPlayInfoMsgCB("billing","Please fill all mandatory fields");
+        $("#buypage-alert-billing").show();
         return;
       }
+      $("#buypage-alert-billing").hide();
       var firstName = subscriptionCustomer['first_name'];
       var lastName = subscriptionCustomer['last_name'];
       var organization = subscriptionCustomer['organisation'];
@@ -381,7 +384,7 @@
         data:data
       })
         .done(function(data) {
-          var obj = jQuery.parseJSON(data);
+          var obj = $.parseJSON(data);
           if(obj == "ok"){
             _disPlaySuccessMsgCB("credit","Transaction ok");
           }else{
@@ -395,10 +398,102 @@
 
     })
   };
+
+  var _initValidFormFields = function(){
+    $("#first_name").blur(function(){
+      var lenFirstName = $(this).val().length; 
+      if(lenFirstName < 1 ) {
+        $(this).addClass("ErrorField");
+      } else {
+        $(this).removeClass("ErrorField");
+        $(this).addClass("Validated");
+      }
+    });
+    
+    $("#last_name").blur(function(){
+      var lenLastName = $(this).val().length;  
+      if(lenLastName < 1 ) {
+        $(this).addClass("ErrorField");
+      } else {
+        $(this).removeClass("ErrorField");
+        $(this).addClass("Validated");
+      }
+    });
+    
+    $("#organisation").blur(function(){
+      var lenLastName = $(this).val().length;  
+      if(lenLastName < 1 ) {
+        $(this).addClass("ErrorField");
+      } else {
+        $(this).removeClass("ErrorField");
+        $(this).addClass("Validated");
+      }
+    });
+    
+    $("#billing_email").blur(function(){
+      var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
+      var lenEmail = $(this).val().length;
+      if(!$(this).val().match(mailformat)) {
+        $(this).addClass("ErrorField");
+      } else {
+        $(this).removeClass("ErrorField");
+        $(this).addClass("Validated");
+      }
+    });
+    
+    $("#phone").blur(function(){
+      var phoneformat = /^[0-9+\(\)#\.\s\/ext-]+$/;
+      var lenPhone = $(this).val().length;
+      if(lenPhone < 9 || !$(this).val().match(phoneformat)) {
+        $(this).addClass("ErrorField");
+      } else {
+        $(this).removeClass("Error");
+        $(this).addClass("Validated");
+      }
+    });
+  };
+
+  var _isValidBillingForm = function() {
+
+    var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var phoneformat = /^[0-9+\(\)#\.\s\/ext-]+$/;
+    $("#buypage-alert-billing .alert-message").html("");
+
+    var isValid = true;
+    if($("#first_name").val().length < 1) {
+      $("#buypage-alert-billing .alert-message").append("<p>Please fill in the First Name.</p>");
+      isValid = false;
+    }
+
+    if($("#last_name").val().length < 1) {
+      $("#buypage-alert-billing .alert-message").append("<p>Please fill in the Last Name.</p>");
+      isValid = false;
+    } 
+
+    if($("#organisation").val().length < 1) {
+      $("#buypage-alert-billing .alert-message").append("<p>Please fill in the Organisation.</p>");
+      isValid = false;
+    } 
+
+    if(!$("#phone").val().match(phoneformat)) {
+      $("#buypage-alert-billing .alert-message").append("<p>Please enter a valid phone number.</p>");
+      isValid = false;
+    }
+
+    if(!$("#billing_email").val().match(mailformat)) {
+      $("#buypage-alert-billing .alert-message").append("<p>Please enter an valid email address.</p>");
+      isValid = false;  
+    }
+    
+    return isValid;
+  
+  };
+
   var _hideAllAddonsButOne = function(){
     $(".addon-bloc").hide();
     $(".addon-"+_addonUserDefault).show();
   };
+
   BuyPage.setPlanDefaultSelected = function (id,name,price,user,planCycle) {
     _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
     _addonUserDefault = user;
@@ -418,6 +513,7 @@
     _addEvent2LinkRemoveService();
     _addEvent2BtnSubscribe();
     _addEvent2LinkRemoveDiscount();
+    _initValidFormFields();
 
   };
 

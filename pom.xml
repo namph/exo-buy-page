@@ -9,18 +9,33 @@
   </parent>
   <groupId>com.exoplatform.buypage</groupId>
   <artifactId>exo-buy-page</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0.x-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>eXo Platform Buy Page</name>
   <modules>
     <module>exo-buy-page-webapp</module>
     <module>exo-buy-page-package</module>
   </modules>
-
+  <scm>
+    <connection>scm:git:git://github.com/exoplatform/buy-exo-enterprise.git</connection>
+    <developerConnection>scm:git:git@github.com:exoplatform/buy-exo-enterprise.git</developerConnection>
+    <url>https://github.com/exoplatform/platform-private-distributions</url>
+  </scm>
   <properties>
+    <!-- **************************************** -->
+    <!-- Private repository for snapshots         -->
+    <!-- **************************************** -->
+    <exo.snapshots.repo.url>https://repository.exoplatform.org/content/repositories/exo-private-snapshots</exo.snapshots.repo.url>
+    <!-- ************** -->
+    <!-- Build settings -->
+    <!-- ************** -->
+    <!-- maven-release-plugin -->
+    <preparationGoals>clean install</preparationGoals>
+    <!-- ************** -->
+    <!-- Dependencies   -->
+    <!-- ************** -->
     <org.apache.tomcat.version>7.0.57</org.apache.tomcat.version>
   </properties>
- 
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -35,7 +50,6 @@
         <version>${org.apache.tomcat.version}</version>
         <type>zip</type>
       </dependency>
-   </dependencies>
+    </dependencies>
   </dependencyManagement>
 </project>
-

@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.exoplatform.buypage</groupId>
     <artifactId>exo-buy-page</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.exoplatform.buypage</groupId>
+    <version>1.0.x-SNAPSHOT</version>
   </parent>
   <artifactId>buy-page-package</artifactId>
   <packaging>pom</packaging>
   <name>eXo Buy Page :: Tomcat Packaging</name>
-
   <dependencies>
     <dependency>
       <groupId>com.exoplatform.buypage</groupId>
@@ -25,7 +23,6 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
-
   <build>
     <finalName>exo-buy-page</finalName>
     <pluginManagement>
@@ -39,27 +36,26 @@
         </plugin>
       </plugins>
     </pluginManagement>
-
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-assembly-plugin</artifactId>
         <executions>
-              <!-- Create the distribution directory with all content -->
-              <execution>
-                <id>tomcat-dir</id>
-                <phase>prepare-package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-                <configuration>
-                  <attach>false</attach>
-                  <descriptors>
-                    <descriptor>${project.basedir}/src/main/assembly/1-extract-tomcat.xml</descriptor>
-                    <descriptor>${project.basedir}/src/main/assembly/2-compose-appsrv.xml</descriptor>
-                  </descriptors>
-                </configuration>
-              </execution>
+          <!-- Create the distribution directory with all content -->
+          <execution>
+            <id>tomcat-dir</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <attach>false</attach>
+              <descriptors>
+                <descriptor>${project.basedir}/src/main/assembly/1-extract-tomcat.xml</descriptor>
+                <descriptor>${project.basedir}/src/main/assembly/2-compose-appsrv.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
         </executions>
       </plugin>
     </plugins>
