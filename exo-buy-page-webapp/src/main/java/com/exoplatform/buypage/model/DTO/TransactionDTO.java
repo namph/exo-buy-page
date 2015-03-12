@@ -14,10 +14,9 @@ public class TransactionDTO{
   private PlanDTO planDTO;
   private List<AddonDTO> addonDTOs;
   private DiscountDTO discountDTO;
-  private int total;
   private String customer_email;
   private String customer_organization;
-  private BigDecimal amount;
+  private BigDecimal totalBill;
 
   public PlanDTO getPlanDTO() {
     return planDTO;
@@ -33,14 +32,6 @@ public class TransactionDTO{
 
   public void setAddonDTOs(List<AddonDTO> addonDTOs) {
     this.addonDTOs = addonDTOs;
-  }
-
-  public int getTotal() {
-    return total;
-  }
-
-  public void setTotal(int total) {
-    this.total = total;
   }
 
   public String getCustomer_email() {
@@ -66,19 +57,19 @@ public class TransactionDTO{
     this.id = id;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
-  }
-
   public DiscountDTO getDiscountDTO() {
     return discountDTO;
   }
 
   public void setDiscountDTO(DiscountDTO discountDTO) {
     this.discountDTO = discountDTO;
+  }
+
+  public BigDecimal getTotalBill() {
+    return totalBill;
+  }
+
+  public void setTotalBill(int totalBill) {
+    this.totalBill = new BigDecimal(totalBill);
   }
 }

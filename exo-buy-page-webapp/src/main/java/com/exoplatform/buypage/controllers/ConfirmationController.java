@@ -5,11 +5,13 @@ import com.braintreegateway.Discount;
 import com.braintreegateway.Plan;
 import com.braintreegateway.Transaction;
 import com.exoplatform.buypage.gateway.IService;
+import com.exoplatform.buypage.model.Addon;
 import com.exoplatform.buypage.model.DTO.AddonDTO;
 import com.exoplatform.buypage.model.DTO.DiscountDTO;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
 import com.exoplatform.buypage.model.DTO.TransactionDTO;
 import com.exoplatform.buypage.utils.CommonUtils;
+import org.omg.CosNaming.NamingContextPackage.NotEmpty;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -58,14 +60,15 @@ public class ConfirmationController {
         Transaction transaction = gatewayService.getTransaction(transactionId);
         if (null != transaction) {
           // show order detail from client side
-          if (transaction.getAmount().equals(transactionDTO.getAmount())){
+          if (transaction.getAmount().compareTo(transactionDTO.getTotalBill()) == 0){
             planDTO = transactionDTO.getPlanDTO();
             customer_email = transactionDTO.getCustomer_email();
             customer_org = transactionDTO.getCustomer_organization();
             discountDTO = transactionDTO.getDiscountDTO();
+            total = CommonUtils.convertAmount2String(transactionDTO.getTotalBill());
             List<AddonDTO> addons = transactionDTO.getAddonDTOs();
-            List<AddonDTO> addonDTOs = planDTO.getAddons();
-            List<AddonDTO> serviceDTOs = planDTO.getServices();
+            List<AddonDTO> addonDTOs = new ArrayList<AddonDTO>();
+            List<AddonDTO> serviceDTOs = new ArrayList<AddonDTO>();
             AddonDTO addonDTO = null;
             for (AddonDTO addOn : addons) {
               addonDTO = new AddonDTO(addOn.getId(), addOn.getName(), addOn.getDescription(),addOn.getPrice());
@@ -94,18 +97,26 @@ public class ConfirmationController {
             List<AddonDTO> serviceDTOs = planDTO.getServices();
             AddonDTO addonDTO = null;
             for (AddOn addOn : addons) {
-              addonDTO = new AddonDTO(addOn.getId(), addOn.getName(), addOn.getDescription(), addOn.getAmount());
-              if (addonDTO.isService())
-                serviceDTOs.add(addonDTO);
-              else
-                addonDTOs.add(addonDTO);
+              AddOn btAddon = gatewayService.getAddon(addOn.getId());
+              if (null != btAddon){
+                addonDTO = new AddonDTO(btAddon.getId(), btAddon.getName(), btAddon.getDescription(), btAddon.getAmount());
+                if (addonDTO.isService())
+                  serviceDTOs.add(addonDTO);
+                else
+                  addonDTOs.add(addonDTO);
+              }
             }
             planDTO.setAddons(addonDTOs);
             planDTO.setServices(serviceDTOs);
             // we know already only one discount submitted
             for (Discount discount : discounts) {
-              discountDTO = new DiscountDTO(discount.getId(), discount.getName(), discount.getDescription());
-              discountDTO.setAmount(gatewayService.getDiscountAmount(discountDTO, planDTO.getPrice(), planDTO.getPlanCycle(), planDTO.getOptionUser()));
+              Discount btDiscount  = gatewayService.getDiscount(discount.getId());
+              if (null != btDiscount){
+                discountDTO = new DiscountDTO(btDiscount.getId(),btDiscount.getName(),btDiscount.getDescription());
+                discountDTO.setAmount(btDiscount.getAmount());
+                discountDTO.setAmount(gatewayService.getDiscountAmount(discountDTO, planDTO.getPrice(), planDTO.getPlanCycle(), planDTO.getOptionUser()));
+              }
+
             }
           }
           mav.addObject("transactionId", transactionId);
@@ -118,7 +129,7 @@ public class ConfirmationController {
       }
 
     }
-    httpSession.setAttribute("transaction",null);
+   // httpSession.setAttribute("transaction",null);
     return mav;
   }
 

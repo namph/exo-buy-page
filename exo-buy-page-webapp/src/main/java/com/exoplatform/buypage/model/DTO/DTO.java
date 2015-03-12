@@ -63,6 +63,6 @@ public class DTO {
     if (!"".equals(options) && options.contains("USER") && options.split("_").length > 0){
       return Integer.parseInt(options.split("_")[1]);
     }
-    return 5;
+    return 0;
   }
 }

@@ -2,16 +2,17 @@
     var _planContainerDOM;
     var _addonsContainerDOM;
     var _billContainerDOM;
-    var _baseRestUrl = "/buy/rest";
+    var _baseRestUrl = "/buy";
     var _planSelected;
     var _listAddonsSelected = new Array();
     var _listServicesSelected = new Array();
     var _discountProvided;
     var _addonUserDefault = 0;
     var _currentSlider;
+    var _totalBill= 0;
     var BuyPage = {};
 
-    var _messageConfirmCBController = function (typeParent, type,message) {
+    var _messageConfirmCBController = function (typeParent, type,message,display) {
 
         var buypageAlertGeneral = $("#buypage-alert-general");
         var buypageAlertCoupon = $("#buypage-alert-coupon");
@@ -21,8 +22,6 @@
 
         if(typeParent == "coupon"){
             alertDOM = buypageAlertCoupon;
-        }else if(typeParent == "billing"){
-            alertDOM = buypageAlertBilling;
         } else if(typeParent == "credit"){
             alertDOM = buypageAlertCredit;
         }
@@ -32,26 +31,25 @@
                 alertDOM.removeClass();
                 alertDOM.addClass('alert');
                 alertDOM.addClass('alert-' + type);
-                alertDOM.append("<strong>"+type+"!</strong> "+message);
-                alertDOM.show();
-                /*        alertDOM.css('visibility', 'visible');
-                 setTimeout(function() {
-                 alertDOM.css("visibility" , "hidden");
-                 }, 5000);*/
+                alertDOM.children('div').html("<strong>"+type+"!</strong> "+message);
             }
+            if(display)
+              alertDOM.show();
+            else
+              alertDOM.hide();
         }
     };
-    var _disPlayInfoMsgCB = function(typeParent,msg){
-        _messageConfirmCBController(typeParent,'info',msg);
+    var _disPlayInfoMsgCB = function(typeParent,msg,display){
+        _messageConfirmCBController(typeParent,'info',msg,display);
     };
-    var _disPlayWarningMsgCB = function(typeParent,msg){
-        _messageConfirmCBController(typeParent,'warning',msg);
+    var _disPlayWarningMsgCB = function(typeParent,msg,display){
+        _messageConfirmCBController(typeParent,'warning',msg,display);
     };
-    var _disPlayErrorMsgCB = function(typeParent,msg){
-        _messageConfirmCBController(typeParent,'danger',msg);
+    var _disPlayErrorMsgCB = function(typeParent,msg,display){
+        _messageConfirmCBController(typeParent,'danger',msg,display);
     };
-    var _disPlaySuccessMsgCB = function(typeParent,msg){
-        _messageConfirmCBController(typeParent,'success',msg);
+    var _disPlaySuccessMsgCB = function(typeParent,msg,display){
+        _messageConfirmCBController(typeParent,'success',msg,display);
     };
 
     var _showSliderAssociated2PlanSelected = function(){
@@ -132,9 +130,9 @@
                 if(typeof data !== undefined){
                     _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
                     _loadBillFromClient();
-                    _disPlaySuccessMsgCB("coupon","The coupon is valid");
-                }
-                _disPlayWarningMsgCB("coupon","The coupon is unknown")
+                    _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
+                }else
+                _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
@@ -443,6 +441,7 @@
     };
     var _addEvent2BtnSubscribe = function(){
         $(document).on('click.subscribe.submit','button.subscribe', function () {
+            var me = $(this);
             var subscriptionCustomer = _validateBillingForm();
             var isValidBillingForm = _isValidBillingForm();
             if (subscriptionCustomer == null || !isValidBillingForm){
@@ -461,20 +460,25 @@
             var expireMonth = $("#expireMonth").val();
             var expireYear = $("#expireYear").val();
             var cardCVV = $("#cardCVV").val();
-            var planId = _planSelected.id;
 
-            var discountCode = null;
+            var termandcondition = $("#termandcondition");
+            if (!termandcondition.prop('checked')){
+              _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
+              return;
+            }
+            me.prop('disabled',true);
+            var discount = null;
             if(typeof _discountProvided !== undefined && null != _discountProvided)
-                discountCode = _discountProvided.id;
-            var addonIds = new Array();
+              discount = _discountProvided;
+            var addons = new Array();
             for(var i=0;i<_listAddonsSelected.length;i++){
-                addonIds.push(_listAddonsSelected[i].id);
+              addons.push(_listAddonsSelected[i]);
             }
             for(var i=0;i<_listServicesSelected.length;i++){
-                addonIds.push(_listServicesSelected[i].id);
+              addons.push(_listServicesSelected[i]);
             }
 
-            var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"planId":planId,"addonIds":addonIds,"discountCode":discountCode};
+            var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"plan":_planSelected,"addons":addons,"discount":discount,"totalBill":_totalBill};
             data = JSON.stringify(data);
             $.ajax({
                 url: _baseRestUrl+"/Subscribe/submit",
@@ -485,15 +489,18 @@
             })
                 .done(function(data) {
                     var obj = $.parseJSON(data);
-                    if(obj == "ok"){
-                        _disPlaySuccessMsgCB("credit","Transaction ok");
+                    if(obj.msg == "ok"){
+                        _disPlaySuccessMsgCB("credit","Transaction successful",true);
+                        window.location.href = "confirmation/success";
                     }else{
-                        _disPlayInfoMsgCB("credit",obj);
+                      me.prop('disabled',false);
+                      _disPlayInfoMsgCB("credit",obj.msg,true);
                     }
                 })
                 .fail(function (jqxhr, textStatus, error) {
                     var err = textStatus + ', ' + error;
-                    _disPlayErrorMsgCB("credit",err);
+                    me.prop('disabled',false);
+                    _disPlayErrorMsgCB("credit",err,true);
                 });
 
         })
@@ -593,7 +600,17 @@
         $(".addon-bloc").hide();
         $(".addon-"+_addonUserDefault).show();
     };
-
+    var _addEvent2CheckTandC = function () {
+      $(document).on('click.termandcondition.check',"#termandcondition",function(){
+        var me = $(this);
+        if(me.prop("checked")){
+          _disPlayWarningMsgCB("credit","",false);
+        }
+      });
+    };
+    BuyPage.setTotalBill = function(total){
+      _totalBill = total;
+    };
     BuyPage.setPlanDefaultSelected = function (id,name,price,user,planCycle) {
         _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
         _addonUserDefault = user;
@@ -614,6 +631,7 @@
         _addEvent2BtnSubscribe();
         _addEvent2LinkRemoveDiscount();
         _initValidFormFields();
+        _addEvent2CheckTandC();
 
     };
 

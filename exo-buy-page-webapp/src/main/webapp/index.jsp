@@ -54,7 +54,7 @@
                 <!-- message callback -->
                 <div class="alert alert-dismissible" id="buypage-alert-coupon" role="alert" style="display: none">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Warning!</strong> Coupon invaidated.
+                    <div></div>
                 </div>
                 <p>Do you have any coupon code ? user it here.</p>
                 <div class="input-group col-md-8">
@@ -123,7 +123,7 @@
                 <!-- message callback -->
                 <div class="alert alert-dismissible" id="buypage-alert-credit" role="alert" style="display: none">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Warning!</strong> credit.
+                    <div></div>
                 </div>
                 <!-- credit js -->
 
@@ -217,7 +217,7 @@
                     <div class="form-group">
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox"> I have read and agreed to the <a href="#">terms and conditions</a>.
+                                <input type="checkbox" id="termandcondition"> I have read and agreed to the <a href="#">terms and conditions</a>.
                             </label>
                         </div>
                     </div>

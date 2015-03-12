@@ -327,14 +327,16 @@ public class ServiceImpl implements IService {
   public BigDecimal getDiscountAmount(DiscountDTO discountDTO, BigDecimal planPrice,int planCycle, int userNumber){
     BigDecimal discountPrice = new BigDecimal(0);
     String name = discountDTO.getName();
-    String[] info = name.split(PREFIX_DISCOUNT_TYPE);
-    if (info.length >= 2 && info[1].indexOf("PERCENT") != -1) {
-      double percentage = (double) Integer.parseInt(info[2]) / 100;
-      discountPrice = planPrice.multiply(new BigDecimal(Double.toString(percentage)));
-    } else if (info.length >= 2 && info[1].indexOf("MONTH") != -1) {
-      discountPrice = discountDTO.getAmount().multiply(new BigDecimal(userNumber));
-    } else if (info.length >= 3 && info[1].indexOf("USER") != -1) {
-      discountPrice = discountDTO.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
+    if (null != name){
+      String[] info = name.split(PREFIX_DISCOUNT_TYPE);
+      if (info.length >= 2 && info[1].indexOf("PERCENT") != -1) {
+        double percentage = (double) Integer.parseInt(info[2]) / 100;
+        discountPrice = planPrice.multiply(new BigDecimal(Double.toString(percentage)));
+      } else if (info.length >= 2 && info[1].indexOf("MONTH") != -1) {
+        discountPrice = discountDTO.getAmount().multiply(new BigDecimal(userNumber));
+      } else if (info.length >= 3 && info[1].indexOf("USER") != -1) {
+        discountPrice = discountDTO.getAmount().multiply(new BigDecimal(planCycle)).multiply(new BigDecimal(info[2]));
+      }
     }
     return discountPrice;
   }

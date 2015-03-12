@@ -42,6 +42,7 @@ public class RestBillController {
         mav.addObject("discount",discountDTO);
         orderAmount = orderAmount.subtract(discountAmount);
       }
+      mav.addObject("totalBill",orderAmount.floatValue());
       mav.addObject("total", CommonUtils.convertAmount2String(orderAmount));
     }else{
       mav.addObject("error","service unavailable");

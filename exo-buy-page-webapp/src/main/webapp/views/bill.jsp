@@ -1,5 +1,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:if test="${error == null}">
+    <script language="javascript">
+        BuyPage.setTotalBill(${totalBill});
+    </script>
     <c:set var="planId" value="${plan.getId()}"></c:set>
     <c:set var="planName" value="${plan.getName()}"></c:set>
     <c:set var="planPrice" value="${plan.getPrice()}"></c:set>

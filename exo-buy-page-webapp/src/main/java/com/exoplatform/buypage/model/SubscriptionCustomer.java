@@ -23,7 +23,7 @@ public class SubscriptionCustomer {
   private int userNumber;
   private List<AddonDTO> addons;
   private DiscountDTO discount;
-  private BigDecimal amount;
+  private int totalBill;
 
   public String getFirstName() {
     return firstName;
@@ -113,13 +113,6 @@ public class SubscriptionCustomer {
     this.userNumber = userNumber;
   }
 
-  public BigDecimal getAmount() {
-    return amount;
-  }
-
-  public void setAmount(BigDecimal amount) {
-    this.amount = amount;
-  }
   public PlanDTO getPlan() {
     return plan;
   }
@@ -142,5 +135,13 @@ public class SubscriptionCustomer {
 
   public void setDiscount(DiscountDTO discount) {
     this.discount = discount;
+  }
+
+  public int getTotalBill() {
+    return totalBill;
+  }
+
+  public void setTotalBill(int totalBill) {
+    this.totalBill = totalBill;
   }
 }

@@ -58,15 +58,12 @@
                         <c:if test="${plan.getAddons().size() > 0}">
                             <tr>
                                 <td>
-                                    addon
+                                    addons
                                 </td>
                                 <td>
                                     <c:forEach items="${plan.getAddons()}" var="addon">
-                                        <c:set var="i" value="i+1"></c:set>
-                                        ${addon.getName()}
-                                        <c:if test="${i < plan.getAddons().size()}">
-                                            <c:out value=","></c:out>
-                                        </c:if>
+                                        <c:set var="i" value="${i+1}"></c:set>
+                                        ${addon.getName()}<c:if test="${i < plan.getAddons().size()}">,</c:if>
                                     </c:forEach>
                                 </td>
                             </tr>
@@ -78,12 +75,9 @@
                                 </td>
                                 <td>
                                     <c:forEach items="${plan.getServices()}" var="service">
-                                        <c:set var="i" value="i+1"></c:set>
+                                        <c:set var="i" value="${i+1}"></c:set>
                                         ${service.getName()}
-                                        <c:if test="${i < plan.getAddons().size()}">
-                                            <c:out value=","></c:out>
-                                        </c:if>
-
+                                        <c:if test="${i < plan.getServices().size()}">,</c:if>
                                     </c:forEach>
                                 </td>
                             </tr>

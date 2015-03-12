@@ -40,7 +40,7 @@ public class RestSubscribeController {
       transactionDTO.setId(result.get("transactionId"));
       transactionDTO.setPlanDTO(subscriptionCustomer.getPlan());
       transactionDTO.setAddonDTOs(subscriptionCustomer.getAddons());
-      transactionDTO.setAmount(subscriptionCustomer.getAmount());
+      transactionDTO.setTotalBill(subscriptionCustomer.getTotalBill());
       transactionDTO.setCustomer_email(subscriptionCustomer.getEmail());
       transactionDTO.setCustomer_organization(subscriptionCustomer.getOrganization());
       transactionDTO.setDiscountDTO(subscriptionCustomer.getDiscount());
