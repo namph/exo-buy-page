@@ -5,10 +5,6 @@
         <div class="col-sm-12 wrap-dropdown">
             <div class="dropdown-box show">
                 <p><b>This Add-on includes:</b></p>
-                <p><i class="fa fa-check fa-primary-color"></i> Unlimited video calls for up to 25 users</p>
-                <p><i class="fa fa-check fa-primary-color"></i> Screen sharing</p>
-                <p><i class="fa fa-check fa-primary-color"></i> Group video conference with Chat integration</p>
-                <p><i class="fa fa-check fa-primary-color"></i> 1-year license</p>
             </div>
         </div>
     </div>
@@ -25,7 +21,6 @@
         <c:forEach items="${addons}" var="addon">
             <c:set var="count_addon" value="${count_addon + 1}"/>
             <c:if test="${count_addon%3==1}"><div class="row"></c:if>
-
             <c:set var="id" value="${addon.getId()}"></c:set>
             <c:set var="name" value="${addon.getName()}"></c:set>
             <c:set var="description" value="${addon.getDescription()}"></c:set>
@@ -34,7 +29,7 @@
             <c:set var="icon" value="uiIcon28BPCamera"></c:set>
             <div class="col-sm-4 addon-bloc addon-${user}" style="display: none;">
                 <div class="uiCloudCardSelect" id="${id}">
-                    <div class="inner addonItem" data-toggle="dropdown" data-name="${name}" data-desciption="${description}" data-price="${price}" data-id="${id}">
+                    <div class="inner addonItem" data-toggle="${count_addon%3}" data-name="${name}" data-description="${description}" data-price="${price}" data-id="${id}">
                         <div class="circle-icon">
                             <i class="${icon}"></i>
                         </div>
@@ -48,14 +43,9 @@
 </c:if>
 <c:if test="${services.size() > 0}">
     <div class="dropdown-info-service" style="display: none;">
-        <div class="col-sm-12 middle wrap-dropdown">
+        <div class="col-sm-12 wrap-dropdown">
             <div class="dropdown-box show">
-                <p><b>5 days of ddedicated expertise</b></p>
-                <p><i class="fa fa-check fa-primary-color"></i> Installation, users and groups provisioning</p>
-                <p><i class="fa fa-check fa-primary-color"></i> 1 Administrator training</p>
-                <p><i class="fa fa-check fa-primary-color"></i> 1 Hands on customization workshop</p>
-                <p><i class="fa fa-check fa-primary-color"></i> 1 Change management workshop</p>
-                <p><i class="fa fa-check fa-primary-color"></i> 1-year license</p>
+                <p><b>5 days of dedicated expertise</b></p>
             </div>
         </div>
     </div>
@@ -77,7 +67,7 @@
             <c:set var="icon" value="uiIcon28BPCamera"></c:set>
             <div class="col-sm-4">
                 <div class="uiCloudCardSelect" id="${id}">
-                    <div class="inner serviceItem" data-toggle="dropdown" data-name="${name}" data-description="${description}" data-price="${price}" data-id="${id}">
+                    <div class="inner serviceItem" data-toggle="${count_service%3}" data-name="${name}" data-description="${description}" data-price="${price}" data-id="${id}">
                         <c:if test="${icon != \"\"}">
                             <div class="circle-icon">
                                 <i class="${icon}"></i>
