@@ -67,7 +67,10 @@ public class RestWebHookController {
     try {
       String mailTemplateConfigPath = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SUBCRIPTION_INFORMATION_TEMPLATE);
       mailTemplate = this.getClass().getResource(mailTemplateConfigPath).getPath();
+      log.info(mailTemplate);
+      System.out.println(mailTemplate);
     } catch (Exception e1) {
+     e1.printStackTrace();
      log.error(e1.getMessage());
      return "Test failured: " + id;
     }
@@ -87,6 +90,8 @@ public class RestWebHookController {
     try {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
     } catch (Exception e) {
+      e.printStackTrace();
+      log.error(e.getMessage());
       return "Test failured: " + id;
     }
     
