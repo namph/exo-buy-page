@@ -161,12 +161,19 @@ public class RestWebHookController {
   public Object handle(spark.Request request, spark.Response response,
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
+    System.out.println("START Webhook call");
+    System.out.println(request.toString());
+    
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
     Subscription subscription = null;
     try {
       String bt_signature = request.queryParams("bt_signature");
       String bt_payload = request.queryParams("bt_payload");
+      
+      System.out.println("bt_signature: " + bt_signature);
+      System.out.println("bt_payload: " + bt_payload);
+      
       WebhookNotification webhookNotification = gateway.webhookNotification().parse(bt_signature, bt_payload);
       
       subscription = webhookNotification.getSubscription();
