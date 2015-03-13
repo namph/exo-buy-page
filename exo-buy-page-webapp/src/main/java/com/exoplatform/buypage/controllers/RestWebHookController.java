@@ -6,20 +6,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestPart;
 
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
@@ -158,18 +163,26 @@ public class RestWebHookController {
   
   @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
   @ResponseBody
-  public Object handle(spark.Request request, spark.Response response,
+  public Object handle(@RequestBody String postData,
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
     System.out.println("START Webhook call");
-    System.out.println(request.toString());
+    System.out.println(postData);
+    //System.out.println(request.toString());
     
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
     Subscription subscription = null;
     try {
-      String bt_signature = request.queryParams("bt_signature");
-      String bt_payload = request.queryParams("bt_payload");
+      
+      org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) JSONValue.parseWithException(postData);
+      
+      //String bt_signature = request.getParameter("bt_signature");
+      //String bt_payload = request.getParameter("bt_payload");
+      
+      String bt_signature =  jsonObj.get("bt_signature").toString();
+      String bt_payload =  jsonObj.get("bt_payload").toString();
+     
       
       System.out.println("bt_signature: " + bt_signature);
       System.out.println("bt_payload: " + bt_payload);
