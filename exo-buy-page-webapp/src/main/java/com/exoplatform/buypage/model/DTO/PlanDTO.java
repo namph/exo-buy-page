@@ -24,10 +24,16 @@ public class PlanDTO extends DTO {
 
   private List<AddonDTO> services;
   private List<AddonDTO> addons;
+  private int year;
 
   private int planCycle;
   public PlanDTO(){
 
+  }
+  public PlanDTO(String id){
+    this.setId(id);
+    this.setAddons(new ArrayList<AddonDTO>());
+    this.setServices(new ArrayList<AddonDTO>());
   }
   public PlanDTO(String id, String name, String description){
     super(id, name, description);
@@ -55,8 +61,10 @@ public class PlanDTO extends DTO {
   public String getPeriod() {
     String period = "";
     Calendar now = Calendar.getInstance();
-    now.add(Calendar.YEAR,this.getPlanCycle()/12);
-    period = (now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/" + now.get(Calendar.YEAR) + " - "+(now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/" + now.get(Calendar.YEAR);
+    Calendar ending = Calendar.getInstance();
+    ending.add(Calendar.YEAR,this.getPlanCycle()/12);
+
+    period = (now.get(Calendar.MONTH) + 1) + "/" + now.get(Calendar.DATE) + "/" + now.get(Calendar.YEAR) + " - "+(ending.get(Calendar.MONTH) + 1) + "/" + ending.get(Calendar.DATE) + "/" + ending.get(Calendar.YEAR);
     return period;
   }
   public List<AddonDTO> getServices() {
@@ -73,5 +81,20 @@ public class PlanDTO extends DTO {
 
   public void setAddons(List<AddonDTO> addons) {
     this.addons = addons;
+  }
+
+  public int getYear() {
+    return year;
+  }
+
+  public void setYear(int year) {
+    this.year = year;
+  }
+  public int getYearNumber(){
+    String type = this.getPlanType();
+    String[] typeArr = type.split("_");
+    if (typeArr.length > 1)
+      return  Integer.parseInt((typeArr[typeArr.length-1]).replaceAll("\\D+",""));
+    return 1;
   }
 }

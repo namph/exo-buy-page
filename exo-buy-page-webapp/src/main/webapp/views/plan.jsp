@@ -33,8 +33,10 @@
                             <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
                             <c:set var="planCycle" value="${entry.value.getPlanCycle()}"></c:set>
                             <li role="presentation"  class="${entry.value.getActive()}">
-                                <div data-target=".${id}" aria-controls="profile" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}" data-planCycle="${planCycle}">
-                                    <h5>${name}<br>${description}</h5>
+                                <div data-target=".${id}" aria-controls="${id}" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}" data-planCycle="${planCycle}">
+                                    <h5>${name}</h5>
+                                    <span>eXo Platfom Enterprise</span>
+                                    <span class="iconSelect"><i class="fa fa-check"></i></span>
                                 </div>
                             </li>
                         </c:forEach>
@@ -86,6 +88,7 @@
                                 <c:set var="position" value="${nbUser/entry.value.getMaxNbUser()*100}"></c:set>
                                 <c:set var="user" value="${planDTO.getOptionUser()}"></c:set>
                                 <c:set var="planCycle" value="${planDTO.getPlanCycle()}"></c:set>
+                                ${planDTO.getYearNumber()}
                                 <div class="ui-slider-handle ui-state-default ui-corner-all subPlanItem" id="${planTypeId}-${nbUser}" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}"  data-user="${user}" data-planCycle="${planCycle}">
                                     <span class="countValue" >${nbUser} users</span>
                                 </div>

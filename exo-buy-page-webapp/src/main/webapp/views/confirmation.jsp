@@ -88,7 +88,7 @@
                                 <td>
                                     Discount
                                 </td>
-                                <td>${discount.getName()}</td>
+                                <td>${discount.getName()} (<small>${discount.getDescription()}</small>)</td>
                             </tr>
                         </c:if>
                         <tr>

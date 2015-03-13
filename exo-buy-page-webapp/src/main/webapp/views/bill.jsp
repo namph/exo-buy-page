@@ -74,7 +74,7 @@
                 <div class="price-row">
                     <div class="row">
                         <div class="col-xs-7 price-label">
-                                ${name}
+                                ${name} <small>${description}</small>
                         </div>
                         <div class="col-xs-5 text-right">
                             <span class="price link-color">$ ${amount}</span>
