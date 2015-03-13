@@ -69,7 +69,7 @@ public class TransactionDTO{
     return totalBill;
   }
 
-  public void setTotalBill(int totalBill) {
-    this.totalBill = new BigDecimal(totalBill);
+  public void setTotalBill(BigDecimal totalBill) {
+    this.totalBill = totalBill;
   }
 }

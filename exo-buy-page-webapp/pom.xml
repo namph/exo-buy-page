@@ -172,18 +172,6 @@
       <version>1.4.7</version>
       <type>jar</type>
     </dependency>
-    <!-- memcache -->
-    <dependency>
-      <groupId>com.google.code.simple-spring-memcached</groupId>
-      <artifactId>spring-cache</artifactId>
-      <version>${mecache.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.google.code.simple-spring-memcached</groupId>
-      <artifactId>xmemcached-provider</artifactId>
-      <version>${mecache.version}</version>
-    </dependency>
     <!-- for issue related to proxy -->
     <dependency>
       <groupId>cglib</groupId>
