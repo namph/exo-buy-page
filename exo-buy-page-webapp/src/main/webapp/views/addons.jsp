@@ -23,13 +23,23 @@
             <c:if test="${count_addon%3==1}"><div class="row"></c:if>
             <c:set var="id" value="${addon.getId()}"></c:set>
             <c:set var="name" value="${addon.getName()}"></c:set>
-            <c:set var="description" value="${addon.getDescription()}"></c:set>
+            <c:set var="listDescription" value="${addon.getListDescription()}"></c:set>
             <c:set var="price" value="${addon.getPrice()}"></c:set>
             <c:set var="user" value="${addon.getOptionUser()}"></c:set>
             <c:set var="icon" value="uiIcon28BPCamera"></c:set>
             <div class="col-sm-4 addon-bloc addon-${user}" style="display: none;">
                 <div class="uiCloudCardSelect" id="${id}">
-                    <div class="inner addonItem" data-toggle="${count_addon%3}" data-name="${name}" data-description="${description}" data-price="${price}" data-id="${id}">
+                    <div class="inner addonItem" data-toggle="${count_addon%3}" data-name="${name}" data-price="${price}" data-id="${id}">
+                        <div class="item-list-description" style="display: none;">
+                            <c:if test="${listDescription.get(\"title\") != \"\"}">
+                                <p><b>${listDescription.get("title")}</b></p>
+                            </c:if>
+                            <c:if test="${listDescription != null}">
+                                <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                    <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                         <div class="circle-icon">
                             <i class="${icon}"></i>
                         </div>
@@ -45,7 +55,6 @@
     <div class="dropdown-info-service" style="display: none;">
         <div class="col-sm-12 wrap-dropdown">
             <div class="dropdown-box show">
-                <p><b>5 days of dedicated expertise</b></p>
             </div>
         </div>
     </div>
@@ -62,12 +71,22 @@
 
             <c:set var="id" value="${service.getId()}"></c:set>
             <c:set var="name" value="${service.getName()}"></c:set>
-            <c:set var="description" value="${service.getDescription()}"></c:set>
+            <c:set var="listDescription" value="${service.getListDescription()}"></c:set>
             <c:set var="price" value="${service.getPrice()}"></c:set>
             <c:set var="icon" value="uiIcon28BPCamera"></c:set>
             <div class="col-sm-4">
                 <div class="uiCloudCardSelect" id="${id}">
-                    <div class="inner serviceItem" data-toggle="${count_service%3}" data-name="${name}" data-description="${description}" data-price="${price}" data-id="${id}">
+                    <div class="inner serviceItem" data-toggle="${count_service%3}" data-name="${name}" data-price="${price}" data-id="${id}">
+                        <div class="item-list-description" style="display: none;">
+                            <c:if test="${listDescription != null}">
+                                <c:if test="${listDescription.get(\"title\") != \"\"}">
+                                    <p><b>${listDescription.get("title")}</b></p>
+                                </c:if>
+                                <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                    <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                         <c:if test="${icon != \"\"}">
                             <div class="circle-icon">
                                 <i class="${icon}"></i>

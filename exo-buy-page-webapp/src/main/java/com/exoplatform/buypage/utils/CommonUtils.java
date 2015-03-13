@@ -2,6 +2,8 @@ package com.exoplatform.buypage.utils;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class CommonUtils {
 
@@ -34,5 +36,21 @@ public class CommonUtils {
 
   public static String convertAmount2String(BigDecimal amount){
     return DECIMAL_FORMAT.format(amount);
+  }
+  
+  public static  Date parseDate(String date,String formatStr){
+    try {      
+      SimpleDateFormat format = new SimpleDateFormat(formatStr);      
+      Date ret = format.parse(date);        
+      return ret;
+    } catch (Exception e) {
+      return null;
+    } 
+  }
+  
+  public static  String partString(Date date, String format){
+    SimpleDateFormat formatter = new SimpleDateFormat(format);
+    String s = formatter.format(date);
+    return s;
   }
 }

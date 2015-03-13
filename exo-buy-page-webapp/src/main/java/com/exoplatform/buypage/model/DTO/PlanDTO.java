@@ -16,11 +16,6 @@
  */
 package com.exoplatform.buypage.model.DTO;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -103,32 +98,6 @@ public class PlanDTO extends DTO {
         return  Integer.parseInt((typeArr[typeArr.length-1]).replaceAll("\\D+",""));
     }
     return 1;
-  }
-  public JSONObject getListDescription() {
-    JSONParser jsonParser = new JSONParser();
-    JSONObject jsonObject = null;
-    JSONArray jsonArray = null;
-    String title = "";
-    ArrayList<String> description = new ArrayList<String>();
-    if (null != this.getDescription()) {
-      jsonObject = new JSONObject();
-      try {
-        Object object = (Object) jsonParser.parse(this.getDescription());
-        if (object instanceof JSONObject)
-          jsonObject = (JSONObject) object;
-        else if (object instanceof JSONArray) {
-          jsonArray = (JSONArray) object;
-        }
-      } catch (Exception e) {
-      }
-      if (!jsonObject.containsKey("title")) {
-        jsonObject.put("title", "");
-      }
-      if (!jsonObject.containsKey("description") && null != jsonArray) {
-        jsonObject.put("description", jsonArray);
-      }
-    }
-    return jsonObject;
   }
 
 }
