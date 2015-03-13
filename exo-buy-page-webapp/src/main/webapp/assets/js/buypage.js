@@ -178,6 +178,7 @@
             var planCycle = me.attr("data-planCycle");
             _addonUserDefault = user;
             _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
+            $(".hide-tab-item-"+id).trigger('click');
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
             }else{

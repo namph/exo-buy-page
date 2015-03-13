@@ -91,16 +91,4 @@ public class RESTPlanController {
     mav.addObject("planTypes",planTypeDTOMap);
     return mav;
   }
-  @RequestMapping(value = "/set",method = RequestMethod.GET,produces = "application/json")
-  @ResponseBody
-  public String set(HttpSession httpSession){
-    TransactionDTO transactionDTO = new TransactionDTO();
-    transactionDTO.setId("trans-sess");
-    PlanDTO planDTO = new PlanDTO("planid","toto","tata");
-    transactionDTO.setPlanDTO(planDTO);
-    httpSession.setAttribute("trans",transactionDTO);
-    return transactionDTO.getId();
-  }
-
-
 }
