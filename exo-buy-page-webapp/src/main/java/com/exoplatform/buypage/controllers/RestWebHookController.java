@@ -163,11 +163,12 @@ public class RestWebHookController {
   
   @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
   @ResponseBody
-  public Object handle(@RequestBody String postData,
+  public Object handle(@RequestParam (value = "bt_signature", required=false) String bt_signature,
+                       @RequestParam (value = "bt_payload", required=false) String bt_payload,
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
     System.out.println("START Webhook call");
-    System.out.println(postData);
+    //System.out.println(request.getQueryString());
     //System.out.println(request.toString());
     
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
@@ -175,13 +176,13 @@ public class RestWebHookController {
     Subscription subscription = null;
     try {
       
-      org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) JSONValue.parseWithException(postData);
+      //org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) JSONValue.parseWithException(postData);
       
       //String bt_signature = request.getParameter("bt_signature");
       //String bt_payload = request.getParameter("bt_payload");
       
-      String bt_signature =  jsonObj.get("bt_signature").toString();
-      String bt_payload =  jsonObj.get("bt_payload").toString();
+      //String bt_signature =  request.getParameter("bt_signature");
+      //String bt_payload =  request.getParameter("bt_payload");
      
       
       System.out.println("bt_signature: " + bt_signature);
