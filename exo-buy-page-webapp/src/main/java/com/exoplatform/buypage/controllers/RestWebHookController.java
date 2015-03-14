@@ -6,25 +6,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.json.simple.JSONValue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RequestPart;
 
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
@@ -157,7 +152,6 @@ public class RestWebHookController {
   @ResponseBody
   public Object handle(@RequestParam (value = "bt_challenge", required=false) String bt_challenge){
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
-    //response.type("text/html");
     return gateway.webhookNotification().verify(bt_challenge);
   }
   
@@ -168,22 +162,12 @@ public class RestWebHookController {
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
     System.out.println("START Webhook call");
-    //System.out.println(request.getQueryString());
-    //System.out.println(request.toString());
-    
+    log.info("START Webhook call");
+
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
     Subscription subscription = null;
     try {
-      
-      //org.json.simple.JSONObject jsonObj = (org.json.simple.JSONObject) JSONValue.parseWithException(postData);
-      
-      //String bt_signature = request.getParameter("bt_signature");
-      //String bt_payload = request.getParameter("bt_payload");
-      
-      //String bt_signature =  request.getParameter("bt_signature");
-      //String bt_payload =  request.getParameter("bt_payload");
-     
       
       System.out.println("bt_signature: " + bt_signature);
       System.out.println("bt_payload: " + bt_payload);
@@ -194,7 +178,7 @@ public class RestWebHookController {
       
       String result = ("[Webhook Received " + webhookNotification.getTimestamp().getTime() + "] | Kind: " + webhookNotification.getKind() + " | Subscription: " + subscription.getId());
       log.info(result);
-      System.out.println(subscription.toString());
+      System.out.println(result);
 
     } catch (Exception e) {
       log.info("Can not load subscription from braintree, test load subscription buy subscriptionId = " + subscriptionId, e);
