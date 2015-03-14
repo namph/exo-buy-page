@@ -46,16 +46,31 @@
                     <!-- Tab panes -->
                     <div class="tab-content">
                         <c:forEach items="${planTypes}" var="entry">
-                            <c:set var="id" value="${entry.value.getId()}"></c:set>
-                            <c:set var="name" value="${entry.value.getName()}"></c:set>
-                            <c:set var="description" value="${entry.value.getDescription()}"></c:set>
-                            <c:set var="price" value="${entry.value.getPrice()}"></c:set>
-                            <div role="tabpanel" class="tab-pane ${entry.value.getActive()} ${id}">
-                                <h3 class="heading-border">Your subcription Plan includes:</h3>
-                                <div class="checkbox"><label><input type="checkbox"> ${name}</label></div>
-                                <div class="checkbox"><label><input type="checkbox"> ${description}</label></div>
-                                <div class="checkbox"><label><input type="checkbox"> Software Maintenace</label></div>
-                            </div>
+                            <c:set var="planTypeId" value="${entry.value.getId()}"></c:set>
+                            <c:set var="active" value="${entry.value.getActive()}"></c:set>
+                            <c:forEach items="${entry.value.getPlanDTOs()}" var="planDTO">
+                                <c:set var="id" value="${planDTO.getId()}"></c:set>
+                                <c:set var="listDescription" value="${planDTO.getListDescription()}"></c:set>
+                                <div data-target=".${id}" class="hide-tab-item-${id}" aria-controls="${id}" role="tab" data-toggle="tab" style="display: none;">
+                                </div>
+                                <c:choose>
+                                    <c:when test="${planTypeId == id}">
+                                        <div role="tabpanel" class="tab-pane ${active} ${id}">
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div role="tabpanel" class="tab-pane ${id}">
+                                    </c:otherwise>
+                                </c:choose>
+                                 <h3 class="heading-border">Your subcription Plan includes:</h3>
+                                 <c:if test="${listDescription != null}">
+                                     <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                         <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
+                                     </c:forEach>
+                                 </c:if>
+                                 </div>
+
+                            </c:forEach>
+
                         </c:forEach>
                     </div>
                 </div>
@@ -88,7 +103,6 @@
                                 <c:set var="position" value="${nbUser/entry.value.getMaxNbUser()*100}"></c:set>
                                 <c:set var="user" value="${planDTO.getOptionUser()}"></c:set>
                                 <c:set var="planCycle" value="${planDTO.getPlanCycle()}"></c:set>
-                                ${planDTO.getYearNumber()}
                                 <div class="ui-slider-handle ui-state-default ui-corner-all subPlanItem" id="${planTypeId}-${nbUser}" style="left: ${position}%;" data-name="${name}" data-price="${price}" data-id="${id}"  data-user="${user}" data-planCycle="${planCycle}">
                                     <span class="countValue" >${nbUser} users</span>
                                 </div>

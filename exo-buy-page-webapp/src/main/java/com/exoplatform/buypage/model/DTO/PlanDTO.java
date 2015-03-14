@@ -91,10 +91,13 @@ public class PlanDTO extends DTO {
     this.year = year;
   }
   public int getYearNumber(){
-    String type = this.getPlanType();
-    String[] typeArr = type.split("_");
-    if (typeArr.length > 1)
-      return  Integer.parseInt((typeArr[typeArr.length-1]).replaceAll("\\D+",""));
+    if (null != this.getPlanType()){
+      String type = this.getPlanType();
+      String[] typeArr = type.split("_");
+      if (typeArr.length > 1)
+        return  Integer.parseInt((typeArr[typeArr.length-1]).replaceAll("\\D+",""));
+    }
     return 1;
   }
+
 }

@@ -116,7 +116,6 @@ public class ConfirmationController {
                 discountDTO.setAmount(btDiscount.getAmount());
                 discountDTO.setAmount(gatewayService.getDiscountAmount(discountDTO, planDTO.getPrice(), planDTO.getPlanCycle(), planDTO.getOptionUser()));
               }
-
             }
           }
           mav.addObject("transactionId", transactionId);

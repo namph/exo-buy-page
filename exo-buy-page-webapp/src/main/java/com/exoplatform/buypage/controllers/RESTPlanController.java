@@ -4,7 +4,6 @@ import com.braintreegateway.Plan;
 import com.exoplatform.buypage.gateway.IService;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
 import com.exoplatform.buypage.model.DTO.PlanTypeDTO;
-import com.exoplatform.buypage.model.DTO.TransactionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
 import java.util.*;
-import java.util.ArrayList;
 
 /**
  * Plan controller handler.
@@ -52,6 +49,7 @@ public class RESTPlanController {
     PlanTypeDTO planTypeDTO = null;
     String prefixPlanType = "";
     Map<String,PlanTypeDTO> planTypeDTOMap = new HashMap<String, PlanTypeDTO>();
+    Boolean hasPlanActivated = false;
     for (Plan plan:plans){
       planDTO = new PlanDTO(plan.getId(),plan.getName(),plan.getDescription());
       planDTO.setPrice(gatewayService.getPlanPrice(plan));
@@ -72,6 +70,7 @@ public class RESTPlanController {
         }
         currentPlanTypeDTO.getPlanDTOs().add(planDTO);
         if (!"".equals(planDTO.getActive())){
+          hasPlanActivated = true;
           currentPlanTypeDTO.setId(planDTO.getId());
           currentPlanTypeDTO.setName(planDTO.getName());
           currentPlanTypeDTO.setDescription(planDTO.getDescription());
@@ -86,21 +85,13 @@ public class RESTPlanController {
     }
     if (planTypeDTOMap.size() == 0){
       msgError = "Sorry, Service unavailable, Please try it later !";
+    }else{
+      if (!hasPlanActivated){
+        planTypeDTOMap.get(prefixPlanType).setActive("active");
+      }
     }
     mav.addObject("error",msgError);
     mav.addObject("planTypes",planTypeDTOMap);
     return mav;
   }
-  @RequestMapping(value = "/set",method = RequestMethod.GET,produces = "application/json")
-  @ResponseBody
-  public String set(HttpSession httpSession){
-    TransactionDTO transactionDTO = new TransactionDTO();
-    transactionDTO.setId("trans-sess");
-    PlanDTO planDTO = new PlanDTO("planid","toto","tata");
-    transactionDTO.setPlanDTO(planDTO);
-    httpSession.setAttribute("trans",transactionDTO);
-    return transactionDTO.getId();
-  }
-
-
 }

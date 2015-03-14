@@ -178,6 +178,7 @@
             var planCycle = me.attr("data-planCycle");
             _addonUserDefault = user;
             _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
+            $(".hide-tab-item-"+id).trigger('click');
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
             }else{
@@ -194,7 +195,7 @@
             var id = me.attr("data-id");
             var name = me.attr("data-name");
             var price = me.attr("data-price");
-            var description = me.attr("data-description");
+            var description = "";//me.attr("data-description");
             var obj = {id:id, name:name, price:price, description:description};
 
             _toggleDropdownAddonDesc(me);
@@ -217,7 +218,8 @@
     var _toggleDropdownAddonDesc = function(addon_item) {
         var parent = addon_item.parent();
         var parent_row = addon_item.closest(".row");
-        var description = addon_item.attr("data-description");
+        var descriptionBloc = addon_item.children("div.item-list-description");
+        var description = descriptionBloc.html();//addon_item.attr("data-description");
         var data_toggle = addon_item.attr("data-toggle");
         var is_shown_desc = false;
 
@@ -251,11 +253,12 @@
         parent_row.find(".wrap-dropdown").addClass(dropdown_position);
 
         dropdown_box = parent_row.find(".dropdown-box");
-        $.each(description.split("*"), function (number, desc) {
+        dropdown_box.append(description);
+/*        $.each(description.split("*"), function (number, desc) {
             if (desc != "") {
                 dropdown_box.append("<p><i class='fa fa-check fa-primary-color'></i> " + desc + "</p>");
             }
-        })
+        })*/
 
         var appended_dropdown_info_service = parent_row.find(".dropdown-info-addon");
 
@@ -291,7 +294,8 @@
     var _toggleDropdownServiceDesc = function(service_item) {
         var parent = service_item.parent();
         var parent_row = service_item.closest(".row");
-        var description = service_item.attr("data-description");
+        var descriptionBloc = service_item.children("div.item-list-description");
+        var description = descriptionBloc.html();//service_item.attr("data-description");
         var data_toggle = service_item.attr("data-toggle");
         var is_shown_desc = false;
 
@@ -320,11 +324,12 @@
         parent_row.find(".wrap-dropdown").addClass(dropdown_position);
 
         dropdown_box = parent_row.find(".dropdown-box");
-        $.each(description.split("*"), function (number, desc) {
+        dropdown_box.append(description);
+/*        $.each(description.split("*"), function (number, desc) {
             if (desc != "") {
                 dropdown_box.append("<p><i class='fa fa-check fa-primary-color'></i> " + desc + "</p>");
             }
-        })
+        })*/
 
         var appended_dropdown_info_service = parent_row.find(".dropdown-info-service");
 
@@ -597,8 +602,31 @@
     };
 
     var _hideAllAddonsButOne = function(){
+
+      var addonOfPlanSelectedDOM = $(".addon-"+_addonUserDefault);
+      /*
+      to do later
+      var addonIdOfPlanSelected = addonOfPlanSelectedDOM.children().attr("id");
+      var id = "";
+      for(var i=0;i< _listAddonsSelected.length;i++){
+        id = _listAddonsSelected[i].id;
+        if(id.indexOf(_addonUserDefault) != -1){
+          var addonDOM = $("#"+id);
+          var parent = addonDOM.parent();
+          if(parent.hasClass("selected")){
+            parent.removeClass("selected");
+            _removeServiceFromListSelected(id);
+          }else{
+            parent.addClass("selected");
+            _addService2ListSelected(obj);
+          }
+        }
+      }
+      addonOfPlanSelectedDOM.addClass("selected");
+      _addService2ListSelected(obj);
+      */
         $(".addon-bloc").hide();
-        $(".addon-"+_addonUserDefault).show();
+      addonOfPlanSelectDOM.show();
     };
     var _addEvent2CheckTandC = function () {
       $(document).on('click.termandcondition.check',"#termandcondition",function(){
