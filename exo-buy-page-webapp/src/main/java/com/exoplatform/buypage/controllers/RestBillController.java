@@ -26,7 +26,7 @@ public class RestBillController {
   @Inject
   IService gatewayService;
 
-  @RequestMapping(value = "/showFromClient",method = RequestMethod.POST,consumes = {"application/json"})
+  @RequestMapping(value = "/showFromClient",method = RequestMethod.POST,consumes = {"application/json"},produces = "text/html")
   public ModelAndView showBillFromClient(@RequestBody ItemOrderWrapper itemOrderWrapper){
     ModelAndView mav = new ModelAndView();
     mav.setViewName("bill");

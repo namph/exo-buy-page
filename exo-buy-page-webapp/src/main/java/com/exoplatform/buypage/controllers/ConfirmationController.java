@@ -44,7 +44,7 @@ public class ConfirmationController {
     return null;
   }
 
-  @RequestMapping(value = "/success")
+  @RequestMapping(value = "/success",produces = "text/html")
   public ModelAndView success(HttpSession httpSession){
     PlanDTO planDTO = null;
     String customer_email = null;

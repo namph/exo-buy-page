@@ -63,9 +63,12 @@
                                 </c:choose>
                                  <h3 class="heading-border">Your subcription Plan includes:</h3>
                                  <c:if test="${listDescription != null}">
-                                     <c:forEach items="${listDescription.get(\"description\")}" var="description">
-                                         <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
-                                     </c:forEach>
+                                     <ul class="ui-list-check">
+                                         <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                         <li>${description}</li>
+                                         </c:forEach>
+                                     </ul>
+
                                  </c:if>
                                  </div>
 

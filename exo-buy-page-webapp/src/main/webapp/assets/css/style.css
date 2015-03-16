@@ -8932,6 +8932,68 @@ body {
 .input-group .input-group-btn .fa {
   font-size: 16px;
 }
+ul[class^="ui-list"] {
+  margin-bottom: 15px;
+  padding-left: 15px;
+}
+ul[class^="ui-list"] > li {
+  position: relative;
+}
+ul[class^="ui-list"] > li + li {
+  margin-top: 8px;
+}
+ul[class^="ui-list"] ul,
+ul[class^="ui-list"] ol {
+  margin-top: 20px;
+  padding-left: 20px;
+}
+ul.ui-list-check {
+  list-style: none;
+  padding-left: 20px;
+}
+ul.ui-list-check li {
+  position: relative;
+}
+ul.ui-list-check li:before {
+  position: absolute;
+  left: -20px;
+  top: 0px;
+  font-family: 'FontAwesome';
+  content: "\f00c";
+  color: #2f5e92;
+}
+.form-group.required {
+  position: relative;
+}
+.form-group.required:after {
+  content: "*";
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  -webkit-transform: translate(0, -50%);
+  -ms-transform: translate(0, -50%);
+  -o-transform: translate(0, -50%);
+  transform: translate(0, -50%);
+  font-size: 18px;
+  display: block;
+  height: 16px;
+  width: 20px;
+  text-align: center;
+  font-size: 30px;
+  line-height: 1;
+}
+.form-group.required.has-error:after {
+  color: #d9534f;
+}
+.form-group.required.has-success:after {
+  color: #5cb85c;
+}
+.form-group.required.has-warning:after {
+  color: #f0ad4e;
+}
+.form-group.required.has-info:after {
+  color: #5bc0de;
+}
 .circle-icon {
   display: block;
   margin: 0 auto;
@@ -9385,6 +9447,8 @@ h2.TitleForm {
   margin-top: 0;
   margin-bottom: 8px;
   font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 .intro-plan-box .nav-pills > li > div h5:after {
   content: "";
@@ -9578,7 +9642,7 @@ h2.TitleForm {
 }
 .panel.order-box.affix {
   top: 20px;
-  min-width: 307px;
+  width: 307px;
 }
 .list-card-supported {
   padding: 5px 0;
@@ -9590,6 +9654,32 @@ h2.TitleForm {
   float: left;
   margin-left: 5.7%;
   margin-bottom: 10px;
+}
+.list-card-supported > li + li {
+  margin-top: 0;
+}
+.loading-all {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  line-height: 100%;
+  text-align: center;
+  color: #fff;
+  z-index: 1600;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.loading-all .fa {
+  position: fixed;
+  font-size: 60px;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
@@ -9614,6 +9704,11 @@ h2.TitleForm {
   }
 }
 /* Only for Small devices and lower (<767px) */
+@media (max-width: 767px) {
+  .text-right.md {
+    text-align: left;
+  }
+}
 .inline {
   display: inline;
 }

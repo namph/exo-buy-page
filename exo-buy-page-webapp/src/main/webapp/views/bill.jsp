@@ -86,8 +86,8 @@
         </div>
         <div class="panel-footer">
             <div class="row">
-                <div class="col-xs-6 total-text">Total</div>
-                <div class="col-xs-6 total-price"><span class="price">$ ${total}</span></div>
+                <div class="col-xs-5 total-text">Total</div>
+                <div class="col-xs-7 total-price"><span class="price">$ ${total}</span></div>
             </div>
         </div>
     </div>

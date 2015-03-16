@@ -12,7 +12,29 @@
     var _totalBill= 0;
     var BuyPage = {};
 
-    var _messageConfirmCBController = function (typeParent, type,message,display) {
+  var _eXoStyleMessageConfirmCBController = function (type,message) {
+    var alertDOM =  $('#buypage-alert-billing');
+    if(type != null && type != "") {
+      var icon = type.charAt(0).toUpperCase() + type.slice(1);
+      var strIcon =""; //"<i class='uiIcon" + icon + "'></i>";
+      alertDOM.removeClass();
+      alertDOM.addClass('alert');
+      alertDOM.addClass('alert-' + type);
+      alertDOM.html(strIcon + message);
+    }
+  };
+  var _disPlayInfoeXoStyleMsgCB = function(msg){
+    _eXoStyleMessageConfirmCBController('info',msg);
+  };
+  var _disPlayWarningeXoStyleMsgCB = function(msg){
+    _eXoStyleMessageConfirmCBController('warning',msg);
+  };
+  var _disPlayErroreXoStyleMsgCB = function(msg){
+    _eXoStyleMessageConfirmCBController('danger',msg);
+  };
+
+
+  var _messageConfirmCBController = function (typeParent, type,message,display) {
 
         var buypageAlertGeneral = $("#buypage-alert-general");
         var buypageAlertCoupon = $("#buypage-alert-coupon");
@@ -108,6 +130,7 @@
     };
     var _loadActiveAddons = function(planId){
         $.ajax({
+            mimeType:"text/html; charset=UTF-8",
             url: _baseRestUrl+"/Addons/getActives/"+planId,
             dataType: "text"
         })
@@ -121,32 +144,26 @@
             });
     };
     var _getDiscount = function(discountId){
+      $(".coupon-loading").show();
         $.ajax({
             url: _baseRestUrl+"/Discount/get/"+discountId,
             dataType: "text"
         })
             .done(function(data) {
-                var obj = $.parseJSON(data);
-                if(typeof data !== undefined){
-                    _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
-                    _loadBillFromClient();
-                    _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
+                $(".coupon-loading").hide();
+                if(typeof data !== undefined && data!= ""){
+                  var obj = $.parseJSON(data);
+                  _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
+                  _loadBillFromClient();
+                  _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
                 }else
-                _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+                  _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
             })
             .fail(function (jqxhr, textStatus, error) {
+                $(".coupon-loading").hide();
                 var err = textStatus + ', ' + error;
                 console.log("Transaction Failed: " + err);
             });
-    };
-    var _addEvent2BtnSubmitDiscount = function(){
-        $(document).on('click.discount.submit','button#btnSubmitDiscount',function(){
-            _discountProvided = null;
-            var discountId = $("#discountId").val();
-            if (typeof discountId !== undefined && discountId.length > 0 ){
-                _getDiscount(discountId);
-            }
-        })
     };
 
     var _addEventClick2PlanTypeItem = function(){
@@ -197,12 +214,11 @@
             var price = me.attr("data-price");
             var description = "";//me.attr("data-description");
             var obj = {id:id, name:name, price:price, description:description};
-
+            _toggleDropdownAddonDesc(me);
             if(parent.hasClass("selected")){
                 parent.removeClass("selected");
                 _removeAddonFromListSelected(id);
             } else {
-                _toggleDropdownAddonDesc(me);
                 parent.addClass("selected");
                 _addAddon2ListSelected(obj);
             }
@@ -273,14 +289,14 @@
             var price = me.attr("data-price");
             var obj = {id:id,name:name,price:price};
 
-            _toggleDropdownServiceDesc(me);
-
             if(parent.hasClass("selected")){
                 parent.removeClass("selected");
+              _toggleDropdownServiceDesc(me,false);
                 _removeServiceFromListSelected(id);
             }else{
-                parent.addClass("selected");
-                _addService2ListSelected(obj);
+              parent.addClass("selected");
+              _addService2ListSelected(obj);
+              _toggleDropdownServiceDesc(me,true);
             }
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
@@ -290,14 +306,17 @@
         });
     };
 
-    var _toggleDropdownServiceDesc = function(service_item) {
+    var _toggleDropdownServiceDesc = function(service_item,display) {
+
         var parent = service_item.parent();
         var parent_row = service_item.closest(".row");
         var descriptionBloc = service_item.children("div.item-list-description");
         var description = descriptionBloc.html();//service_item.attr("data-description");
         var data_toggle = service_item.attr("data-toggle");
         var is_shown_desc = false;
-
+        if(!display){
+          parent_row.parent().find(".dropdown-info-service").remove();
+        }
         if (parent_row.find(".dropdown-info-service").hasClass(data_toggle)) is_shown_desc = true;
 
         parent_row.parent().find(".dropdown-info-service").remove();
@@ -382,6 +401,7 @@
         })
             .done(function(data) {
                 _billContainerDOM.html(data);
+                _resetAffixOrderBox();
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
@@ -390,9 +410,12 @@
     };
     var _addEvent2BtnSubmitDiscount = function(){
         $(document).on('click.discount.submit','button#btnSubmitDiscount',function(){
+            _disPlayWarningMsgCB("coupon","",false);
             var discountId = $("#discountId").val();
             if (typeof discountId !== undefined && discountId.length > 0 ){
                 _getDiscount(discountId);
+            }else{
+              _disPlayWarningMsgCB("coupon","Please provide your coupon code",true);
             }
         })
     };
@@ -446,6 +469,14 @@
 
         return info;
     };
+    var _dislayLoadingAll = function(display){
+      var loadingDOM = $(".loading-all");
+      if(display){
+        loadingDOM.addClass("show");
+      }
+      else
+        loadingDOM.removeClass("show");
+    };
     var _addEvent2BtnSubscribe = function(){
         $(document).on('click.subscribe.submit','button.subscribe', function () {
             var me = $(this);
@@ -453,10 +484,8 @@
             var isValidBillingForm = _isValidBillingForm();
             if (subscriptionCustomer == null || !isValidBillingForm){
                 //_disPlayInfoMsgCB("billing","Please fill all mandatory fields");
-                $("#buypage-alert-billing").show();
                 return;
             }
-            $("#buypage-alert-billing").hide();
             var firstName = subscriptionCustomer['first_name'];
             var lastName = subscriptionCustomer['last_name'];
             var organization = subscriptionCustomer['organisation'];
@@ -484,7 +513,7 @@
             for(var i=0;i<_listServicesSelected.length;i++){
               addons.push(_listServicesSelected[i]);
             }
-
+          _dislayLoadingAll(true);
             var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"plan":_planSelected,"addons":addons,"discount":discount,"totalBill":_totalBill};
             data = JSON.stringify(data);
             $.ajax({
@@ -500,12 +529,14 @@
                         _disPlaySuccessMsgCB("credit","Transaction successful",true);
                         window.location.href = "confirmation/success";
                     }else{
+                      _dislayLoadingAll(false);
                       me.prop('disabled',false);
                       _disPlayInfoMsgCB("credit",obj.msg,true);
                     }
                 })
                 .fail(function (jqxhr, textStatus, error) {
                     var err = textStatus + ', ' + error;
+                    _dislayLoadingAll(false);
                     me.prop('disabled',false);
                     _disPlayErrorMsgCB("credit",err,true);
                 });
@@ -513,34 +544,37 @@
         })
     };
 
+
+    var error = "has-error";
+    var valid = "has-success";
     var _initValidFormFields = function(){
         $("#first_name").blur(function(){
             var lenFirstName = $(this).val().length;
             if(lenFirstName < 1 ) {
-                $(this).addClass("ErrorField");
+                $(this).parent().addClass(error);
             } else {
-                $(this).removeClass("ErrorField");
-                $(this).addClass("Validated");
+                $(this).parent().removeClass(error);
+                $(this).parent().addClass(valid);
             }
         });
 
         $("#last_name").blur(function(){
             var lenLastName = $(this).val().length;
             if(lenLastName < 1 ) {
-                $(this).addClass("ErrorField");
+              $(this).parent().addClass(error);
             } else {
-                $(this).removeClass("ErrorField");
-                $(this).addClass("Validated");
+              $(this).parent().removeClass(error);
+              $(this).parent().addClass(valid);
             }
         });
 
         $("#organisation").blur(function(){
             var lenLastName = $(this).val().length;
             if(lenLastName < 1 ) {
-                $(this).addClass("ErrorField");
+              $(this).parent().addClass(error);
             } else {
-                $(this).removeClass("ErrorField");
-                $(this).addClass("Validated");
+              $(this).parent().removeClass(error);
+              $(this).parent().addClass(valid);
             }
         });
 
@@ -548,10 +582,10 @@
             var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             var lenEmail = $(this).val().length;
             if(!$(this).val().match(mailformat)) {
-                $(this).addClass("ErrorField");
+              $(this).parent().addClass(error);
             } else {
-                $(this).removeClass("ErrorField");
-                $(this).addClass("Validated");
+              $(this).parent().removeClass(error);
+              $(this).parent().addClass(valid);
             }
         });
 
@@ -559,46 +593,69 @@
             var phoneformat = /^[0-9+\(\)#\.\s\/ext-]+$/;
             var lenPhone = $(this).val().length;
             if(lenPhone < 9 || !$(this).val().match(phoneformat)) {
-                $(this).addClass("ErrorField");
+              $(this).parent().addClass(error);
             } else {
-                $(this).removeClass("Error");
-                $(this).addClass("Validated");
+              $(this).parent().removeClass(error);
+              $(this).parent().addClass(valid);
             }
         });
     };
 
     var _isValidBillingForm = function() {
-
+        $("#buypage-alert-billing").hide();
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var phoneformat = /^[0-9+\(\)#\.\s\/ext-]+$/;
-        $("#buypage-alert-billing .alert-message").html("");
+        var msg = "";
 
         var isValid = true;
         if($("#first_name").val().length < 1) {
-            $("#buypage-alert-billing .alert-message").append("<p>Please fill in the First Name.</p>");
+            msg +="<p>Please fill in the First Name.</p>";
+            $("#first_name").parent().addClass(error);
             isValid = false;
+        } else {
+          $(this).parent().removeClass(error);
+          $(this).parent().addClass(valid);
         }
 
         if($("#last_name").val().length < 1) {
-            $("#buypage-alert-billing .alert-message").append("<p>Please fill in the Last Name.</p>");
-            isValid = false;
+            msg +="<p>Please fill in the Last Name.</p>";
+          $("#last_name").parent().addClass(error);
+          isValid = false;
+        } else {
+          $(this).parent().removeClass(error);
+          $(this).parent().addClass(valid);
         }
 
         if($("#organisation").val().length < 1) {
-            $("#buypage-alert-billing .alert-message").append("<p>Please fill in the Organisation.</p>");
-            isValid = false;
+            msg +="<p>Please fill in the Organisation.</p>";
+          $("#organisation").parent().addClass(error);
+          isValid = false;
+        } else {
+          $(this).parent().removeClass(error);
+          $(this).parent().addClass(valid);
         }
 
         if(!$("#phone").val().match(phoneformat)) {
-            $("#buypage-alert-billing .alert-message").append("<p>Please enter a valid phone number.</p>");
-            isValid = false;
+            msg +="<p>Please enter a valid phone number.</p>";
+          $("#phone").parent().addClass(error);
+          isValid = false;
+        } else {
+          $(this).parent().removeClass(error);
+          $(this).parent().addClass(valid);
         }
 
         if(!$("#billing_email").val().match(mailformat)) {
-            $("#buypage-alert-billing .alert-message").append("<p>Please enter an valid email address.</p>");
-            isValid = false;
+            msg +="<p>Please enter an valid email address.</p>";
+          $("#billing_email").parent().addClass(error);
+          isValid = false;
+        } else {
+          $(this).parent().removeClass(error);
+          $(this).parent().addClass(valid);
         }
-
+        if(msg != ""){
+          _disPlayErroreXoStyleMsgCB(msg);
+          $("#buypage-alert-billing").show();
+        }
         return isValid;
 
     };
@@ -671,6 +728,16 @@
           _disPlayWarningMsgCB("credit","",false);
         }
       });
+    };
+    var _resetAffixOrderBox = function () {
+      $('.order-box').affix({
+        offset: {
+          top: 100,
+          bottom: function () {
+            return (this.bottom = $('.footer').outerHeight(true))
+          }
+        }
+      })
     };
     BuyPage.setTotalBill = function(total){
       _totalBill = total;

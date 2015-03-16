@@ -39,7 +39,7 @@ public class RESTPlanController {
     return plans;
   }
 
-  @RequestMapping(value = "getActives", method = RequestMethod.GET)
+  @RequestMapping(value = "getActives", method = RequestMethod.GET,produces = "text/html")
   public ModelAndView getActives(){
     String msgError = "";
     ModelAndView mav = new ModelAndView();

@@ -87,12 +87,12 @@
 .fontSizeLoop(@maxValue, @minValue: 0, @counter: 1, @unit: px) {
     // Nếu đơn vị sử dụng là px thì
     .loopSize (@index) when (@index >= @minValue) and (@unit = px){
-      	.f@{index} {
+      	.f-@{index} {
             // your resulting css
             font-size: ~"@{index}@{unit}";
         }
 
-        .f@{index}-ipt {
+        .f-@{index}-ipt {
             // your resulting css
             font-size: ~"@{index}@{unit}"!important;
         }
@@ -104,12 +104,12 @@
   	// Nếu đơn vị ko phải là "px" thì tên class sẽ thêm vào tên class
   	//vd: .f5em hoặc f5pt
   	.loopSize (@index) when (@index >= @minValue) and not (@unit = px){
-  		.f@{index}@{unit} {
+  		.f-@{index}@{unit} {
             // your resulting css
             font-size: ~"@{index}@{unit}";
         }
 
-        .f@{index}@{unit}-ipt {
+        .f-@{index}@{unit}-ipt {
             // your resulting css
             font-size: ~"@{index}@{unit}"!important;
         }
@@ -545,3 +545,10 @@
 
 // MIXIN: MIXINS for this Project
 // Write new mixin for project here...
+.reset-button-focus(@color; @background; @border) {
+	&:focus {
+		color: @color;
+		background-color: @background;
+		border-color: @border;
+	}
+}

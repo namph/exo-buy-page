@@ -1,5 +1,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+<body>
 <c:if test="${addons.size() > 0}">
     <div class="dropdown-info-addon" style="display: none;">
         <div class="col-sm-12 wrap-dropdown">
@@ -37,9 +46,11 @@
                                 <p><b>${listDescription.get("title")}</b></p>
                             </c:if>
                             <c:if test="${listDescription != null}">
-                                <c:forEach items="${listDescription.get(\"description\")}" var="description">
-                                    <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
-                                </c:forEach>
+                                <ul class="ui-list-check">
+                                    <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                        <li> ${description} </li>
+                                    </c:forEach>
+                                </ul>
                             </c:if>
                         </div>
                         <div class="circle-icon">
@@ -84,9 +95,11 @@
                                 <c:if test="${listDescription.get(\"title\") != \"\"}">
                                     <p><b>${listDescription.get("title")}</b></p>
                                 </c:if>
-                                <c:forEach items="${listDescription.get(\"description\")}" var="description">
-                                    <p><i class="fa fa-check fa-primary-color"></i> ${description}</p>
-                                </c:forEach>
+                                <ul class="ui-list-check">
+                                    <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                        <li> ${description} </li>
+                                    </c:forEach>
+                                </ul>
                             </c:if>
                         </div>
                         <c:if test="${icon != \"\"}">
@@ -102,3 +115,5 @@
         </c:forEach>
     </div>
 </c:if>
+</body>
+</html>

@@ -58,7 +58,7 @@
                         <c:if test="${plan.getAddons().size() > 0}">
                             <tr>
                                 <td>
-                                    addons
+                                    Add-ons
                                 </td>
                                 <td>
                                     <c:forEach items="${plan.getAddons()}" var="addon">
@@ -96,6 +96,7 @@
                             <td>$ ${total}</td>
                         </tr>
                     </table>
+                    <a class="btn btn-default" href="/buy">Close</a>
                 </div>
             </c:when>
             <c:otherwise>

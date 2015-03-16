@@ -33,7 +33,8 @@ public class RESTAddonController {
     return addons;
   }
 
-  @RequestMapping(value = "/getActives/{planId}", method = RequestMethod.GET)
+  @RequestMapping(value = "/getActives/{planId}", method = RequestMethod.GET,produces = "text/html")
+  @ResponseBody
   public ModelAndView getActives(@PathVariable(value = "planId") String planId){
     ModelAndView mav = new ModelAndView();
     mav.setViewName("addons");

@@ -51,16 +51,17 @@
                 <span class="title-icon"><i class="uiIcon28BPDiscount"></i></span>
             </div>
             <div class="bp-content">
+                <div class="text-center coupon-loading" style="display: none;"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
                 <!-- message callback -->
                 <div class="alert alert-dismissible" id="buypage-alert-coupon" role="alert" style="display: none">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div></div>
                 </div>
                 <p>Do you have any coupon code ? user it here.</p>
-                <div class="input-group col-md-8">
+                <div class="input-group">
                     <input type="text" class="form-control" placeholder="Coupon" id="discountId">
                         <span class="input-group-btn">
-                            <button class="btn btn-default" id="btnSubmitDiscount" type="button">Add Coupon</button>
+                            <button class="btn btn-primary" id="btnSubmitDiscount" type="button">Add Coupon</button>
                         </span>
                 </div>
             </div>
@@ -71,25 +72,21 @@
 
             <div class="bp-content" id="billingForm">
                 <!-- message callback -->
-                <div class="alert alert-danger" id="buypage-alert-billing" role="alert" style="display: none;">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <div class="alert-message">
-                        
-                    </div>
+                <div class="alert alert-warning" id="buypage-alert-billing" style="display: none;">
                 </div>
-                <div class="form-group">
+                <div class="form-group required ">
                     <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="">
                 </div>
-                <div class="form-group">
+                <div class="form-group required ">
                     <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" value="">
                 </div>
-                <div class="form-group">
+                <div class="form-group required ">
                     <input type="text" id="organisation" name="organisation" class="form-control" placeholder="Organisation" value="">
                 </div>
-                <div class="form-group">
+                <div class="form-group required ">
                     <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone" value="">
                 </div>
-                <div class="form-group">
+                <div class="form-group required ">
                     <input type="text" id="billing_email" name="billing_email" class="form-control" placeholder="Billing Email" value="">
                 </div>
                 <div class="form-group">
@@ -122,7 +119,6 @@
             <div class="bp-content">
                 <!-- message callback -->
                 <div class="alert alert-dismissible" id="buypage-alert-credit" role="alert" style="display: none">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <div></div>
                 </div>
                 <!-- credit js -->
@@ -142,14 +138,14 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-7">
+                        <div class="col-sm-6">
                             <div class="form-group ccjs-name">
                                 <input name="name" id="cardHolder" class="ccjs-name form-control" placeholder="Name on Card">
                             </div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6">
                             <fieldset class="ccjs-expiration row">
-                                <div class="col-sm-4"><p class="form-control-static text-right">Expiration:</p></div>
+                                <div class="col-sm-4"><p class="form-control-static text-right md">Expiration:</p></div>
                                 <div class="col-sm-4 col-xs-6 form-group">
                                     <select name="month" id="expireMonth" class="ccjs-month form-control">
                                         <option selected disabled>MM</option>
@@ -237,6 +233,11 @@
     </div>
 </div>
 </div>
+
+<div class="loading-all">
+    <i class="fa fa-spinner fa-spin"></i>
+</div>
+
 <!-- Javascript -->
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
