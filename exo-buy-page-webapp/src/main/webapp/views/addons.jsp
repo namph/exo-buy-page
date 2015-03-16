@@ -13,7 +13,7 @@
         <h3 class="title">Add-ons</h3>
         <span class="title-icon"><i class="uiIcon28BPAddons"></i></span>
     </div>
-    <div class="bp-content">
+    <div class="bp-content addonsContainer">
 
         <p>Add powerful add-on to your Social Intranet</p>
         <br>
@@ -27,7 +27,9 @@
             <c:set var="price" value="${addon.getPrice()}"></c:set>
             <c:set var="user" value="${addon.getOptionUser()}"></c:set>
             <c:set var="icon" value="uiIcon28BPCamera"></c:set>
-            <div class="col-sm-4 addon-bloc addon-${user}" style="display: none;">
+            <c:set var="isAttched2Plan" value="${addon.isAttached2Plan()}"></c:set>
+            <c:set var="type" value="${addon.getAddonType()}"></c:set>
+            <div class="col-sm-4 addon-bloc addon-${id}-${user}" style="display: none;" data-attached-plan="${isAttched2Plan}" data-type="${type}">
                 <div class="uiCloudCardSelect" id="${id}">
                     <div class="inner addonItem" data-toggle="${count_addon%3}" data-name="${name}" data-price="${price}" data-id="${id}">
                         <div class="item-list-description" style="display: none;">

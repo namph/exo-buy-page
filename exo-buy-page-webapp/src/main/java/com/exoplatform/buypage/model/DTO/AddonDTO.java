@@ -47,5 +47,15 @@ public class AddonDTO extends DTO {
       return true;
     return false;
   }
+  public Boolean isAttached2Plan(){
+    if (this.getId().indexOf("USER") != -1){
+      return true;
+    }
+    return false;
+  }
 
+
+  public String getAddonType() {
+    return this.getCombinationValue("type");
+  }
 }

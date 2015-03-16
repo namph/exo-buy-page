@@ -162,9 +162,9 @@
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
             }else{
-                _loadBillFromClient();
                 _showSliderAssociated2PlanSelected();
                 _hideAllAddonsButOne();
+                _loadBillFromClient();
             }
         });
     };
@@ -182,8 +182,8 @@
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
             }else{
-                _loadBillFromClient();
                 _hideAllAddonsButOne();
+                _loadBillFromClient();
             }
         }
     };
@@ -198,12 +198,11 @@
             var description = "";//me.attr("data-description");
             var obj = {id:id, name:name, price:price, description:description};
 
-            _toggleDropdownAddonDesc(me);
-
             if(parent.hasClass("selected")){
                 parent.removeClass("selected");
                 _removeAddonFromListSelected(id);
             } else {
+                _toggleDropdownAddonDesc(me);
                 parent.addClass("selected");
                 _addAddon2ListSelected(obj);
             }
@@ -342,8 +341,11 @@
     };
     var _removeAddonFromListSelected = function (id) {
         var pos = _checkItemExistsInList(id,_listAddonsSelected);
-        if ( pos != null)
-            _listAddonsSelected.splice(pos,1);
+        if ( pos != null){
+          _listAddonsSelected.splice(pos,1);
+          return true;
+        }
+        return false;
     };
     var _addService2ListSelected = function(obj){
         if (_checkItemExistsInList(obj.id,_listServicesSelected) == null)
@@ -601,32 +603,66 @@
 
     };
 
-    var _hideAllAddonsButOne = function(){
+    var _hideAllAddonsButOne = function() {
 
-      var addonOfPlanSelectedDOM = $(".addon-"+_addonUserDefault);
-      /*
-      to do later
-      var addonIdOfPlanSelected = addonOfPlanSelectedDOM.children().attr("id");
-      var id = "";
-      for(var i=0;i< _listAddonsSelected.length;i++){
-        id = _listAddonsSelected[i].id;
-        if(id.indexOf(_addonUserDefault) != -1){
-          var addonDOM = $("#"+id);
-          var parent = addonDOM.parent();
-          if(parent.hasClass("selected")){
-            parent.removeClass("selected");
-            _removeServiceFromListSelected(id);
-          }else{
-            parent.addClass("selected");
-            _addService2ListSelected(obj);
-          }
+      $(".addon-bloc").hide();
+      var addonsSelected2BeRemoved = new Array();
+      var addonsAttached2Plan = new Array();
+      _listAddonsSelected = new Array();
+      $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
+        var addonDOM = $(this);
+        var type = $(this).attr("data-type");
+        var childL1 = $(this).children();
+        var id = childL1.attr("id");
+        var isAttached2Plan = addonDOM.attr("data-attached-plan");
+        if (childL1.hasClass('selected')) {
+          if (isAttached2Plan)
+            addonsSelected2BeRemoved.push(type);
+          else
+            addonsAttached2Plan.push({"id": id, "type": type, "selected": true});
+          childL1.removeClass('selected');
         }
+
+      });
+      $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
+        var addonDOM = $(this);
+        var type = $(this).attr("data-type");
+        var childL1 = $(this).children();
+        var id = childL1.attr("id");
+        if ($(".addon-" + id + "-" + _addonUserDefault).length > 0) {
+          addonsAttached2Plan.push({"id": id, "type": type, "selected": false});
+        }
+      });
+      var addon2BeDisplayed = new Array();
+      var addons2BeSelected = new Array();
+      if (addonsAttached2Plan.length > 0) {
+        for (var i = 0; i < addonsAttached2Plan.length; i++) {
+          if (jQuery.inArray(addonsAttached2Plan[i].type, addonsSelected2BeRemoved) != -1) {
+            addons2BeSelected.push(addonsAttached2Plan[i].id);
+          }
+          addon2BeDisplayed.push(addonsAttached2Plan[i].id);
+        }
+        $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
+          var addonDOM = $(this);
+          var type = $(this).attr("data-type");
+          var childL1 = $(this).children();
+          var me = childL1.children();
+          var parent_row = addonDOM.parent();
+          parent_row.parent().find(".dropdown-info-addon").remove();
+          var id = me.attr("data-id");
+          var name = me.attr("data-name");
+          var price = me.attr("data-price");
+          var description = "";//me.attr("data-description");
+          var obj = {id: id, name: name, price: price, description: description};
+          if (jQuery.inArray(id, addon2BeDisplayed)  != -1) {
+            addonDOM.show();
+          }
+          if (jQuery.inArray(id, addons2BeSelected)  != -1) {
+            _addAddon2ListSelected(obj);
+            childL1.addClass("selected");
+          }
+        });
       }
-      addonOfPlanSelectedDOM.addClass("selected");
-      _addService2ListSelected(obj);
-      */
-        $(".addon-bloc").hide();
-      addonOfPlanSelectDOM.show();
     };
     var _addEvent2CheckTandC = function () {
       $(document).on('click.termandcondition.check',"#termandcondition",function(){
