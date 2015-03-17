@@ -228,12 +228,11 @@
             <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
         </div>
     </div>
-    <div id="BuyPageLoadingContainer" style="display: none">
-        <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
-    </div>
 </div>
 </div>
-
+<div id="BuyPageLoadingContainer" style="display: none">
+    <div class="text-center"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
+</div>
 <div class="loading-all">
     <i class="fa fa-spinner fa-spin"></i>
 </div>

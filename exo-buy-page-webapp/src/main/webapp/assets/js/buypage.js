@@ -12,6 +12,11 @@
     var _totalBill= 0;
     var BuyPage = {};
 
+  var _showPartLoading = function(parent){
+    var loading = $("#BuyPageLoadingContainer").html();
+    parent.html(loading);
+  };
+
   var _eXoStyleMessageConfirmCBController = function (type,message) {
     var alertDOM =  $('#buypage-alert-billing');
     if(type != null && type != "") {
@@ -53,7 +58,7 @@
                 alertDOM.removeClass();
                 alertDOM.addClass('alert');
                 alertDOM.addClass('alert-' + type);
-                alertDOM.children('div').html("<strong>"+type+"!</strong> "+message);
+                alertDOM.children('div').html(message);
             }
             if(display)
               alertDOM.show();
@@ -116,17 +121,22 @@
             url: _baseRestUrl+"/Plan/getActives",
             dataType: "text"
         })
-            .done(function(data) {
-                _planContainerDOM.html(data);
-                _showSliderAssociated2PlanSelected();
-                _loadBillFromClient();
-                _loadActiveAddons(null);
+          .done(function(data) {
+              _planContainerDOM.html(data);
+              _showSliderAssociated2PlanSelected();
+              _loadBillFromClient();
+              _loadActiveAddons(null);
 
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                console.log("Transaction Failed: " + err);
-            });
+          })
+          .error(function (xhr, ajaxOptions, thrownError){
+            if(xhr.status==404) {
+              _planContainerDOM("Something went wrong, please try again");
+            }
+          })
+          .fail(function (jqxhr, textStatus, error) {
+              var err = textStatus + ', ' + error;
+              console.log("Transaction Failed: " + err);
+          });
     };
     var _loadActiveAddons = function(planId){
         $.ajax({
@@ -134,36 +144,46 @@
             url: _baseRestUrl+"/Addons/getActives/"+planId,
             dataType: "text"
         })
-            .done(function(data) {
-                _addonsContainerDOM.html(data);
-                _hideAllAddonsButOne();
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                var err = textStatus + ', ' + error;
-                console.log("Transaction Failed: " + err);
-            });
+          .done(function(data) {
+              _addonsContainerDOM.html(data);
+              _hideAllAddonsButOne();
+          })
+          .error(function (xhr, ajaxOptions, thrownError){
+            if(xhr.status==404) {
+              _addonsContainerDOM("Something went wrong, please try again");
+            }
+          })
+          .fail(function (jqxhr, textStatus, error) {
+              var err = textStatus + ', ' + error;
+              console.log("Transaction Failed: " + err);
+          });
     };
     var _getDiscount = function(discountId){
+      var url = encodeURI(_baseRestUrl+"/Discount/get/"+discountId);
       $(".coupon-loading").show();
         $.ajax({
-            url: _baseRestUrl+"/Discount/get/"+discountId,
-            dataType: "text"
+            url: url
         })
-            .done(function(data) {
-                $(".coupon-loading").hide();
-                if(typeof data !== undefined && data!= ""){
-                  var obj = $.parseJSON(data);
-                  _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
-                  _loadBillFromClient();
-                  _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
-                }else
-                  _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
-            })
-            .fail(function (jqxhr, textStatus, error) {
-                $(".coupon-loading").hide();
-                var err = textStatus + ', ' + error;
-                console.log("Transaction Failed: " + err);
-            });
+        .done(function(data) {
+            $(".coupon-loading").hide();
+            if(typeof data !== undefined && data!= ""){
+              var obj = $.parseJSON(data);
+              _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
+              _loadBillFromClient();
+              _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
+            }else
+              _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+        })
+        .error(function (xhr, ajaxOptions, thrownError){
+            if(xhr.status==404) {
+              _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+            }
+          })
+        .fail(function (jqxhr, textStatus, error) {
+            $(".coupon-loading").hide();
+            var err = textStatus + ', ' + error;
+            _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+        });
     };
 
     var _addEventClick2PlanTypeItem = function(){
@@ -389,7 +409,7 @@
         return index;
     };
     var _loadBillFromClient = function(){
-
+        _showPartLoading(_billContainerDOM);
         var data = {"plan":_planSelected,"addons":_listAddonsSelected,"services":_listServicesSelected,"discount":_discountProvided};
         data = JSON.stringify(data);
         $.ajax({
@@ -403,9 +423,14 @@
                 _billContainerDOM.html(data);
                 _resetAffixOrderBox();
             })
+            .error(function (xhr, ajaxOptions, thrownError){
+              if(xhr.status==404) {
+                _billContainerDOM.html("Something went wrong, please try again");
+              }
+            })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
-                console.log("Transaction Failed: " + err);
+              _billContainerDOM.html("Something went wrong, please try again");
             });
     };
     var _addEvent2BtnSubmitDiscount = function(){
@@ -523,24 +548,28 @@
                 contentType:"application/json",
                 data:data
             })
-                .done(function(data) {
-                    var obj = $.parseJSON(data);
-                    if(obj.msg == "ok"){
-                        _disPlaySuccessMsgCB("credit","Transaction successful",true);
-                        window.location.href = "confirmation/success";
-                    }else{
-                      _dislayLoadingAll(false);
-                      me.prop('disabled',false);
-                      _disPlayInfoMsgCB("credit",obj.msg,true);
-                    }
-                })
-                .fail(function (jqxhr, textStatus, error) {
-                    var err = textStatus + ', ' + error;
+              .done(function(data) {
+                  var obj = $.parseJSON(data);
+                  if(obj.msg == "ok"){
+                      _disPlaySuccessMsgCB("credit","Transaction successful",true);
+                      window.location.href = "confirmation/success";
+                  }else{
                     _dislayLoadingAll(false);
                     me.prop('disabled',false);
-                    _disPlayErrorMsgCB("credit",err,true);
-                });
-
+                    _disPlayInfoMsgCB("credit",obj.msg,true);
+                  }
+              })
+              .error(function (xhr, ajaxOptions, thrownError){
+                if(xhr.status==404) {
+                  _disPlayErrorMsgCB("credit","Something went wrong, please try again",true);;
+                }
+              })
+              .fail(function (jqxhr, textStatus, error) {
+                  var err = textStatus + ', ' + error;
+                  _dislayLoadingAll(false);
+                  me.prop('disabled',false);
+                  _disPlayErrorMsgCB("credit",err,true);
+              });
         })
     };
 
