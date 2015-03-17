@@ -57,5 +57,12 @@ public interface MailConfiguration {
   public final static String EXO_BUY_MAIL_SUBCRIPTION_INFORMATION_TEMPLATE  = "exo.buy.mail.subscription.information.template";
 
   public final static String EXO_BUY_MAIL_SUBCRIPTION_INFORMATION_SUBJECT   = "exo.buy.mail.subscription.information.subject";
+  
+  
+  public final static String EXO_BUY_MAIL_TECHNICAL_TEAM_EMAIL            = "exo.buy.mail.technical.email";
+  
+  public final static String EXO_BUY_MAIL_SUBCRIPTION_TECHNICAL_TEMPLATE  = "exo.buy.mail.subscription.technical.template";
+
+  public final static String EXO_BUY_MAIL_SUBCRIPTION_TECHNICAL_SUBJECT   = "exo.buy.mail.subscription.technical.subject";
 
 }

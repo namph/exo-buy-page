@@ -3,6 +3,7 @@ package com.exoplatform.buypage.controllers;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -21,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.braintreegateway.AddOn;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
 import com.braintreegateway.Subscription;
+import com.braintreegateway.Transaction;
 import com.braintreegateway.WebhookNotification;
 
 import com.exoplatform.buypage.gateway.IService;
+import com.exoplatform.buypage.model.DTO.AddonDTO;
 import com.exoplatform.buypage.model.DTO.PlanDTO;
 import com.exoplatform.buypage.utils.CommonUtils;
 import com.exoplatform.buypage.utils.UnLockUtils;
@@ -98,10 +102,79 @@ public class RestWebHookController {
     return "Test successfully: " + id;
   }
   
-  private void sendMailToUser(Subscription subscription) throws Exception{
+  
+  private void sendMailToTechnicalTeam (Subscription subscription,Transaction transaction,
+                                        Customer customer, PlanDTO planDTO,
+                                        String productCode, String unlockKey) throws Exception{
+    
+    String technicalTeamEmail = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_TECHNICAL_TEAM_EMAIL);
+        
+    Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
+    mailHeaders.put(MailHeaders.TO, technicalTeamEmail);
+    mailHeaders.put(MailHeaders.SUBJECT, exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SUBCRIPTION_TECHNICAL_SUBJECT) + 
+                    " " + customer.getFirstName() + " " + customer.getCompany());
+    mailHeaders.put(MailHeaders.CONTENT_TYPE, "text/html; charset=utf-8");
+    mailHeaders.put(MailHeaders.FROM, exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SENDER));
+    
+    String mailTemplate = null;
+    try {
+      String mailTemplateConfigPath = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SUBCRIPTION_TECHNICAL_TEMPLATE);
+      mailTemplate = this.getClass().getResource(mailTemplateConfigPath).getPath();
+    } catch (Exception e) {
+     log.error("Can not sent mail Techincal Information to team: " + technicalTeamEmail, e);
+     throw e;
+    }
+    
+    Map<String, String> templateProperties  = new HashMap<String, String>();
+    templateProperties.put("customer.name", customer.getFirstName());
+    templateProperties.put("customer.company", customer.getCompany());
+    templateProperties.put("customer.email", customer.getEmail());
+    templateProperties.put("customer.phone", customer.getPhone());
+    templateProperties.put("customer.id", customer.getId());
+    
+    templateProperties.put("transaction.date", CommonUtils.partString(transaction.getCreatedAt().getTime(), "dd/MM/yyyy hh:mm:ss a") +
+                           " " +transaction.getCreatedAt().getTimeZone());
+    templateProperties.put("transaction.id", transaction.getId());
+    templateProperties.put("transaction.amount", CommonUtils.convertAmount2String(transaction.getAmount()));
+    templateProperties.put("plan.name", planDTO.getName() );
+    templateProperties.put("product.code", productCode);
+    templateProperties.put("unlock.key", unlockKey);
+    
+    //List<AddOn> listAddon =transaction.getAddOns();
+    List<AddOn> listAddon =subscription.getAddOns();
+    StringBuffer bufferListAddon =  new StringBuffer();
+    StringBuffer bufferListService =  new StringBuffer();
+    for (AddOn addOn : listAddon) {
+      AddonDTO addonDTO = new AddonDTO(addOn.getId(),addOn.getName(),addOn.getDescription(),addOn.getAmount());
+      if(!addonDTO.isService()){
+        bufferListAddon.append(addOn.getName());
+        bufferListAddon.append("<br>");
+      }else{
+        bufferListService.append(addOn.getName());
+        bufferListService.append("<br>");
+        
+      }
+    }
+    
+    templateProperties.put("list.addon", bufferListAddon.toString());
+    
+    templateProperties.put("list.service", bufferListService.toString());
+    
+    try {
+      mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
+    } catch (Exception e) {
+      log.info("Can not sent mail Subscription Information to customer: " + customer.getEmail(), e);
+      throw e;
+    }
+    
+    
+  }
+  
+  private void sendMailToUser(Subscription subscription, Transaction transaction,
+                              Customer customer, PlanDTO planDTO,
+                              String productCode, String unlockKey) throws Exception{
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     
-    Customer customer = subscription.getTransactions().get(0).getCustomer();
     String customerEmail = customer.getEmail();
     String customerName = customer.getFirstName();
     
@@ -119,10 +192,7 @@ public class RestWebHookController {
      log.error("Can not load Email Template", e);
      throw e;
     }
-    PlanDTO planDTO = new  PlanDTO(subscription.getPlanId());
-    String nbUser = planDTO.getOptionUser().toString();
-    String productCode = UnLockUtils.generateProductCode();
-    String unlockKey =  UnLockUtils.generateKey(productCode, nbUser);
+    
     int licenseYear =  planDTO.getYearNumber();
     Calendar cal = Calendar.getInstance();
     cal.setTime(new Date());
@@ -185,7 +255,21 @@ public class RestWebHookController {
       subscription = gateway.subscription().find(subscriptionId);
     }
     try {
-      sendMailToUser(subscription);
+      List<Transaction> listTransaction = subscription.getTransactions();
+      Transaction transaction = listTransaction.get(listTransaction.size()-1);
+      Customer customer = transaction.getCustomer();
+      PlanDTO planDTO = new PlanDTO(transaction.getPlanId());
+      String productCode = customer.getCustomFields().get(" product_code");
+      if(null == productCode || productCode.length()==0){
+        productCode = UnLockUtils.generateProductCode();
+      }
+      String nbUser = planDTO.getOptionUser().toString();
+      String unlockKey =  UnLockUtils.generateKey(productCode, nbUser);
+      
+      sendMailToUser(subscription, transaction, customer, planDTO, productCode, unlockKey);
+      
+      sendMailToTechnicalTeam(subscription, transaction, customer, planDTO, productCode, unlockKey);
+      
     } catch (Exception e) {
       return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
