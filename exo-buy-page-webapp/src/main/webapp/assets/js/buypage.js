@@ -14,7 +14,10 @@
 
   var _showPartLoading = function(parent){
     var loading = $("#BuyPageLoadingContainer").html();
-    parent.html(loading);
+    try{
+      parent.find("div.panel-body").html(loading);
+    }catch (e){}
+
   };
 
   var _eXoStyleMessageConfirmCBController = function (type,message) {
@@ -167,7 +170,7 @@
         .done(function(data) {
             $(".coupon-loading").hide();
             if(typeof data !== undefined && data!= ""){
-              var obj = $.parseJSON(data);
+              var obj = data;
               _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
               _loadBillFromClient();
               _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
