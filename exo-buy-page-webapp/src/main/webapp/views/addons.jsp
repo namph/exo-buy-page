@@ -30,7 +30,7 @@
             <c:set var="isAttched2Plan" value="${addon.isAttached2Plan()}"></c:set>
             <c:set var="type" value="${addon.getAddonType()}"></c:set>
             <div class="col-sm-4 addon-bloc addon-${id}-${user}" style="display: none;" data-attached-plan="${isAttched2Plan}" data-type="${type}">
-                <div class="uiCloudCardSelect" id="${id}">
+                <div class="uiCloudCardSelect mini" id="${id}">
                     <div class="inner addonItem" data-toggle="${count_addon%3}" data-name="${name}" data-price="${price}" data-id="${id}">
                         <div class="item-list-description" style="display: none;">
                             <c:if test="${listDescription.get(\"title\") != \"\"}">
@@ -77,7 +77,7 @@
             <c:set var="name" value="${service.getName()}"></c:set>
             <c:set var="listDescription" value="${service.getListDescription()}"></c:set>
             <c:set var="price" value="${service.getPrice()}"></c:set>
-            <c:set var="icon" value="uiIcon28BPCamera"></c:set>
+            <c:set var="icon" value="uiIcon28BPAddon"></c:set>
             <div class="col-sm-4">
                 <div class="uiCloudCardSelect" id="${id}">
                     <div class="inner serviceItem" data-toggle="${count_service%3}" data-name="${name}" data-price="${price}" data-id="${id}">

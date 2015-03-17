@@ -22,64 +22,65 @@
             </c:if>
         </c:forEach>
         <div class="intro-plan-box" role="tabpanel">
-            <!-- Nav tabs -->
-            <div class="row intro-container">
-                <div class="col-sm-4 intro-nav">
-                    <ul class="nav nav-pills nav-stacked" role="tablist">
-                        <c:forEach items="${planTypes}" var="entry">
-                            <c:set var="id" value="${entry.value.getId()}"></c:set>
-                            <c:set var="name" value="${entry.value.getName()}"></c:set>
-                            <c:set var="description" value="${entry.value.getDescription()}"></c:set>
-                            <c:set var="price" value="${entry.value.getPrice()}"></c:set>
-                            <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
-                            <c:set var="planCycle" value="${entry.value.getPlanCycle()}"></c:set>
-                            <li role="presentation"  class="${entry.value.getActive()}">
-                                <div data-target=".${id}" aria-controls="${id}" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}" data-planCycle="${planCycle}">
-                                    <h5>${name}</h5>
-                                    <span>eXo Platfom Enterprise</span>
-                                    <span class="iconSelect"><i class="fa fa-check"></i></span>
-                                </div>
-                            </li>
+        <!-- Nav tabs -->
+        <div class="row intro-container">
+            <div class="col-sm-4 intro-nav">
+                <ul class="nav nav-pills nav-stacked" role="tablist">
+                    <c:forEach items="${planTypes}" var="entry">
+                        <c:set var="id" value="${entry.value.getId()}"></c:set>
+                        <c:set var="name" value="${entry.value.getName()}"></c:set>
+                        <c:set var="description" value="${entry.value.getDescription()}"></c:set>
+                        <c:set var="price" value="${entry.value.getPrice()}"></c:set>
+                        <c:set var="user" value="${entry.value.getDefaultNbUser()}"></c:set>
+                        <c:set var="planCycle" value="${entry.value.getPlanCycle()}"></c:set>
+                        <li role="presentation"  class="${entry.value.getActive()}">
+                            <div data-target=".${id}" aria-controls="${id}" role="tab" data-toggle="tab" class="planTypeItem" data-name="${name}" data-price="${price}" data-id="${id}" data-user="${user}" data-planCycle="${planCycle}">
+                                <h5>${name}</h5>
+                                <span>eXo Platfom Enterprise</span>
+                                <span class="iconSelect"><i class="fa fa-check"></i></span>
+                            </div>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </div>
+            <div class="col-sm-8 col-sm-offset-4 intro-content">
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <c:forEach items="${planTypes}" var="entry">
+                    <c:set var="planTypeId" value="${entry.value.getId()}"></c:set>
+                    <c:set var="active" value="${entry.value.getActive()}"></c:set>
+                    <c:forEach items="${entry.value.getPlanDTOs()}" var="planDTO">
+                    <c:set var="id" value="${planDTO.getId()}"></c:set>
+                    <c:set var="listDescription" value="${planDTO.getListDescription()}"></c:set>
+                    <div data-target=".${id}" class="hide-tab-item-${id}" aria-controls="${id}" role="tab" data-toggle="tab" style="display: none;">
+                    </div>
+                    <c:choose>
+                    <c:when test="${planTypeId == id}">
+                    <div role="tabpanel" class="tab-pane ${active} ${id}">
+                        </c:when>
+                        <c:otherwise>
+                        <div role="tabpanel" class="tab-pane ${id}">
+                            </c:otherwise>
+                            </c:choose>
+                            <h3 class="heading-border">Your subcription Plan includes:</h3>
+                            <c:if test="${listDescription != null}">
+                                <ul class="ui-list-check">
+                                    <c:forEach items="${listDescription.get(\"description\")}" var="description">
+                                        <li>${description}</li>
+                                    </c:forEach>
+                                </ul>
+
+                            </c:if>
+                        </div>
+
                         </c:forEach>
-                    </ul>
-                </div>
-                <div class="col-sm-8 col-sm-offset-4 intro-content">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <c:forEach items="${planTypes}" var="entry">
-                            <c:set var="planTypeId" value="${entry.value.getId()}"></c:set>
-                            <c:set var="active" value="${entry.value.getActive()}"></c:set>
-                            <c:forEach items="${entry.value.getPlanDTOs()}" var="planDTO">
-                                <c:set var="id" value="${planDTO.getId()}"></c:set>
-                                <c:set var="listDescription" value="${planDTO.getListDescription()}"></c:set>
-                                <div data-target=".${id}" class="hide-tab-item-${id}" aria-controls="${id}" role="tab" data-toggle="tab" style="display: none;">
-                                </div>
-                                <c:choose>
-                                    <c:when test="${planTypeId == id}">
-                                        <div role="tabpanel" class="tab-pane ${active} ${id}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div role="tabpanel" class="tab-pane ${id}">
-                                    </c:otherwise>
-                                </c:choose>
-                                 <h3 class="heading-border">Your subcription Plan includes:</h3>
-                                 <c:if test="${listDescription != null}">
-                                     <ul class="ui-list-check">
-                                         <c:forEach items="${listDescription.get(\"description\")}" var="description">
-                                         <li>${description}</li>
-                                         </c:forEach>
-                                     </ul>
-
-                                 </c:if>
-                                 </div>
-
-                            </c:forEach>
 
                         </c:forEach>
                     </div>
                 </div>
             </div>
         </div>
+        <p>Select the number of users for your subscription:</p>
         <!-- Tab panes -->
         <div class="tab-content">
             <c:forEach items="${planTypes}" var="entry">
@@ -116,5 +117,6 @@
                 </div>
             </c:forEach>
         </div>
+        <p class="text-right">Need more users? Purchase an <a href="http://www.exoplatform.com/company/en/company/contact-us" target="_blank">unlimited users subscription</a></p>
     </c:otherwise>
 </c:choose>
