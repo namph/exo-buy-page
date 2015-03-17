@@ -100,9 +100,9 @@
                                                     <h5 class="bold">Product Code</h5 class="bold">
                                                     <p>The product code is a unique code that identifies one eXo Platform Enterprise instance. For instance:</p>
                                                     <p><strong>B33@SF20D4KF@20S</strong></p>
-                                                    <p>If you have installed eXo Platform already, find your product code by clicking on the banner “buy a subscription”.</p>
+                                                    <p>If you have installed eXo Platform already, find your product code by clicking on the banner "buy a subscription".</p>
                                                     <p>If not, No Big Deal!</p>
-                                                    <p>We will send it to your directly with you unlock key.</p>
+                                                    <p>We will send it to you directly with your unlock key.</p>
                                                 </div>
                                             </div>
                                             <button class="btn btn-default" type="button"><i class="fa fa-question-circle"></i></button>
@@ -217,7 +217,6 @@
                                     </label>
                                 </div>
                             </div>
-                            <br>
                             <br>
                             <button class="btn btn-primary btn-lg subscribe">Confirm purchase</button>
                             <!-- credit js -->
