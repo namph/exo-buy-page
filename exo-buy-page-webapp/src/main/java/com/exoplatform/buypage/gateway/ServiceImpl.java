@@ -140,7 +140,6 @@ public class ServiceImpl implements IService {
     Result<Subscription> subscriptionResult = null;
 
     Result<Customer> customerResult = createOrUpdateCustomer(customerId, subsCustomer);
-
     if (!customerResult.isSuccess()) {
       result.put("msg", CommonUtils.getMessageByBTCode(getCustomerRequestError(customerResult)));
       return result;
@@ -151,7 +150,6 @@ public class ServiceImpl implements IService {
     String paymentMethodToken = card.getToken();
     SubscriptionRequest subscriptionRequest = new SubscriptionRequest().paymentMethodToken(paymentMethodToken);
     subscriptionRequest.planId(subsCustomer.getPlan().getId());
-
 
     List<AddonDTO> addonDTOs = subsCustomer.getAddons();
     ModificationsRequest addonUpdate = subscriptionRequest.addOns();
@@ -224,7 +222,7 @@ public class ServiceImpl implements IService {
     CustomerRequest customerRequest = new CustomerRequest()
             .firstName(subsCustomer.getFirstName())
             .lastName(subsCustomer.getLastName()).phone(subsCustomer.getPhone())
-            .company(subsCustomer.getOrganization()).email(subsCustomer.getEmail())
+            .company(subsCustomer.getOrganization()).email(subsCustomer.getEmail()).customField("product_code",subsCustomer.getProductCode())
             .creditCard().billingAddress().done()
             .number(subsCustomer.getCardNumber())
             .cardholderName(subsCustomer.getCardHolder())

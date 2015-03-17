@@ -91,7 +91,7 @@
                 </div>
                 <div class="form-group">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
+                        <input type="text" id="product_code" class="form-control" placeholder="Product Code (not mandatory)" aria-describedby="sizing-addon2">
                                 <span class="input-group-btn popover-manual-toggle" data-toggle="dropdown" id="sizing-addon2">
                                     <div role="tooltip" class="popover fade in">
                                         <div class="arrow"></div>

@@ -521,6 +521,7 @@
             var expireMonth = $("#expireMonth").val();
             var expireYear = $("#expireYear").val();
             var cardCVV = $("#cardCVV").val();
+            var productCode = $("#product_code").val();
 
             var termandcondition = $("#termandcondition");
             if (!termandcondition.prop('checked')){
@@ -539,7 +540,7 @@
               addons.push(_listServicesSelected[i]);
             }
           _dislayLoadingAll(true);
-            var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"plan":_planSelected,"addons":addons,"discount":discount,"totalBill":_totalBill};
+            var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"productCode":productCode,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"plan":_planSelected,"addons":addons,"discount":discount,"totalBill":_totalBill};
             data = JSON.stringify(data);
             $.ajax({
                 url: _baseRestUrl+"/Subscribe/submit",

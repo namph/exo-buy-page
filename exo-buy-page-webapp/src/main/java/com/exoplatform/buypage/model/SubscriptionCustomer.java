@@ -21,6 +21,7 @@ public class SubscriptionCustomer {
   private String cardCVV;
   private PlanDTO plan;
   private int userNumber;
+  private String productCode;
   private List<AddonDTO> addons;
   private DiscountDTO discount;
   private BigDecimal totalBill;
@@ -143,5 +144,13 @@ public class SubscriptionCustomer {
 
   public void setTotalBill(BigDecimal totalBill) {
     this.totalBill = totalBill;
+  }
+
+  public String getProductCode() {
+    return productCode;
+  }
+
+  public void setProductCode(String productCode) {
+    this.productCode = productCode;
   }
 }
