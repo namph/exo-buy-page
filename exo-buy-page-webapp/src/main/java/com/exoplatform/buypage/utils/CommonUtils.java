@@ -3,6 +3,7 @@ package com.exoplatform.buypage.utils;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class CommonUtils {
@@ -51,6 +52,14 @@ public class CommonUtils {
   public static  String partString(Date date, String format){
     SimpleDateFormat formatter = new SimpleDateFormat(format);
     String s = formatter.format(date);
+    return s;
+  }
+  
+  public static  String partString(Calendar cal, String format){
+    //for example format = "dd/MM/yyyy hh:mm:ss a zz" will return "17/03/2015 04:21:31 AM UTC"
+    SimpleDateFormat formatter = new SimpleDateFormat(format);
+    formatter.setCalendar(cal);
+    String s = formatter.format(cal.getTime());
     return s;
   }
 }

@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.braintreegateway.AddOn;
 import com.braintreegateway.BraintreeGateway;
 import com.braintreegateway.Customer;
+import com.braintreegateway.Plan;
+import com.braintreegateway.PlanGateway;
 import com.braintreegateway.Subscription;
 import com.braintreegateway.Transaction;
 import com.braintreegateway.WebhookNotification;
@@ -106,9 +108,11 @@ public class RestWebHookController {
   private void sendMailToTechnicalTeam (Subscription subscription,Transaction transaction,
                                         Customer customer, PlanDTO planDTO,
                                         String productCode, String unlockKey) throws Exception{
-    
     String technicalTeamEmail = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_TECHNICAL_TEAM_EMAIL);
-        
+    
+    log.info("Start sending email to technical Team: " + technicalTeamEmail);
+    System.out.println("Start sending email to technical Team: " + technicalTeamEmail);
+  
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     mailHeaders.put(MailHeaders.TO, technicalTeamEmail);
     mailHeaders.put(MailHeaders.SUBJECT, exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SUBCRIPTION_TECHNICAL_SUBJECT) + 
@@ -131,9 +135,8 @@ public class RestWebHookController {
     templateProperties.put("customer.email", customer.getEmail());
     templateProperties.put("customer.phone", customer.getPhone());
     templateProperties.put("customer.id", customer.getId());
-    
-    templateProperties.put("transaction.date", CommonUtils.partString(transaction.getCreatedAt().getTime(), "dd/MM/yyyy hh:mm:ss a") +
-                           " " +transaction.getCreatedAt().getTimeZone());
+
+    templateProperties.put("transaction.date", CommonUtils.partString(transaction.getCreatedAt(), "dd/MM/yyyy hh:mm:ss a zz"));
     templateProperties.put("transaction.id", transaction.getId());
     templateProperties.put("transaction.amount", CommonUtils.convertAmount2String(transaction.getAmount()));
     templateProperties.put("plan.name", planDTO.getName() );
@@ -162,6 +165,10 @@ public class RestWebHookController {
     
     try {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
+      
+      log.info("Finish sending email to technical Team: " + technicalTeamEmail);
+      System.out.println("Finish sending email to technical Team: " + technicalTeamEmail);
+      
     } catch (Exception e) {
       log.info("Can not sent mail Subscription Information to customer: " + customer.getEmail(), e);
       throw e;
@@ -173,6 +180,10 @@ public class RestWebHookController {
   private void sendMailToUser(Subscription subscription, Transaction transaction,
                               Customer customer, PlanDTO planDTO,
                               String productCode, String unlockKey) throws Exception{
+    
+    log.info("Start sending email to" + customer.getEmail());
+    System.out.println("Start sending email to" + customer.getEmail());
+    
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     
     String customerEmail = customer.getEmail();
@@ -212,6 +223,10 @@ public class RestWebHookController {
    
     try {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
+      
+      log.info("Finish sending email to" + customer.getEmail());
+      System.out.println("Finish sending email to" + customer.getEmail());
+      
     } catch (Exception e) {
       log.info("Can not sent mail Subscription Information to customer: " + customerEmail, e);
       throw e;
@@ -239,8 +254,8 @@ public class RestWebHookController {
     Subscription subscription = null;
     try {
       
-      System.out.println("bt_signature: " + bt_signature);
-      System.out.println("bt_payload: " + bt_payload);
+      //System.out.println("bt_signature: " + bt_signature);
+      //System.out.println("bt_payload: " + bt_payload);
       
       WebhookNotification webhookNotification = gateway.webhookNotification().parse(bt_signature, bt_payload);
       
@@ -258,8 +273,9 @@ public class RestWebHookController {
       List<Transaction> listTransaction = subscription.getTransactions();
       Transaction transaction = listTransaction.get(listTransaction.size()-1);
       Customer customer = transaction.getCustomer();
-      PlanDTO planDTO = new PlanDTO(transaction.getPlanId());
-      String productCode = customer.getCustomFields().get(" product_code");
+      Plan plan = gatewayService.getPlan(transaction.getPlanId());
+      PlanDTO planDTO = new PlanDTO(transaction.getPlanId(),plan.getName(),plan.getDescription());
+      String productCode = customer.getCustomFields().get("product_code");
       if(null == productCode || productCode.length()==0){
         productCode = UnLockUtils.generateProductCode();
       }
@@ -271,6 +287,8 @@ public class RestWebHookController {
       sendMailToTechnicalTeam(subscription, transaction, customer, planDTO, productCode, unlockKey);
       
     } catch (Exception e) {
+      log.error("Error happen while Webhook call Buy-Page",e);
+      e.printStackTrace();
       return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<String>("",HttpStatus.OK);
