@@ -143,17 +143,20 @@ public class RestWebHookController {
     templateProperties.put("product.code", productCode);
     templateProperties.put("unlock.key", unlockKey);
     
-    //List<AddOn> listAddon =transaction.getAddOns();
-    List<AddOn> listAddon =subscription.getAddOns();
+    List<AddOn> listAddon =transaction.getAddOns(); //must get addons from transaction
+    //List<AddOn> listAddon =subscription.getAddOns();
     StringBuffer bufferListAddon =  new StringBuffer();
     StringBuffer bufferListService =  new StringBuffer();
     for (AddOn addOn : listAddon) {
-      AddonDTO addonDTO = new AddonDTO(addOn.getId(),addOn.getName(),addOn.getDescription(),addOn.getAmount());
+      //addons from transaction don't contain addon's Name so need to get Full Addon object from Braintree
+      AddOn addOnFromBraintree = gatewayService.getAddon(addOn.getId());
+      AddonDTO addonDTO = new AddonDTO(addOnFromBraintree.getId(),addOnFromBraintree.getName(),
+                                       addOnFromBraintree.getDescription(),addOnFromBraintree.getAmount());
       if(!addonDTO.isService()){
-        bufferListAddon.append(addOn.getName());
+        bufferListAddon.append(addOnFromBraintree.getName());
         bufferListAddon.append("<br>");
       }else{
-        bufferListService.append(addOn.getName());
+        bufferListService.append(addOnFromBraintree.getName());
         bufferListService.append("<br>");
         
       }
@@ -243,6 +246,58 @@ public class RestWebHookController {
   @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
   @ResponseBody
   public Object handle(@RequestParam (value = "bt_signature", required=false) String bt_signature,
+                       @RequestParam (value = "bt_payload", required=false) String bt_payload){
+    
+    System.out.println("START Webhook call");
+    log.info("START Webhook call");
+
+    BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
+    
+    Subscription subscription = null;
+    try {
+      WebhookNotification webhookNotification = gateway.webhookNotification().parse(bt_signature, bt_payload);
+      
+      subscription = webhookNotification.getSubscription();
+      
+      String result = ("[Webhook Received " + webhookNotification.getTimestamp().getTime() + "] | Kind: " + webhookNotification.getKind() + " | Subscription: " + subscription.getId());
+      log.info(result);
+      System.out.println(result);
+
+    } catch (Exception e) {
+      log.info("Can not load subscription from braintree", e);
+      e.printStackTrace();
+      return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+    }
+    
+    try {
+      List<Transaction> listTransaction = subscription.getTransactions();
+      Transaction transaction = listTransaction.get(listTransaction.size()-1);
+      Customer customer = gateway.customer().find(transaction.getCustomer().getId());
+      Plan plan = gatewayService.getPlan(transaction.getPlanId());
+      PlanDTO planDTO = new PlanDTO(transaction.getPlanId(),plan.getName(),plan.getDescription());
+      String productCode = customer.getCustomFields().get("product_code");
+      if(null == productCode || productCode.length()==0){
+        productCode = UnLockUtils.generateProductCode();
+      }
+      String nbUser = planDTO.getOptionUser().toString();
+      String unlockKey =  UnLockUtils.generateKey(productCode, nbUser);
+      
+      sendMailToUser(subscription, transaction, customer, planDTO, productCode, unlockKey);
+      
+      sendMailToTechnicalTeam(subscription, transaction, customer, planDTO, productCode, unlockKey);
+      
+    } catch (Exception e) {
+      log.error("Error happen while Webhook call Buy-Page",e);
+      e.printStackTrace();
+      return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
+    }
+    return new ResponseEntity<String>("",HttpStatus.OK);
+  }
+  
+  /*This method is use for testing only*/
+ /* @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
+  @ResponseBody
+  public Object handle(@RequestParam (value = "bt_signature", required=false) String bt_signature,
                        @RequestParam (value = "bt_payload", required=false) String bt_payload,
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
@@ -292,6 +347,6 @@ public class RestWebHookController {
       return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<String>("",HttpStatus.OK);
-  }
+  }*/
 
 }
