@@ -289,11 +289,6 @@
 
         dropdown_box = parent_row.find(".dropdown-box");
         dropdown_box.append(description);
-/*        $.each(description.split("*"), function (number, desc) {
-            if (desc != "") {
-                dropdown_box.append("<p><i class='fa fa-check fa-primary-color'></i> " + desc + "</p>");
-            }
-        })*/
 
         var appended_dropdown_info_service = parent_row.find(".dropdown-info-addon");
 
@@ -362,12 +357,8 @@
         parent_row.find(".wrap-dropdown").addClass(dropdown_position);
 
         dropdown_box = parent_row.find(".dropdown-box");
+
         dropdown_box.append(description);
-/*        $.each(description.split("*"), function (number, desc) {
-            if (desc != "") {
-                dropdown_box.append("<p><i class='fa fa-check fa-primary-color'></i> " + desc + "</p>");
-            }
-        })*/
 
         var appended_dropdown_info_service = parent_row.find(".dropdown-info-service");
 
