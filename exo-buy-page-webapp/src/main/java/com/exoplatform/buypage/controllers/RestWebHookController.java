@@ -272,7 +272,7 @@ public class RestWebHookController {
     try {
       List<Transaction> listTransaction = subscription.getTransactions();
       Transaction transaction = listTransaction.get(listTransaction.size()-1);
-      Customer customer = transaction.getCustomer();
+      Customer customer = gateway.customer().find(transaction.getCustomer().getId());
       Plan plan = gatewayService.getPlan(transaction.getPlanId());
       PlanDTO planDTO = new PlanDTO(transaction.getPlanId(),plan.getName(),plan.getDescription());
       String productCode = customer.getCustomFields().get("product_code");
