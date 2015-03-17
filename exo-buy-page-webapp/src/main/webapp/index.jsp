@@ -213,7 +213,7 @@
                             <div class="form-group">
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="termandcondition"> I have read and agreed to the <a href="http://www.exoplatform.com/buy/terms">terms and conditions</a>.
+                                        <input type="checkbox" id="termandcondition"> I have read and agreed to the <a href="http://www.exoplatform.com/terms-conditions" target="_blank">terms and conditions</a>.
                                     </label>
                                 </div>
                             </div>
@@ -239,7 +239,7 @@
     </div><!-- .wrapper -->
     </br>
     <footer id="footer">
-        Copyright &copy;2000-2015. All rights reserved. <span><a href="http://www.exoplatform.com/">eXo Platform SAS</a><a href="http://www.exoplatform.com/buy/terms">Terms and Condition</a><a href="http://www.exoplatform.com/buy/privacy">Privacy Policy</a></span>
+        Copyright &copy;2000-2015. All rights reserved. <span><a href="http://www.exoplatform.com/" target="_blank">eXo Platform SAS</a><a href="http://www.exoplatform.com/terms-conditions" target="_blank">Terms and Condition</a><a href="http://www.exoplatform.com/company/en/privacy" target="_blank">Privacy Policy</a></span>
     </footer>
 
 <!-- Javascript -->
