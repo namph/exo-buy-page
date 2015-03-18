@@ -12,37 +12,37 @@
     var _totalBill= 0;
     var BuyPage = {};
 
-  var _showPartLoading = function(parent){
-    var loading = $("#BuyPageLoadingContainer").html();
-    try{
-      parent.find("div.panel-body").html(loading);
-    }catch (e){}
+    var _showPartLoading = function(parent){
+        var loading = $("#BuyPageLoadingContainer").html();
+        try{
+            parent.find("div.panel-body").html(loading);
+        }catch (e){}
 
-  };
+    };
 
-  var _eXoStyleMessageConfirmCBController = function (type,message) {
-    var alertDOM =  $('#buypage-alert-billing');
-    if(type != null && type != "") {
-      var icon = type.charAt(0).toUpperCase() + type.slice(1);
-      var strIcon =""; //"<i class='uiIcon" + icon + "'></i>";
-      alertDOM.removeClass();
-      alertDOM.addClass('alert');
-      alertDOM.addClass('alert-' + type);
-      alertDOM.html(strIcon + message);
-    }
-  };
-  var _disPlayInfoeXoStyleMsgCB = function(msg){
-    _eXoStyleMessageConfirmCBController('info',msg);
-  };
-  var _disPlayWarningeXoStyleMsgCB = function(msg){
-    _eXoStyleMessageConfirmCBController('warning',msg);
-  };
-  var _disPlayErroreXoStyleMsgCB = function(msg){
-    _eXoStyleMessageConfirmCBController('danger',msg);
-  };
+    var _eXoStyleMessageConfirmCBController = function (type,message) {
+        var alertDOM =  $('#buypage-alert-billing');
+        if(type != null && type != "") {
+            var icon = type.charAt(0).toUpperCase() + type.slice(1);
+            var strIcon =""; //"<i class='uiIcon" + icon + "'></i>";
+            alertDOM.removeClass();
+            alertDOM.addClass('alert');
+            alertDOM.addClass('alert-' + type);
+            alertDOM.html(strIcon + message);
+        }
+    };
+    var _disPlayInfoeXoStyleMsgCB = function(msg){
+        _eXoStyleMessageConfirmCBController('info',msg);
+    };
+    var _disPlayWarningeXoStyleMsgCB = function(msg){
+        _eXoStyleMessageConfirmCBController('warning',msg);
+    };
+    var _disPlayErroreXoStyleMsgCB = function(msg){
+        _eXoStyleMessageConfirmCBController('danger',msg);
+    };
 
 
-  var _messageConfirmCBController = function (typeParent, type,message,display) {
+    var _messageConfirmCBController = function (typeParent, type,message,display) {
 
         var buypageAlertGeneral = $("#buypage-alert-general");
         var buypageAlertCoupon = $("#buypage-alert-coupon");
@@ -64,9 +64,9 @@
                 alertDOM.children('div').html(message);
             }
             if(display)
-              alertDOM.show();
+                alertDOM.show();
             else
-              alertDOM.hide();
+                alertDOM.hide();
         }
     };
     var _disPlayInfoMsgCB = function(typeParent,msg,display){
@@ -124,22 +124,22 @@
             url: _baseRestUrl+"/Plan/getActives",
             dataType: "text"
         })
-          .done(function(data) {
-              _planContainerDOM.html(data);
-              _showSliderAssociated2PlanSelected();
-              _loadBillFromClient();
-              _loadActiveAddons(null);
+            .done(function(data) {
+                _planContainerDOM.html(data);
+                _showSliderAssociated2PlanSelected();
+                _loadBillFromClient();
+                _loadActiveAddons(null);
 
-          })
-          .error(function (xhr, ajaxOptions, thrownError){
-            if(xhr.status==404) {
-              _planContainerDOM("Something went wrong, please try again");
-            }
-          })
-          .fail(function (jqxhr, textStatus, error) {
-              var err = textStatus + ', ' + error;
-              console.log("Transaction Failed: " + err);
-          });
+            })
+            .error(function (xhr, ajaxOptions, thrownError){
+                if(xhr.status==404) {
+                    _planContainerDOM("Something went wrong, please try again");
+                }
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ', ' + error;
+                console.log("Transaction Failed: " + err);
+            });
     };
     var _loadActiveAddons = function(planId){
         $.ajax({
@@ -147,46 +147,46 @@
             url: _baseRestUrl+"/Addons/getActives/"+planId,
             dataType: "text"
         })
-          .done(function(data) {
-              _addonsContainerDOM.html(data);
-              _hideAllAddonsButOne();
-          })
-          .error(function (xhr, ajaxOptions, thrownError){
-            if(xhr.status==404) {
-              _addonsContainerDOM("Something went wrong, please try again");
-            }
-          })
-          .fail(function (jqxhr, textStatus, error) {
-              var err = textStatus + ', ' + error;
-              console.log("Transaction Failed: " + err);
-          });
+            .done(function(data) {
+                _addonsContainerDOM.html(data);
+                _hideAllAddonsButOne();
+            })
+            .error(function (xhr, ajaxOptions, thrownError){
+                if(xhr.status==404) {
+                    _addonsContainerDOM("Something went wrong, please try again");
+                }
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                var err = textStatus + ', ' + error;
+                console.log("Transaction Failed: " + err);
+            });
     };
     var _getDiscount = function(discountId){
-      var url = encodeURI(_baseRestUrl+"/Discount/get/"+discountId);
-      $(".coupon-loading").show();
+        var url = encodeURI(_baseRestUrl+"/Discount/get/"+discountId);
+        $(".coupon-loading").show();
         $.ajax({
             url: url
         })
-        .done(function(data) {
-            $(".coupon-loading").hide();
-            if(typeof data !== undefined && data!= ""){
-              var obj = data;
-              _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
-              _loadBillFromClient();
-              _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
-            }else
-              _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
-        })
-        .error(function (xhr, ajaxOptions, thrownError){
-            if(xhr.status==404) {
-              _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
-            }
-          })
-        .fail(function (jqxhr, textStatus, error) {
-            $(".coupon-loading").hide();
-            var err = textStatus + ', ' + error;
-            _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
-        });
+            .done(function(data) {
+                $(".coupon-loading").hide();
+                if(typeof data !== undefined && data!= ""){
+                    var obj = data;
+                    _discountProvided = {"id":obj.id,"name":obj.name,"description":obj.description,"amount":obj.amount};
+                    _loadBillFromClient();
+                    _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
+                }else
+                    _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+            })
+            .error(function (xhr, ajaxOptions, thrownError){
+                if(xhr.status==404) {
+                    _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+                }
+            })
+            .fail(function (jqxhr, textStatus, error) {
+                $(".coupon-loading").hide();
+                var err = textStatus + ', ' + error;
+                _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+            });
     };
 
     var _addEventClick2PlanTypeItem = function(){
@@ -272,7 +272,7 @@
 
         parent_row.parent().find(".dropdown-info-addon").remove();
 
-        if (is_shown_desc) return;
+        //if (is_shown_desc) return;
 
         $(".dropdown-info-addon").clone().addClass(data_toggle).appendTo(parent_row);
 
@@ -309,12 +309,12 @@
 
             if(parent.hasClass("selected")){
                 parent.removeClass("selected");
-              _toggleDropdownServiceDesc(me,false);
+                _toggleDropdownServiceDesc(me,false);
                 _removeServiceFromListSelected(id);
             }else{
-              parent.addClass("selected");
-              _addService2ListSelected(obj);
-              _toggleDropdownServiceDesc(me,true);
+                parent.addClass("selected");
+                _addService2ListSelected(obj);
+                _toggleDropdownServiceDesc(me,true);
             }
             if(typeof _discountProvided !== undefined && null != _discountProvided){
                 _getDiscount(_discountProvided.id);
@@ -333,13 +333,13 @@
         var data_toggle = service_item.attr("data-toggle");
         var is_shown_desc = false;
         if(!display){
-          parent_row.parent().find(".dropdown-info-service").remove();
+            parent_row.parent().find(".dropdown-info-service").remove();
         }
         if (parent_row.find(".dropdown-info-service").hasClass(data_toggle)) is_shown_desc = true;
 
         parent_row.parent().find(".dropdown-info-service").remove();
 
-        if (is_shown_desc) return;
+        //if (is_shown_desc) return;
 
         $(".dropdown-info-service").clone().addClass(data_toggle).appendTo(parent_row);
 
@@ -365,8 +365,33 @@
 
         var appended_dropdown_info_service = parent_row.find(".dropdown-info-service");
 
-        appended_dropdown_info_service.toggle()
+        appended_dropdown_info_service.toggle();
     };
+
+
+    $(document).ready(function() {
+        document.onclick = function(e){
+            var target = (e && e.target) || (event && event.srcElement);
+            var clickedOnItem = false;
+
+            while (target.parentNode) {
+                if ($(target.parentNode).hasClass("uiCloudCardSelect")) {
+                    if ($(target).hasClass("serviceItem")) {
+                        $(".dropdown-info-addon").hide();
+                    } else if ($(target).hasClass("mini") || $(target.parentNode).hasClass("mini")) {
+                        $(".dropdown-info-service").hide();
+                    }
+                    clickedOnItem = true;
+                    break;
+                }
+                target = target.parentNode;
+            }
+            if (!clickedOnItem) {
+                $(".dropdown-info-service").hide();
+                $(".dropdown-info-addon").hide();
+            }
+        }
+    });
 
     var _addAddon2ListSelected = function(obj){
         if (_checkItemExistsInList(obj.id,_listAddonsSelected) == null)
@@ -375,8 +400,8 @@
     var _removeAddonFromListSelected = function (id) {
         var pos = _checkItemExistsInList(id,_listAddonsSelected);
         if ( pos != null){
-          _listAddonsSelected.splice(pos,1);
-          return true;
+            _listAddonsSelected.splice(pos,1);
+            return true;
         }
         return false;
     };
@@ -418,13 +443,13 @@
                 _resetAffixOrderBox();
             })
             .error(function (xhr, ajaxOptions, thrownError){
-              if(xhr.status==404) {
-                _billContainerDOM.html("Something went wrong, please try again");
-              }
+                if(xhr.status==404) {
+                    _billContainerDOM.html("Something went wrong, please try again");
+                }
             })
             .fail(function (jqxhr, textStatus, error) {
                 var err = textStatus + ', ' + error;
-              _billContainerDOM.html("Something went wrong, please try again");
+                _billContainerDOM.html("Something went wrong, please try again");
             });
     };
     var _addEvent2BtnSubmitDiscount = function(){
@@ -434,7 +459,7 @@
             if (typeof discountId !== undefined && discountId.length > 0 ){
                 _getDiscount(discountId);
             }else{
-              _disPlayWarningMsgCB("coupon","Please provide your coupon code",true);
+                _disPlayWarningMsgCB("coupon","Please provide your coupon code",true);
             }
         })
     };
@@ -489,12 +514,12 @@
         return info;
     };
     var _dislayLoadingAll = function(display){
-      var loadingDOM = $(".loading-all");
-      if(display){
-        loadingDOM.addClass("show");
-      }
-      else
-        loadingDOM.removeClass("show");
+        var loadingDOM = $(".loading-all");
+        if(display){
+            loadingDOM.addClass("show");
+        }
+        else
+            loadingDOM.removeClass("show");
     };
     var _addEvent2BtnSubscribe = function(){
         $(document).on('click.subscribe.submit','button.subscribe', function () {
@@ -519,21 +544,21 @@
 
             var termandcondition = $("#termandcondition");
             if (!termandcondition.prop('checked')){
-              _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
-              return;
+                _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
+                return;
             }
             me.prop('disabled',true);
             var discount = null;
             if(typeof _discountProvided !== undefined && null != _discountProvided)
-              discount = _discountProvided;
+                discount = _discountProvided;
             var addons = new Array();
             for(var i=0;i<_listAddonsSelected.length;i++){
-              addons.push(_listAddonsSelected[i]);
+                addons.push(_listAddonsSelected[i]);
             }
             for(var i=0;i<_listServicesSelected.length;i++){
-              addons.push(_listServicesSelected[i]);
+                addons.push(_listServicesSelected[i]);
             }
-          _dislayLoadingAll(true);
+            _dislayLoadingAll(true);
             var data = {"firstName":firstName,"lastName":lastName,"organization":organization,"phone":phone,"email":email,"productCode":productCode,"cardNumber":cardNumber,"cardHolder":cardHolder,"expireMonth":expireMonth,"expireYear":expireYear,"cardCVV":cardCVV,"plan":_planSelected,"addons":addons,"discount":discount,"totalBill":_totalBill};
             data = JSON.stringify(data);
             $.ajax({
@@ -543,28 +568,28 @@
                 contentType:"application/json",
                 data:data
             })
-              .done(function(data) {
-                  var obj = $.parseJSON(data);
-                  if(obj.msg == "ok"){
-                      _disPlaySuccessMsgCB("credit","Transaction successful",true);
-                      window.location.href = "confirmation/success";
-                  }else{
+                .done(function(data) {
+                    var obj = $.parseJSON(data);
+                    if(obj.msg == "ok"){
+                        _disPlaySuccessMsgCB("credit","Transaction successful",true);
+                        window.location.href = "confirmation/success";
+                    }else{
+                        _dislayLoadingAll(false);
+                        me.prop('disabled',false);
+                        _disPlayInfoMsgCB("credit",obj.msg,true);
+                    }
+                })
+                .error(function (xhr, ajaxOptions, thrownError){
+                    if(xhr.status==404) {
+                        _disPlayErrorMsgCB("credit","Something went wrong, please try again",true);;
+                    }
+                })
+                .fail(function (jqxhr, textStatus, error) {
+                    var err = textStatus + ', ' + error;
                     _dislayLoadingAll(false);
                     me.prop('disabled',false);
-                    _disPlayInfoMsgCB("credit",obj.msg,true);
-                  }
-              })
-              .error(function (xhr, ajaxOptions, thrownError){
-                if(xhr.status==404) {
-                  _disPlayErrorMsgCB("credit","Something went wrong, please try again",true);;
-                }
-              })
-              .fail(function (jqxhr, textStatus, error) {
-                  var err = textStatus + ', ' + error;
-                  _dislayLoadingAll(false);
-                  me.prop('disabled',false);
-                  _disPlayErrorMsgCB("credit",err,true);
-              });
+                    _disPlayErrorMsgCB("credit",err,true);
+                });
         })
     };
 
@@ -585,20 +610,20 @@
         $("#last_name").blur(function(){
             var lenLastName = $(this).val().length;
             if(lenLastName < 1 ) {
-              $(this).parent().addClass(error);
+                $(this).parent().addClass(error);
             } else {
-              $(this).parent().removeClass(error);
-              $(this).parent().addClass(valid);
+                $(this).parent().removeClass(error);
+                $(this).parent().addClass(valid);
             }
         });
 
         $("#organisation").blur(function(){
             var lenLastName = $(this).val().length;
             if(lenLastName < 1 ) {
-              $(this).parent().addClass(error);
+                $(this).parent().addClass(error);
             } else {
-              $(this).parent().removeClass(error);
-              $(this).parent().addClass(valid);
+                $(this).parent().removeClass(error);
+                $(this).parent().addClass(valid);
             }
         });
 
@@ -606,10 +631,10 @@
             var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
             var lenEmail = $(this).val().length;
             if(!$(this).val().match(mailformat)) {
-              $(this).parent().addClass(error);
+                $(this).parent().addClass(error);
             } else {
-              $(this).parent().removeClass(error);
-              $(this).parent().addClass(valid);
+                $(this).parent().removeClass(error);
+                $(this).parent().addClass(valid);
             }
         });
 
@@ -617,10 +642,10 @@
             var phoneformat = /^[0-9+\(\)#\.\s\/ext-]+$/;
             var lenPhone = $(this).val().length;
             if(lenPhone < 9 || !$(this).val().match(phoneformat)) {
-              $(this).parent().addClass(error);
+                $(this).parent().addClass(error);
             } else {
-              $(this).parent().removeClass(error);
-              $(this).parent().addClass(valid);
+                $(this).parent().removeClass(error);
+                $(this).parent().addClass(valid);
             }
         });
     };
@@ -637,48 +662,48 @@
             $("#first_name").parent().addClass(error);
             isValid = false;
         } else {
-          $(this).parent().removeClass(error);
-          $(this).parent().addClass(valid);
+            $(this).parent().removeClass(error);
+            $(this).parent().addClass(valid);
         }
 
         if($("#last_name").val().length < 1) {
             msg +="<p>Please fill in the Last Name.</p>";
-          $("#last_name").parent().addClass(error);
-          isValid = false;
+            $("#last_name").parent().addClass(error);
+            isValid = false;
         } else {
-          $(this).parent().removeClass(error);
-          $(this).parent().addClass(valid);
+            $(this).parent().removeClass(error);
+            $(this).parent().addClass(valid);
         }
 
         if($("#organisation").val().length < 1) {
             msg +="<p>Please fill in the Organisation.</p>";
-          $("#organisation").parent().addClass(error);
-          isValid = false;
+            $("#organisation").parent().addClass(error);
+            isValid = false;
         } else {
-          $(this).parent().removeClass(error);
-          $(this).parent().addClass(valid);
+            $(this).parent().removeClass(error);
+            $(this).parent().addClass(valid);
         }
 
         if(!$("#phone").val().match(phoneformat)) {
             msg +="<p>Please enter a valid phone number.</p>";
-          $("#phone").parent().addClass(error);
-          isValid = false;
+            $("#phone").parent().addClass(error);
+            isValid = false;
         } else {
-          $(this).parent().removeClass(error);
-          $(this).parent().addClass(valid);
+            $(this).parent().removeClass(error);
+            $(this).parent().addClass(valid);
         }
 
         if(!$("#billing_email").val().match(mailformat)) {
             msg +="<p>Please enter an valid email address.</p>";
-          $("#billing_email").parent().addClass(error);
-          isValid = false;
+            $("#billing_email").parent().addClass(error);
+            isValid = false;
         } else {
-          $(this).parent().removeClass(error);
-          $(this).parent().addClass(valid);
+            $(this).parent().removeClass(error);
+            $(this).parent().addClass(valid);
         }
         if(msg != ""){
-          _disPlayErroreXoStyleMsgCB(msg);
-          $("#buypage-alert-billing").show();
+            _disPlayErroreXoStyleMsgCB(msg);
+            $("#buypage-alert-billing").show();
         }
         return isValid;
 
@@ -686,85 +711,85 @@
 
     var _hideAllAddonsButOne = function() {
 
-      $(".addon-bloc").hide();
-      var addonsSelected2BeRemoved = new Array();
-      var addonsAttached2Plan = new Array();
-      _listAddonsSelected = new Array();
-      $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
-        var addonDOM = $(this);
-        var type = $(this).attr("data-type");
-        var childL1 = $(this).children();
-        var id = childL1.attr("id");
-        var isAttached2Plan = addonDOM.attr("data-attached-plan");
-        if (childL1.hasClass('selected')) {
-          if (isAttached2Plan)
-            addonsSelected2BeRemoved.push(type);
-          else
-            addonsAttached2Plan.push({"id": id, "type": type, "selected": true});
-          childL1.removeClass('selected');
-        }
-
-      });
-      $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
-        var addonDOM = $(this);
-        var type = $(this).attr("data-type");
-        var childL1 = $(this).children();
-        var id = childL1.attr("id");
-        if ($(".addon-" + id + "-" + _addonUserDefault).length > 0) {
-          addonsAttached2Plan.push({"id": id, "type": type, "selected": false});
-        }
-      });
-      var addon2BeDisplayed = new Array();
-      var addons2BeSelected = new Array();
-      if (addonsAttached2Plan.length > 0) {
-        for (var i = 0; i < addonsAttached2Plan.length; i++) {
-          if (jQuery.inArray(addonsAttached2Plan[i].type, addonsSelected2BeRemoved) != -1) {
-            addons2BeSelected.push(addonsAttached2Plan[i].id);
-          }
-          addon2BeDisplayed.push(addonsAttached2Plan[i].id);
-        }
+        $(".addon-bloc").hide();
+        var addonsSelected2BeRemoved = new Array();
+        var addonsAttached2Plan = new Array();
+        _listAddonsSelected = new Array();
         $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
-          var addonDOM = $(this);
-          var type = $(this).attr("data-type");
-          var childL1 = $(this).children();
-          var me = childL1.children();
-          var parent_row = addonDOM.parent();
-          parent_row.parent().find(".dropdown-info-addon").remove();
-          var id = me.attr("data-id");
-          var name = me.attr("data-name");
-          var price = me.attr("data-price");
-          var description = "";//me.attr("data-description");
-          var obj = {id: id, name: name, price: price, description: description};
-          if (jQuery.inArray(id, addon2BeDisplayed)  != -1) {
-            addonDOM.show();
-          }
-          if (jQuery.inArray(id, addons2BeSelected)  != -1) {
-            _addAddon2ListSelected(obj);
-            childL1.addClass("selected");
-          }
+            var addonDOM = $(this);
+            var type = $(this).attr("data-type");
+            var childL1 = $(this).children();
+            var id = childL1.attr("id");
+            var isAttached2Plan = addonDOM.attr("data-attached-plan");
+            if (childL1.hasClass('selected')) {
+                if (isAttached2Plan)
+                    addonsSelected2BeRemoved.push(type);
+                else
+                    addonsAttached2Plan.push({"id": id, "type": type, "selected": true});
+                childL1.removeClass('selected');
+            }
+
         });
-      }
+        $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
+            var addonDOM = $(this);
+            var type = $(this).attr("data-type");
+            var childL1 = $(this).children();
+            var id = childL1.attr("id");
+            if ($(".addon-" + id + "-" + _addonUserDefault).length > 0) {
+                addonsAttached2Plan.push({"id": id, "type": type, "selected": false});
+            }
+        });
+        var addon2BeDisplayed = new Array();
+        var addons2BeSelected = new Array();
+        if (addonsAttached2Plan.length > 0) {
+            for (var i = 0; i < addonsAttached2Plan.length; i++) {
+                if (jQuery.inArray(addonsAttached2Plan[i].type, addonsSelected2BeRemoved) != -1) {
+                    addons2BeSelected.push(addonsAttached2Plan[i].id);
+                }
+                addon2BeDisplayed.push(addonsAttached2Plan[i].id);
+            }
+            $(".addonsContainer").find(".addon-bloc").each(function (i, v) {
+                var addonDOM = $(this);
+                var type = $(this).attr("data-type");
+                var childL1 = $(this).children();
+                var me = childL1.children();
+                var parent_row = addonDOM.parent();
+                parent_row.parent().find(".dropdown-info-addon").remove();
+                var id = me.attr("data-id");
+                var name = me.attr("data-name");
+                var price = me.attr("data-price");
+                var description = "";//me.attr("data-description");
+                var obj = {id: id, name: name, price: price, description: description};
+                if (jQuery.inArray(id, addon2BeDisplayed)  != -1) {
+                    addonDOM.show();
+                }
+                if (jQuery.inArray(id, addons2BeSelected)  != -1) {
+                    _addAddon2ListSelected(obj);
+                    childL1.addClass("selected");
+                }
+            });
+        }
     };
     var _addEvent2CheckTandC = function () {
-      $(document).on('click.termandcondition.check',"#termandcondition",function(){
-        var me = $(this);
-        if(me.prop("checked")){
-          _disPlayWarningMsgCB("credit","",false);
-        }
-      });
+        $(document).on('click.termandcondition.check',"#termandcondition",function(){
+            var me = $(this);
+            if(me.prop("checked")){
+                _disPlayWarningMsgCB("credit","",false);
+            }
+        });
     };
     var _resetAffixOrderBox = function () {
-      $('.order-box').affix({
-        offset: {
-          top: 100,
-          bottom: function () {
-            return (this.bottom = $('.footer').outerHeight(true))
-          }
-        }
-      })
+        $('.order-box').affix({
+            offset: {
+                top: 100,
+                bottom: function () {
+                    return (this.bottom = $('.footer').outerHeight(true))
+                }
+            }
+        })
     };
     BuyPage.setTotalBill = function(total){
-      _totalBill = total;
+        _totalBill = total;
     };
     BuyPage.setPlanDefaultSelected = function (id,name,price,user,planCycle) {
         _planSelected = {"id":id,"name":name,"price":price,"planCycle":planCycle};
