@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -143,22 +144,30 @@ public class RestWebHookController {
     templateProperties.put("product.code", productCode);
     templateProperties.put("unlock.key", unlockKey);
     
-    List<AddOn> listAddon =transaction.getAddOns(); //must get addons from transaction
-    //List<AddOn> listAddon =subscription.getAddOns();
+    List<AddOn> listAddonOfTransaction =transaction.getAddOns(); //must get addons from transaction
+    List<AddOn> listAddonOfSubscription =subscription.getAddOns();
     StringBuffer bufferListAddon =  new StringBuffer();
     StringBuffer bufferListService =  new StringBuffer();
-    for (AddOn addOn : listAddon) {
-      //addons from transaction don't contain addon's Name so need to get Full Addon object from Braintree
-      AddOn addOnFromBraintree = gatewayService.getAddon(addOn.getId());
-      AddonDTO addonDTO = new AddonDTO(addOnFromBraintree.getId(),addOnFromBraintree.getName(),
-                                       addOnFromBraintree.getDescription(),addOnFromBraintree.getAmount());
-      if(!addonDTO.isService()){
-        bufferListAddon.append(addOnFromBraintree.getName());
-        bufferListAddon.append("<br>");
-      }else{
-        bufferListService.append(addOnFromBraintree.getName());
-        bufferListService.append("<br>");
+    for (AddOn addOnT : listAddonOfTransaction) {
+      for (AddOn addOnS : listAddonOfSubscription) {
+        //addons from transaction don't contain addon's Name so need to get Full Addon object from Braintree
+        //AddOn addOnFromBraintree = gatewayService.getAddon(addOn.getId());
         
+        //To avoid query Addon data from braintree server,
+        //we will get addon information from Subscriptions because Subscriptions contains all addons of all transactions
+        if(addOnT.getId().equals(addOnS.getId())){
+          AddonDTO addonDTO = new AddonDTO(addOnS.getId(),addOnS.getName(),
+                                           addOnS.getDescription(),addOnS.getAmount());
+          if(!addonDTO.isService()){
+            bufferListAddon.append(addOnS.getName());
+            bufferListAddon.append("<br>");
+          }else{
+            bufferListService.append(addOnS.getName());
+            bufferListService.append("<br>");
+            
+          }
+          break;
+        }
       }
     }
     
@@ -185,7 +194,7 @@ public class RestWebHookController {
                               String productCode, String unlockKey) throws Exception{
     
     log.info("Start sending email to" + customer.getEmail());
-    System.out.println("Start sending email to" + customer.getEmail());
+    System.out.println("Start sending email to: " + customer.getEmail());
     
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     
@@ -245,11 +254,18 @@ public class RestWebHookController {
   
   @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
   @ResponseBody
-  public Object handle(@RequestParam (value = "bt_signature", required=false) String bt_signature,
+  public Object handle(HttpServletRequest request,
+                       @RequestParam (value = "bt_signature", required=false) String bt_signature,
                        @RequestParam (value = "bt_payload", required=false) String bt_payload){
-    
+
     System.out.println("START Webhook call");
     log.info("START Webhook call");
+    
+    String clientIpAddress = request.getRemoteAddr();
+    String clientAgent = request.getHeader("user-agent");
+    
+    System.out.println("clientIpAddress: " + clientIpAddress);
+    System.out.println("clientAgent: " + clientAgent);
 
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
@@ -262,6 +278,12 @@ public class RestWebHookController {
       String result = ("[Webhook Received " + webhookNotification.getTimestamp().getTime() + "] | Kind: " + webhookNotification.getKind() + " | Subscription: " + subscription.getId());
       log.info(result);
       System.out.println(result);
+      
+      if(webhookNotification.getKind().equals(WebhookNotification.Kind.SUBSCRIPTION_CHARGED_SUCCESSFULLY)){
+        //Do nothing
+        //Do not send mails
+        return new ResponseEntity<String>("", HttpStatus.OK);
+      }
 
     } catch (Exception e) {
       log.info("Can not load subscription from braintree", e);
@@ -295,14 +317,22 @@ public class RestWebHookController {
   }
   
   /*This method is use for testing only*/
- /* @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
+  /*
+  @RequestMapping(value = "/handle",method = RequestMethod.POST,produces = {"text/html"})
   @ResponseBody
-  public Object handle(@RequestParam (value = "bt_signature", required=false) String bt_signature,
+  public Object handle(HttpServletRequest request,
+                       @RequestParam (value = "bt_signature", required=false) String bt_signature,
                        @RequestParam (value = "bt_payload", required=false) String bt_payload,
                        @RequestParam (value = "subscriptionId", required=false) String subscriptionId ){
     
     System.out.println("START Webhook call");
     log.info("START Webhook call");
+    
+    String clientIpAddress = request.getRemoteAddr();
+    String clientAgent = request.getHeader("user-agent");
+    
+    System.out.println("clientIpAddress: " + clientIpAddress);
+    System.out.println("clientAgent: " + clientAgent);
 
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
