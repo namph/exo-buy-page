@@ -272,7 +272,7 @@
 
         parent_row.parent().find(".dropdown-info-addon").remove();
 
-        if (is_shown_desc) return;
+        //if (is_shown_desc) return;
 
         $(".dropdown-info-addon").clone().addClass(data_toggle).appendTo(parent_row);
 
