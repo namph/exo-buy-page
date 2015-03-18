@@ -279,7 +279,7 @@ public class RestWebHookController {
       log.info(result);
       System.out.println(result);
       
-      if(webhookNotification.getKind().equals(WebhookNotification.Kind.SUBSCRIPTION_CHARGED_SUCCESSFULLY)){
+      if(webhookNotification.getKind().equals(WebhookNotification.Kind.SUBSCRIPTION_CHARGED_SUCCESSFULLY) == false){
         //Do nothing
         //Do not send mails
         return new ResponseEntity<String>("", HttpStatus.OK);
