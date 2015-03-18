@@ -13,17 +13,17 @@
 
     <div class="panel panel-primary order-box" data-spy="affix" data-offset-top="110" data-offset-bottom="200">
         <div class="panel-heading">
-            <h4>Your Order<br><small><a class="exo-icon-restore" href="#"></a>${period}</small></h4>
+            <h4>Your Order<br><small><a class="exo-icon-restore" href="#"></a> ${period}</small></h4>
         </div>
         <div class="panel-body">
-            <h5 class="price-head">Exo Platform Entrerprise</h5>
+            <h5 class="price-head">eXo Platform Entrerprise</h5>
             <div class="price-row">
                 <div class="row">
                     <div class="col-xs-7 price-label">
                             ${planName}<br><strong>${planUser}</strong> users
                     </div>
                     <div class="col-xs-5 text-right">
-                        <span class="price">$ ${planPrice}</span>
+                        <span class="price">$${planPrice}</span>
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                                     ${name}<br>Up to ${user} users
                             </div>
                             <div class="col-xs-5 text-right">
-                                <span class="price link-color">$ ${price}</span>
+                                <span class="price link-color">$${price}</span>
                             </div>
                         </div>
                         <a href="javascript:void(0);" class="fa fa-trash remove-addonItem" data-id="${id}"></a>
@@ -49,7 +49,7 @@
                 </c:forEach>
             </c:if>
             <c:if test="${services.size() > 0}">
-                <h5 class="price-head">Service</h5>
+                <h5 class="price-head">Services</h5>
                 <c:forEach items="${services}" var="item">
                     <c:set var="id" value="${item.getId()}"></c:set>
                     <c:set var="name" value="${item.getName()}"></c:set>
@@ -60,7 +60,7 @@
                                     ${name}
                             </div>
                             <div class="col-xs-5 text-right">
-                                <span class="price link-color">$ ${price}</span>
+                                <span class="price link-color">$${price}</span>
                             </div>
                         </div>
                         <a href="javascript:void(0);" class="fa fa-trash  remove-serviceItem" data-id="${id}"></a>
@@ -88,7 +88,7 @@
         <div class="panel-footer">
             <div class="row">
                 <div class="col-xs-5 total-text">Total</div>
-                <div class="col-xs-7 total-price"><span class="price">$ ${total}</span></div>
+                <div class="col-xs-7 total-price"><span class="price">$${total}</span></div>
             </div>
         </div>
     </div>

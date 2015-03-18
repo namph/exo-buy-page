@@ -8835,12 +8835,12 @@ button.close {
     width: 100%;
     margin-bottom: 20px;
     /*@media(max-width: 767px) {
-		>.row {
-			.form-control {
-				margin-bottom: 12px;
-			}
-		}
-	}*/
+        >.row {
+            .form-control {
+                margin-bottom: 12px;
+            }
+        }
+    }*/
 }
 .ccjs-card .ccjs-csc-diagram,
 .ccjs-card .ccjs-csc-diagram-amex {
@@ -9256,7 +9256,9 @@ h2.TitleForm {
     margin-top: 50px;
 }
 .slider.slider-horizontal {
-    width: 100%;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .slider-selection.tick-slider-selection {
     background: #5373a9;
@@ -9424,9 +9426,11 @@ body {
     margin-right: 15px;
     text-align: center;
     overflow: hidden;
+}
+.uiCloudCardSelect > .inner {
     height: 154px;
 }
-.uiCloudCardSelect.mini {
+.uiCloudCardSelect.mini > .inner {
     height: 120px;
 }
 .uiCloudCardSelect.mini .title {
@@ -9670,15 +9674,15 @@ body {
         border-right-color: #ffffff;
     }
     /*
-	.open {
-		> .popover-manual-toggle {
-			&:hover {
-				.popover {
-					display: block;
-				}
-			}
-		}
-	}*/
+    .open {
+        > .popover-manual-toggle {
+            &:hover {
+                .popover {
+                    display: block;
+                }
+            }
+        }
+    }*/
 }
 .panel.order-box {
     background-color: #ECECEC;
