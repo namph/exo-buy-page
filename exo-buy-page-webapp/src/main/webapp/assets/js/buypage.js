@@ -375,7 +375,7 @@
             var clickedOnItem = false;
 
             while (target.parentNode) {
-                if ($(target.parentNode).hasClass("uiCloudCardSelect")) {
+                if ($(target.parentNode).hasClass("uiCloudCardSelect") || $(target.parentNode).hasClass("wrap-dropdown")) {
                     if ($(target).hasClass("serviceItem")) {
                         $(".dropdown-info-addon").hide();
                     } else if ($(target).hasClass("mini") || $(target.parentNode).hasClass("mini")) {
