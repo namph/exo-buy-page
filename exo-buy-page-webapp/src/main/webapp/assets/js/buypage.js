@@ -368,31 +368,6 @@
         appended_dropdown_info_service.toggle();
     };
 
-
-    $(document).ready(function() {
-        document.onclick = function(e){
-            var target = (e && e.target) || (event && event.srcElement);
-            var clickedOnItem = false;
-
-            while (target.parentNode) {
-                if ($(target.parentNode).hasClass("uiCloudCardSelect") || $(target.parentNode).hasClass("wrap-dropdown")) {
-                    if ($(target).hasClass("serviceItem")) {
-                        $(".dropdown-info-addon").hide();
-                    } else if ($(target).hasClass("mini") || $(target.parentNode).hasClass("mini")) {
-                        $(".dropdown-info-service").hide();
-                    }
-                    clickedOnItem = true;
-                    break;
-                }
-                target = target.parentNode;
-            }
-            if (!clickedOnItem) {
-                $(".dropdown-info-service").hide();
-                $(".dropdown-info-addon").hide();
-            }
-        }
-    });
-
     var _addAddon2ListSelected = function(obj){
         if (_checkItemExistsInList(obj.id,_listAddonsSelected) == null)
             _listAddonsSelected.push(obj);
@@ -541,7 +516,16 @@
             var expireYear = $("#expireYear").val();
             var cardCVV = $("#cardCVV").val();
             var productCode = $("#product_code").val();
-
+            var isOk2Submit = false;
+            if ( cardNumber.replace(/ /g,'').length > 0 && cardCVV.replace(/ /g,'').length > 0 && cardHolder.replace(/ /g,'').length > 0 && expireMonth != null && expireYear != null ) {
+              isOk2Submit = true;
+            }
+            if (isOk2Submit){
+              _disPlayWarningMsgCB("credit","",false);
+            }else{
+              _disPlayWarningMsgCB("credit","Please fill all fields in credit form",true);
+              return;
+            }
             var termandcondition = $("#termandcondition");
             if (!termandcondition.prop('checked')){
                 _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
@@ -788,6 +772,30 @@
             }
         })
     };
+    var _addEventClickOutSide = function(){
+      document.onclick = function(e){
+
+        var target = (e && e.target) || (event && event.srcElement);
+        var clickedOnItem = false;
+
+        while (target.parentNode) {
+          if ($(target.parentNode).hasClass("uiCloudCardSelect") || $(target.parentNode).hasClass("wrap-dropdown")) {
+            if ($(target).hasClass("serviceItem")) {
+              $(".dropdown-info-addon").hide();
+            } else if ($(target).hasClass("mini") || $(target.parentNode).hasClass("mini")) {
+              $(".dropdown-info-service").hide();
+            }
+            clickedOnItem = true;
+            break;
+          }
+          target = target.parentNode;
+        }
+        if (!clickedOnItem) {
+          $(".dropdown-info-service").hide();
+          $(".dropdown-info-addon").hide();
+        }
+      }
+    };
     BuyPage.setTotalBill = function(total){
         _totalBill = total;
     };
@@ -796,11 +804,12 @@
         _addonUserDefault = user;
     };
 
+
     BuyPage.init = function () {
         _planContainerDOM = $(".buypage-plans");
         _addonsContainerDOM = $(".buypage-addons");
         _billContainerDOM = $(".buypage-bill");
-
+        _addEventClickOutSide();
         _loadActivePlans();
         _addEvent2BtnSubmitDiscount();
         _addEventClick2PlanTypeItem();

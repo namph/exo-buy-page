@@ -10,7 +10,11 @@ public class CommonUtils {
 
   private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#,##0.00");
   public static String getMessageByBTCode(String strCode) {
-    int code = Integer.valueOf(strCode);
+    int code = 0;
+    try {
+      code = Integer.valueOf(strCode);
+    }
+    catch (Exception e){}
     switch (code) {
       case 2001:
         return "Insufficient Funds";
