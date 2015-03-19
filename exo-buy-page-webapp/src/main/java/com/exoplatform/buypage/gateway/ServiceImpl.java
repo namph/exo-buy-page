@@ -60,7 +60,10 @@ public class ServiceImpl implements IService {
   private BraintreeGateway gateway;
   public ServiceImpl(){
     try {
-      this.adminConfiguration = new PropertiesConfiguration("braintree.properties");
+      String envMode = System.getProperty("spring.profiles.active");
+      if (null == envMode || "".equals(envMode))
+        envMode = "dev";
+      this.adminConfiguration = new PropertiesConfiguration(envMode+"_braintree.properties");
     } catch (ConfigurationException e) {
       log.error("Cannot load admin configuration file.");
     }
