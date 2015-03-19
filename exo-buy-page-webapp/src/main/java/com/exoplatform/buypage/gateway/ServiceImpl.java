@@ -60,7 +60,7 @@ public class ServiceImpl implements IService {
   private BraintreeGateway gateway;
   public ServiceImpl(){
     try {
-      String envMode = System.getProperty("spring.profiles.active");
+      String envMode = System.getProperty("buypage.braintree.setting.mode");
       if (null == envMode || "".equals(envMode))
         envMode = "dev";
       this.adminConfiguration = new PropertiesConfiguration(envMode+"_braintree.properties");
