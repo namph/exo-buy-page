@@ -12,7 +12,8 @@ public class CommonUtils {
   public static String getMessageByBTCode(String strCode) {
     int code = 0;
     try {
-      code = Integer.valueOf(strCode);
+      if(null != strCode && !"".equals(strCode))
+        code = Integer.valueOf(strCode);
     }
     catch (Exception e){}
     switch (code) {
@@ -35,7 +36,7 @@ public class CommonUtils {
       case 2015:
         return "Transaction Not Allowed";
       default:
-        return "We are unable to process your credit card payment, please verify the information you entered is correct";
+        return "We are unable to process your credit card payment, please verify the information you entered is correct. If the problem persists, contact us to complete your order.";
     }
   }
 

@@ -245,6 +245,12 @@ public class ServiceImpl implements IService {
   private String getCustomerRequestError(Result<Customer> requestError) {
     String result = null;
     List<ValidationError> errors = requestError.getErrors().getAllDeepValidationErrors();
+    if (errors.size() == 0){
+      result = requestError.getMessage();
+      if (result.contains("Rejected: cvv")){
+        return "2010";
+      }
+    }
     for (ValidationError error : errors) {
       if (error.getCode().toString().contains("CREDIT_CARD_NUMBER")) {
         result = "2005";
