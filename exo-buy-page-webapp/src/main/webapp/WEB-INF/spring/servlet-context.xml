@@ -11,7 +11,7 @@
   <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="locations">
       <list>
-        <value>classpath:${spring.profiles.active}_braintree.properties</value>
+        <value>${exo.buy.configuration.dir}/${buypage.braintree.setting.mode}_braintree.properties</value>
       </list>
     </property>
     <property name="ignoreUnresolvablePlaceholders" value="true"/>
