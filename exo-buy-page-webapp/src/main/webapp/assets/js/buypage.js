@@ -523,12 +523,12 @@
             if (isOk2Submit){
               _disPlayWarningMsgCB("credit","",false);
             }else{
-              _disPlayWarningMsgCB("credit","Please fill all fields in credit form",true);
+              _disPlayWarningMsgCB("credit","Please input all required fields",true);
               return;
             }
             var termandcondition = $("#termandcondition");
             if (!termandcondition.prop('checked')){
-                _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
+                _disPlayWarningMsgCB("credit","To complete your order, you must read and agree to the Terms and Conditions",true);
                 return;
             }
             me.prop('disabled',true);
@@ -560,7 +560,7 @@
                     }else{
                         _dislayLoadingAll(false);
                         me.prop('disabled',false);
-                        _disPlayInfoMsgCB("credit",obj.msg,true);
+                        _disPlayWarningMsgCB("credit",obj.msg,true);
                     }
                 })
                 .error(function (xhr, ajaxOptions, thrownError){

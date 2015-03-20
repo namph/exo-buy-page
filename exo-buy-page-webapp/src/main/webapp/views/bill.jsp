@@ -6,7 +6,7 @@
     </script>
     <c:set var="planId" value="${plan.getId()}"></c:set>
     <c:set var="planName" value="${plan.getName()}"></c:set>
-    <c:set var="planPrice" value="${plan.getPrice()}"></c:set>
+    <c:set var="planPrice" value="${plan.getStrPrix()}"></c:set>
     <c:set var="planType" value="${plan.getPlanType()}"></c:set>
     <c:set var="planUser" value="${plan.getOptionUser()}"></c:set>
     <c:set var="period" value="${plan.getPeriod()}"></c:set>
@@ -32,7 +32,7 @@
                 <c:forEach items="${addons}" var="item">
                     <c:set var="id" value="${item.getId()}"></c:set>
                     <c:set var="name" value="${item.getName()}"></c:set>
-                    <c:set var="price" value="${item.getPrice()}"></c:set>
+                    <c:set var="price" value="${item.getStrPrix()}"></c:set>
                     <c:set var="user" value="${item.getOptionUser()}"></c:set>
                     <div class="price-row">
                         <div class="row">
@@ -53,7 +53,7 @@
                 <c:forEach items="${services}" var="item">
                     <c:set var="id" value="${item.getId()}"></c:set>
                     <c:set var="name" value="${item.getName()}"></c:set>
-                    <c:set var="price" value="${item.getPrice()}"></c:set>
+                    <c:set var="price" value="${item.getStrPrix()}"></c:set>
                     <div class="price-row">
                         <div class="row">
                             <div class="col-xs-6 price-label">
