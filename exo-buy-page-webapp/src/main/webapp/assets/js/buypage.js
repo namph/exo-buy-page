@@ -763,6 +763,13 @@
         });
     };
     var _resetAffixOrderBox = function () {
+        var windowHeight = $(window).height();
+        var orderboxHeight = $(".order-box").height();
+        if(orderboxHeight > windowHeight) {
+            $(".order-box").addClass('full-height');
+        } else {
+            $(".order-box").removeClass('full-height');
+        }
         $('.order-box').affix({
             offset: {
                 top: 100,
