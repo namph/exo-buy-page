@@ -8436,9 +8436,9 @@ button.close {
     color: #767f86;
     z-index: 1000000;
     width: 300px;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
 }
 .ccjs-card .ccjs-csc-diagram .ccjs-card-code,
 .ccjs-card-style .ccjs-csc-diagram .ccjs-card-code,
@@ -8477,6 +8477,7 @@ button.close {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
+    display: none;
 }
 .ccjs-card .ccjs-csc-diagram .ccjs-close:hover,
 .ccjs-card-style .ccjs-csc-diagram .ccjs-close:hover,

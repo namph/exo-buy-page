@@ -784,7 +784,7 @@
 
         var target = (e && e.target) || (event && event.srcElement);
         var clickedOnItem = false;
-
+        var clickOnCard = false;
         while (target.parentNode) {
           if ($(target.parentNode).hasClass("uiCloudCardSelect") || $(target.parentNode).hasClass("wrap-dropdown")) {
             if ($(target).hasClass("serviceItem")) {
@@ -795,11 +795,21 @@
             clickedOnItem = true;
             break;
           }
-          target = target.parentNode;
+
+          if ($(target.parentNode).hasClass("ccjs-csc-diagram-wrapper") || $(target.parentNode).hasClass("input-group-btn")) {
+            clickOnCard = true;
+            break;
+          }
+
+            target = target.parentNode;
         }
         if (!clickedOnItem) {
           $(".dropdown-info-service").hide();
           $(".dropdown-info-addon").hide();
+        }
+        if (!clickOnCard) {
+          $(".ccjs-csc-diagram-wrapper").removeClass("ccjs-active");
+          $(".ccjs-csc-help").removeClass("ccjs-active");
         }
       }
     };
