@@ -16,6 +16,25 @@
       <filtered>false</filtered>
       <lineEnding>keep</lineEnding>
     </fileSet>
+    <!-- Additional resources -->
+    <fileSet>
+      <directory>${project.basedir}/src/main/resources/tomcat</directory>
+      <outputDirectory>/</outputDirectory>
+      <filtered>true</filtered>
+      <includes>
+        <include>**/*.sh</include>
+      </includes>
+      <fileMode>0755</fileMode>
+    </fileSet>
+    <fileSet>
+      <directory>${project.basedir}/src/main/resources/tomcat</directory>
+      <outputDirectory>/</outputDirectory>
+      <excludes>
+        <exclude>**/*.sh</exclude>
+      </excludes>
+      <directoryMode>0755</directoryMode>
+      <fileMode>0644</fileMode>
+    </fileSet>
   </fileSets>
   <dependencySets>
     <!-- ================================ -->

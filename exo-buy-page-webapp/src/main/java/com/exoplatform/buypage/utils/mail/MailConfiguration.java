@@ -29,7 +29,7 @@ package com.exoplatform.buypage.utils.mail;
 public interface MailConfiguration {
   // Mail sender configuration
   
-  public final static String CONFIGURATION_FILE                       = "exo-buy-configuration.properties";
+  public final static String CONFIGURATION_FILE                       = "exo.buy.configuration.file";
 
   public final static String EXO_BUY_MAIL_AUTH                        = "exo.buy.mail.smtp.auth";
 

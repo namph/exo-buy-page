@@ -53,7 +53,8 @@ public class RestWebHookController {
 
   public RestWebHookController(){
     try {
-      exoBuyAdminConfiguration = new PropertiesConfiguration(MailConfiguration.CONFIGURATION_FILE);
+      String exoConfigFilePath = System.getProperty(MailConfiguration.CONFIGURATION_FILE);
+      this.exoBuyAdminConfiguration = new PropertiesConfiguration(exoConfigFilePath);
     } catch (ConfigurationException e) {
       log.error("Can not load configuration file", e);
     } 
@@ -131,7 +132,7 @@ public class RestWebHookController {
     }
     
     Map<String, String> templateProperties  = new HashMap<String, String>();
-    templateProperties.put("customer.name", customer.getFirstName());
+    templateProperties.put("customer.name", customer.getFirstName() + " " + customer.getLastName());
     templateProperties.put("customer.company", customer.getCompany());
     templateProperties.put("customer.email", customer.getEmail());
     templateProperties.put("customer.phone", customer.getPhone());

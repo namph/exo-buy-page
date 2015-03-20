@@ -81,7 +81,8 @@ public class MailSender {
       this.exoBuyAdminConfiguration = (PropertiesConfiguration) exoBuyAdminConfiguration;
     else{
       try {
-        this.exoBuyAdminConfiguration = new PropertiesConfiguration(CONFIGURATION_FILE);
+        String exoConfigFilePath = System.getProperty(CONFIGURATION_FILE);
+        this.exoBuyAdminConfiguration = new PropertiesConfiguration(exoConfigFilePath);
       } catch (ConfigurationException e) {
         LOG.error("Cannot load exo-buy-configuration file.");
       }

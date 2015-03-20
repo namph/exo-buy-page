@@ -61,9 +61,13 @@ public class ServiceImpl implements IService {
   public ServiceImpl(){
     try {
       String envMode = System.getProperty("buypage.braintree.setting.mode");
-      if (null == envMode || "".equals(envMode))
-        envMode = "dev";
-      this.adminConfiguration = new PropertiesConfiguration(envMode+"_braintree.properties");
+      String configFilePath = "";
+      if (null == envMode || "".equals(envMode) || "dev".equals(envMode)){
+        configFilePath = System.getProperty("braintree.dev.configuration.file");
+      }else{
+        configFilePath = System.getProperty("braintree.prod.configuration.file");
+      }
+      this.adminConfiguration = new PropertiesConfiguration(configFilePath);
     } catch (ConfigurationException e) {
       log.error("Cannot load admin configuration file.");
     }
