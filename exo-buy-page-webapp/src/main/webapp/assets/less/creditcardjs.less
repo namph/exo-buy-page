@@ -8,7 +8,8 @@
 .ccjs-card input, .ccjs-card-style input, .ccjs-card select, .ccjs-card-style select, .ccjs-card button, .ccjs-card-style button {
 }
 
-.ccjs-card input:focus, .ccjs-card-style input:focus, .ccjs-card select:focus, .ccjs-card-style select:focus, .ccjs-card button:focus, .ccjs-card-style button:focus {
+//.ccjs-card button:focus, .ccjs-card-style button:focus,
+.ccjs-card input:focus, .ccjs-card-style input:focus, .ccjs-card select:focus, .ccjs-card-style select:focus{
 	color: @text-color;
 }
 
@@ -48,7 +49,7 @@
 	color: #767f86;
 	z-index: 1000000;
 	width: 300px;
-	.border-radius(3px);
+	.border-radius(@border-radius-large);
 }
 
 .ccjs-card .ccjs-csc-diagram .ccjs-card-code, .ccjs-card-style .ccjs-csc-diagram .ccjs-card-code, .ccjs-card .ccjs-csc-diagram-amex .ccjs-card-code, .ccjs-card-style .ccjs-csc-diagram-amex .ccjs-card-code {
@@ -79,6 +80,7 @@
 	font-size: 18px;
 	font-weight: bold;
 	.border-radius(3px);
+	display: none;
 }
 
 .ccjs-card .ccjs-csc-diagram .ccjs-close:hover, .ccjs-card-style .ccjs-csc-diagram .ccjs-close:hover, .ccjs-card .ccjs-csc-diagram-amex .ccjs-close:hover, .ccjs-card-style .ccjs-csc-diagram-amex .ccjs-close:hover {
@@ -181,7 +183,7 @@
 
 .ccjs-card button.ccjs-csc-help:active, .ccjs-card-style button.ccjs-csc-help:active, .ccjs-card label.ccjs-csc-help:active, .ccjs-card-style label.ccjs-csc-help:active, .ccjs-card button.ccjs-csc-help.ccjs-active, .ccjs-card-style button.ccjs-csc-help.ccjs-active, .ccjs-card label.ccjs-csc-help.ccjs-active, .ccjs-card-style label.ccjs-csc-help.ccjs-active {
 	.fa {
-		color: @text-color;
+		color: @link-color;
 	}
 }
 

@@ -523,12 +523,12 @@
             if (isOk2Submit){
               _disPlayWarningMsgCB("credit","",false);
             }else{
-              _disPlayWarningMsgCB("credit","Please fill all fields in credit form",true);
+              _disPlayWarningMsgCB("credit","Please input all required fields",true);
               return;
             }
             var termandcondition = $("#termandcondition");
             if (!termandcondition.prop('checked')){
-                _disPlayWarningMsgCB("credit","Please accept the terms and condition",true);
+                _disPlayWarningMsgCB("credit","To complete your order, you must read and agree to the Terms and Conditions",true);
                 return;
             }
             me.prop('disabled',true);
@@ -560,7 +560,7 @@
                     }else{
                         _dislayLoadingAll(false);
                         me.prop('disabled',false);
-                        _disPlayInfoMsgCB("credit",obj.msg,true);
+                        _disPlayWarningMsgCB("credit",obj.msg,true);
                     }
                 })
                 .error(function (xhr, ajaxOptions, thrownError){
@@ -784,7 +784,7 @@
 
         var target = (e && e.target) || (event && event.srcElement);
         var clickedOnItem = false;
-
+        var clickOnCard = false;
         while (target.parentNode) {
           if ($(target.parentNode).hasClass("uiCloudCardSelect") || $(target.parentNode).hasClass("wrap-dropdown")) {
             if ($(target).hasClass("serviceItem")) {
@@ -795,11 +795,21 @@
             clickedOnItem = true;
             break;
           }
-          target = target.parentNode;
+
+          if ($(target.parentNode).hasClass("ccjs-csc-diagram-wrapper") || $(target.parentNode).hasClass("input-group-btn")) {
+            clickOnCard = true;
+            break;
+          }
+
+            target = target.parentNode;
         }
         if (!clickedOnItem) {
           $(".dropdown-info-service").hide();
           $(".dropdown-info-addon").hide();
+        }
+        if (!clickOnCard) {
+          $(".ccjs-csc-diagram-wrapper").removeClass("ccjs-active");
+          $(".ccjs-csc-help").removeClass("ccjs-active");
         }
       }
     };

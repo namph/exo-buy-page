@@ -43,40 +43,40 @@
                         <div class="col-md-8 col-sm-offset-2">
                             <br>
                             <p>We are happy to confirm that your transaction <b>${transactionId}</b> has been validated.</p><br/>
-                            <p>You will reveive shortly your subscription information an your product key at <b>${customer_email}</b>.</p>
+                            <p>You will receive shortly your subscription information an your product key at <b>${customer_email}</b>.</p>
                             <br>
                             <table class="table table-striped">
                                 <tr>
                                     <td>TransactionID</td>
-                                    <td>${transactionId}</td>
+                                    <td><strong>${transactionId}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Plan</td>
-                                    <td>${plan.getName()}</td>
+                                    <td><strong>${plan.getName()}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Organisation</td>
-                                    <td>${customer_org}</td>
+                                    <td><strong>${customer_org}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Users</td>
-                                    <td>${plan.getOptionUser()}</td>
+                                    <td><strong>${plan.getOptionUser()}</strong></td>
                                 </tr>
                                 <tr>
                                     <td>Period</td>
-                                    <td>${plan.getPeriod()}</td>
+                                    <td><strong>${plan.getPeriod()}</strong></td>
                                 </tr>
                                 <c:if test="${plan.getAddons().size() > 0}">
                                     <tr>
                                         <td>
                                             Add-ons
                                         </td>
-                                        <td>
+                                        <td><strong>
                                             <c:forEach items="${plan.getAddons()}" var="addon">
                                                 <c:set var="i" value="${i+1}"></c:set>
                                                 ${addon.getName()}<c:if test="${i < plan.getAddons().size()}">,</c:if>
                                             </c:forEach>
-                                        </td>
+                                        </td></strong>
                                     </tr>
                                 </c:if>
                                 <c:if test="${plan.getServices().size() > 0}">
@@ -85,11 +85,13 @@
                                             Services
                                         </td>
                                         <td>
+                                            <strong>
                                             <c:forEach items="${plan.getServices()}" var="service">
                                                 <c:set var="i" value="${i+1}"></c:set>
                                                 ${service.getName()}
                                                 <c:if test="${i < plan.getServices().size()}">,</c:if>
                                             </c:forEach>
+                                            </strong>
                                         </td>
                                     </tr>
 
@@ -99,12 +101,12 @@
                                         <td>
                                             Discount
                                         </td>
-                                        <td>${discount.getName()} (<small>${discount.getDescription()}</small>)</td>
+                                        <td><strong>${discount.getName()} (<small>${discount.getDescription()}</small>)</strong></td>
                                     </tr>
                                 </c:if>
                                 <tr>
                                     <td>Total Amount</td>
-                                    <td>$ ${total}</td>
+                                    <td><strong>$${total}</strong></td>
                                 </tr>
                             </table>
                             <a class="btn btn-default" href="/buy">Close</a>

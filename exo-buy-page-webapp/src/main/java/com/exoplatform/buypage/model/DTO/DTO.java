@@ -1,5 +1,6 @@
 package com.exoplatform.buypage.model.DTO;
 
+import com.exoplatform.buypage.utils.CommonUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -95,5 +96,11 @@ public class DTO {
       }
     }
     return jsonObject;
+  }
+  public String getStrPrix(){
+    if (null != this.getPrice()){
+      return CommonUtils.convertAmount2String(this.getPrice());
+    }
+    return "";
   }
 }
