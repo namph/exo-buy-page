@@ -15,7 +15,7 @@
     </div>
     <div class="bp-content addonsContainer">
 
-        <p>Add powerful add-on to your Social Intranet</p>
+        <p>Add powerful add-ons to your Social Intranet</p>
         <br>
         <!-- User .uiCloudCardSelect with Grid System. You can not use with Grid System like Services section below  -->
         <c:forEach items="${addons}" var="addon">
