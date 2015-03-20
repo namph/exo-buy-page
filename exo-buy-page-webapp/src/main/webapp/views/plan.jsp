@@ -21,7 +21,7 @@
                 </script>
             </c:if>
         </c:forEach>
-        <div class="intro-plan-box" role="tabpanel">
+        <div class="intro-plan-box has-${planTypes.size()}-plan" role="tabpanel">
         <!-- Nav tabs -->
         <div class="row intro-container">
             <div class="col-sm-4 intro-nav">
@@ -82,7 +82,7 @@
         </div>
         <p>Select the number of users for your subscription:</p>
         <!-- Tab panes -->
-        <div class="tab-content">
+        <div class="tab-content text-center">
             <c:forEach items="${planTypes}" var="entry">
                 <c:set var="planTypeId" value="${entry.value.getId()}"></c:set>
                 <c:set var="tick" value="${entry.value.generateUserSliderTick()}"></c:set>

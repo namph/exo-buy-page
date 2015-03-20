@@ -13,16 +13,16 @@
 
     <div class="panel panel-primary order-box" data-spy="affix" data-offset-top="110" data-offset-bottom="200">
         <div class="panel-heading">
-            <h4>Your Order<br><small><a class="exo-icon-restore" href="#"></a> ${period}</small></h4>
+            <h4>Your Order<br><small><span class="exo-icon-restore"></span> ${period}</small></h4>
         </div>
         <div class="panel-body">
             <h5 class="price-head">eXo Platform Entrerprise</h5>
             <div class="price-row">
                 <div class="row">
-                    <div class="col-xs-7 price-label">
+                    <div class="col-xs-6 price-label">
                             ${planName}<br><strong>${planUser}</strong> users
                     </div>
-                    <div class="col-xs-5 text-right">
+                    <div class="col-xs-6 text-right">
                         <span class="price">$${planPrice}</span>
                     </div>
                 </div>
@@ -36,10 +36,10 @@
                     <c:set var="user" value="${item.getOptionUser()}"></c:set>
                     <div class="price-row">
                         <div class="row">
-                            <div class="col-xs-7 price-label">
+                            <div class="col-xs-6 price-label">
                                     ${name}<br>Up to ${user} users
                             </div>
-                            <div class="col-xs-5 text-right">
+                            <div class="col-xs-6 text-right">
                                 <span class="price link-color">$${price}</span>
                             </div>
                         </div>
@@ -56,10 +56,10 @@
                     <c:set var="price" value="${item.getPrice()}"></c:set>
                     <div class="price-row">
                         <div class="row">
-                            <div class="col-xs-7 price-label">
+                            <div class="col-xs-6 price-label">
                                     ${name}
                             </div>
-                            <div class="col-xs-5 text-right">
+                            <div class="col-xs-6 text-right">
                                 <span class="price link-color">$${price}</span>
                             </div>
                         </div>
@@ -74,11 +74,11 @@
                 <h5 class="price-head">Discount</h5>
                 <div class="price-row">
                     <div class="row">
-                        <div class="col-xs-7 price-label">
+                        <div class="col-xs-6 price-label">
                                 ${name} <small>${description}</small>
                         </div>
-                        <div class="col-xs-5 text-right">
-                            <span class="price link-color">$ ${amount}</span>
+                        <div class="col-xs-6 text-right">
+                            <span class="price link-color">-$${amount}</span>
                         </div>
                     </div>
                     <a href="javascript:void(0);" class="fa fa-trash  remove-discountItem" data-id="${id}"></a>

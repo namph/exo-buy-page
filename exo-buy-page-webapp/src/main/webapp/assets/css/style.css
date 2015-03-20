@@ -8941,7 +8941,7 @@ ul[class^="ui-list"] > li {
     position: relative;
 }
 ul[class^="ui-list"] > li + li {
-    margin-top: 8px;
+    margin-top: 5px;
 }
 ul[class^="ui-list"] ul,
 ul[class^="ui-list"] ol {
@@ -9073,12 +9073,6 @@ ul.ui-list-check li:before {
     -ms-transform: translate(-50%, 0);
     -o-transform: translate(-50%, 0);
     transform: translate(-50%, 0);
-}
-.heading-border {
-    margin-top: 0;
-    border-bottom: 1px solid #cccccc;
-    padding-bottom: 8px;
-    margin-bottom: 30px;
 }
 .TitleForm {
     color: #626262;
@@ -9367,7 +9361,7 @@ body {
     width: 10px;
     text-align: center;
 }
-#footer a:after:last-child {
+#footer a:last-child:after {
     display: none;
 }
 .iconSelect {
@@ -9512,6 +9506,14 @@ body {
 .intro-plan-box {
     margin-bottom: 20px;
 }
+.intro-plan-box .heading-border {
+    margin-top: 0;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: normal;
+}
 .intro-plan-box .nav {
     text-align: center;
 }
@@ -9523,7 +9525,24 @@ body {
     -moz-border-radius: 3px;
     border-radius: 3px;
     padding: 15px 30px;
-    min-height: 300px;
+}
+.intro-plan-box.has-1-plan .tab-content {
+    min-height: 118px;
+}
+.intro-plan-box.has-2-plan .tab-content {
+    min-height: 205px;
+}
+.intro-plan-box.has-3-plan .tab-content {
+    min-height: 290px;
+}
+.intro-plan-box.has-4-plan .tab-content {
+    min-height: 375px;
+}
+.intro-plan-box.has-5-plan .tab-content {
+    min-height: 460px;
+}
+.intro-plan-box .tab-pane *:last-child {
+    margin-bottom: 0;
 }
 .intro-plan-box .nav-pills > li {
     margin-bottom: 15px;
@@ -9745,6 +9764,7 @@ body {
 .panel.order-box.affix {
     top: 20px;
     width: 307px;
+    position: 1000;
 }
 .list-card-supported {
     padding: 5px 0;
@@ -9791,6 +9811,12 @@ body {
     }
 }
 /* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .panel.order-box.affix .panel-body {
+        max-height: 400px;
+        overflow: auto;
+    }
+}
 /* Large devices (large desktops, 1200px and up) */
 /* Only for Medium devices and lower (<1199px) */
 /* Only for Small devices and lower (<991px) */
@@ -9809,6 +9835,18 @@ body {
 @media (max-width: 767px) {
     .text-right.md {
         text-align: left;
+    }
+}
+@media (max-width: 480px) {
+    .TitleForm {
+        margin: 10px -15px 30px;
+        text-align: center;
+        padding-bottom: 15px;
+    }
+    .TitleForm .logo {
+        display: block;
+        margin: 0 auto;
+        position: static;
     }
 }
 .inline {
