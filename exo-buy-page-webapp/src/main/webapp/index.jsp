@@ -256,7 +256,7 @@
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/bootstrap.custom.js"></script>
-<script src="assets/js/bootstrap-slider.min.js"></script>
+<script src="assets/js/bootstrap-slider.js"></script>
 <script src="assets/js/buypage.js"></script>
 <script src="assets/js/creditcardjs-v0.10.12.min.js"></script>
 <script language="javascript">
