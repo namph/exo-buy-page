@@ -66,7 +66,6 @@
                         <div class="text-center coupon-loading" style="display: none;"><i class="fa fa-spinner fa-spin fa-3x fa-fw margin-bottom"></i></div>
                         <!-- message callback -->
                         <div class="alert alert-dismissible" id="buypage-alert-coupon" role="alert" style="display: none">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <div></div>
                         </div>
                         <p>Do you have any coupon code? Use it here.</p>
