@@ -8615,6 +8615,13 @@ button.close {
     display: block;
     top: 3.18181818em;
 }
+@media (min-width: 992px) {
+    .ccjs-card.ccjs-card-type-set .ccjs-csc-diagram-wrapper.ccjs-active .ccjs-csc-diagram {
+        bottom: inherit;
+        top: inherit;
+        margin-top: -40%;
+    }
+}
 .ccjs-card.ccjs-card-type-set .ccjs-csc-diagram-amex,
 .ccjs-card-style.ccjs-card-type-set .ccjs-csc-diagram-amex {
     display: none;
