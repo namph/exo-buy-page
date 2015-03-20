@@ -13,7 +13,7 @@
 
     <div class="panel panel-primary order-box" data-spy="affix" data-offset-top="110" data-offset-bottom="200">
         <div class="panel-heading">
-            <h4>Your Order<br><small><span class="exo-icon-restore"></span> ${period}</small></h4>
+            <h4>Your order<br><small><span class="exo-icon-restore"></span> ${period}</small></h4>
         </div>
         <div class="panel-body">
             <h5 class="price-head">eXo Platform Entrerprise</h5>

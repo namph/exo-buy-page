@@ -69,7 +69,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <div></div>
                         </div>
-                        <p>Do you have any coupon code ? user it here.</p>
+                        <p>Do you have any coupon code? Use it here.</p>
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Coupon" id="discountId">
                                 <span class="input-group-btn">
