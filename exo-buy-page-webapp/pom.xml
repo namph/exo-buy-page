@@ -10,29 +10,6 @@
   <packaging>war</packaging>
   <name>BuyPage eXo Platform</name>
   <description>Buy Page projects.</description>
-  <!--scm>
-    <connection>scm:git:git://github.com/exoplatform/buypage.git</connection>
-    <developerConnection>scm:git:git@github.com:exoplatform/buypage.git</developerConnection>
-    <url>http://fisheye.exoplatform.org/browse/buypage/</url>
-    <tag>HEAD</tag>
-  </scm-->
-  <properties>
-    <!-- **************************************** -->
-    <!-- javax.*                                  -->
-    <!-- **************************************** -->
-    <javax.inject.version>1</javax.inject.version>
-    <spring.version>3.1.4.RELEASE</spring.version>
-    <!-- Payment libs -->
-    <braintree.api.version>2.22.2</braintree.api.version>
-    <!-- Logger libs -->
-    <org.slf4j.version>1.7.2</org.slf4j.version>
-    <ch.qos.logback.version>1.0.9</ch.qos.logback.version>
-    <log4j.version>1.2.16</log4j.version>
-    <configuration.version>1.8</configuration.version>
-    <jackson2.version>2.2.2</jackson2.version>
-    <jstl.version>2.2.2</jstl.version>
-    <mecache.version>3.1.0</mecache.version>
-  </properties>
   <dependencies>
     <!-- **************************************** -->
     <!-- javax.* -->
@@ -40,7 +17,6 @@
     <dependency>
       <groupId>javax.inject</groupId>
       <artifactId>javax.inject</artifactId>
-      <version>${javax.inject.version}</version>
     </dependency>
     <!-- **************************************** -->
     <!-- Spring Framework -->
@@ -81,7 +57,6 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <!--    <dependency>
       <groupId>org.springframework</groupId>
@@ -106,17 +81,14 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>3.0.1</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-web</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
-      <version>${spring.version}</version>
     </dependency>
     <!-- **************************************** -->
     <!-- Jackson 2 (needed for Spring MVC JSON mapping), needed for rest -->
@@ -124,17 +96,14 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>${jackson2.version}</version>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
-      <version>${jackson2.version}</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
     <!-- **************************************** -->
@@ -143,7 +112,6 @@
     <dependency>
       <groupId>com.braintreepayments.gateway</groupId>
       <artifactId>braintree-java</artifactId>
-      <version>${braintree.api.version}</version>
       <type>jar</type>
     </dependency>
     <!-- **************************************** -->
@@ -152,7 +120,6 @@
     <dependency>
       <groupId>commons-configuration</groupId>
       <artifactId>commons-configuration</artifactId>
-      <version>${configuration.version}</version>
     </dependency>
     <!-- **************************************** -->
     <!-- Logs -->
@@ -161,12 +128,14 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-      <version>${org.slf4j.version}</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
-      <version>1.1.1</version>
+      <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <!-- **************************************** -->
     <!-- JSTL -->
@@ -174,51 +143,38 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-      <version>1.2</version>
+      <version>${jstl-version}</version>
       <scope>runtime</scope>
     </dependency>
     <dependency>
       <groupId>javax.mail</groupId>
       <artifactId>mail</artifactId>
-      <version>1.4.7</version>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
     <!-- for issue related to proxy -->
     <dependency>
       <groupId>cglib</groupId>
       <artifactId>cglib</artifactId>
-      <version>2.2.2</version>
     </dependency>
     <!-- json -->
     <dependency>
       <groupId>com.googlecode.json-simple</groupId>
       <artifactId>json-simple</artifactId>
-      <version>1.1</version>
     </dependency>
     
     <dependency>
       <groupId>org.bouncycastle</groupId>
       <artifactId>bcmail-jdk15</artifactId>
-      <version>1.45</version>
       <type>jar</type>
-	</dependency>
+	  </dependency>
 	
-	<dependency>
+	  <dependency>
       <groupId>commons-codec</groupId>
       <artifactId>commons-codec</artifactId>
-      <version>1.4</version>
       <type>jar</type>
-	</dependency>
+	  </dependency>
 	
-    <!--
-	<dependency>
-	  <groupId>com.sparkjava</groupId>
-	  <artifactId>spark-core</artifactId>
-	  <version>1.0</version>
-	  <type>jar</type>
-	</dependency>
-	-->
-
   </dependencies>
   <build>
     <finalName>buy</finalName>

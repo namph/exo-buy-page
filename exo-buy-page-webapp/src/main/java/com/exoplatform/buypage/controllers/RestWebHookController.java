@@ -76,9 +76,8 @@ public class RestWebHookController {
       String mailTemplateConfigPath = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_SUBCRIPTION_INFORMATION_TEMPLATE);
       mailTemplate = this.getClass().getResource(mailTemplateConfigPath).getPath();
       log.info(mailTemplate);
-      System.out.println(mailTemplate);
     } catch (Exception e1) {
-     e1.printStackTrace();
+     //e1.printStackTrace();
      log.error(e1.getMessage());
      return "Test failured: " + id;
     }
@@ -98,7 +97,7 @@ public class RestWebHookController {
     try {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
     } catch (Exception e) {
-      e.printStackTrace();
+      //e.printStackTrace();
       log.error(e.getMessage());
       return "Test failured: " + id;
     }
@@ -113,7 +112,6 @@ public class RestWebHookController {
     String technicalTeamEmail = exoBuyAdminConfiguration.getString(MailConfiguration.EXO_BUY_MAIL_TECHNICAL_TEAM_EMAIL);
     
     log.info("Start sending email to technical Team: " + technicalTeamEmail);
-    System.out.println("Start sending email to technical Team: " + technicalTeamEmail);
   
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     mailHeaders.put(MailHeaders.TO, technicalTeamEmail);
@@ -180,7 +178,6 @@ public class RestWebHookController {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
       
       log.info("Finish sending email to technical Team: " + technicalTeamEmail);
-      System.out.println("Finish sending email to technical Team: " + technicalTeamEmail);
       
     } catch (Exception e) {
       log.info("Can not sent mail Subscription Information to customer: " + customer.getEmail(), e);
@@ -195,7 +192,6 @@ public class RestWebHookController {
                               String productCode, String unlockKey) throws Exception{
     
     log.info("Start sending email to" + customer.getEmail());
-    System.out.println("Start sending email to: " + customer.getEmail());
     
     Map<MailHeaders, String> mailHeaders = new HashMap<MailHeaders, String>();
     
@@ -238,7 +234,6 @@ public class RestWebHookController {
       mailSender.sendMail(mailHeaders, mailTemplate, templateProperties);
       
       log.info("Finish sending email to" + customer.getEmail());
-      System.out.println("Finish sending email to" + customer.getEmail());
       
     } catch (Exception e) {
       log.info("Can not sent mail Subscription Information to customer: " + customerEmail, e);
@@ -259,14 +254,10 @@ public class RestWebHookController {
                        @RequestParam (value = "bt_signature", required=false) String bt_signature,
                        @RequestParam (value = "bt_payload", required=false) String bt_payload){
 
-    System.out.println("START Webhook call");
     log.info("START Webhook call");
     
     String clientIpAddress = request.getRemoteAddr();
     String clientAgent = request.getHeader("user-agent");
-    
-    System.out.println("clientIpAddress: " + clientIpAddress);
-    System.out.println("clientAgent: " + clientAgent);
 
     BraintreeGateway gateway = ((com.exoplatform.buypage.gateway.ServiceImpl)gatewayService).getGateway();
     
@@ -278,7 +269,6 @@ public class RestWebHookController {
       
       String result = ("[Webhook Received " + webhookNotification.getTimestamp().getTime() + "] | Kind: " + webhookNotification.getKind() + " | Subscription: " + subscription.getId());
       log.info(result);
-      System.out.println(result);
       
       if(webhookNotification.getKind().equals(WebhookNotification.Kind.SUBSCRIPTION_CHARGED_SUCCESSFULLY) == false){
         //Do nothing
@@ -288,7 +278,7 @@ public class RestWebHookController {
 
     } catch (Exception e) {
       log.info("Can not load subscription from braintree", e);
-      e.printStackTrace();
+      //e.printStackTrace();
       return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
     
@@ -311,7 +301,7 @@ public class RestWebHookController {
       
     } catch (Exception e) {
       log.error("Error happen while Webhook call Buy-Page",e);
-      e.printStackTrace();
+      //e.printStackTrace();
       return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
     }
     return new ResponseEntity<String>("",HttpStatus.OK);
