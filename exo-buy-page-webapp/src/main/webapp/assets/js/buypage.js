@@ -61,7 +61,7 @@
                 alertDOM.removeClass();
                 alertDOM.addClass('alert');
                 alertDOM.addClass('alert-' + type);
-                alertDOM.children('div').html(message);
+                alertDOM.children('div.msg').html(message);
             }
             if(display)
                 alertDOM.show();
@@ -175,17 +175,17 @@
                     _loadBillFromClient();
                     _disPlaySuccessMsgCB("coupon","The coupon is valid",true);
                 }else
-                    _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+                    _disPlayErrorMsgCB("coupon","The coupon is unknown",true)
             })
             .error(function (xhr, ajaxOptions, thrownError){
                 if(xhr.status==404) {
-                    _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+                  _disPlayErrorMsgCB("coupon","The coupon is unknown",true)
                 }
             })
             .fail(function (jqxhr, textStatus, error) {
                 $(".coupon-loading").hide();
                 var err = textStatus + ', ' + error;
-                _disPlayWarningMsgCB("coupon","The coupon is unknown",true)
+              _disPlayErrorMsgCB("coupon","The coupon is unknown",true)
             });
     };
 
@@ -558,9 +558,9 @@
                         _disPlaySuccessMsgCB("credit","Transaction successful",true);
                         window.location.href = "confirmation/success";
                     }else{
-                        _dislayLoadingAll(false);
-                        me.prop('disabled',false);
-                        _disPlayWarningMsgCB("credit",obj.msg,true);
+                      _dislayLoadingAll(false);
+                      me.prop('disabled',false);
+                      _disPlayErrorMsgCB("credit",obj.msg,true);
                     }
                 })
                 .error(function (xhr, ajaxOptions, thrownError){

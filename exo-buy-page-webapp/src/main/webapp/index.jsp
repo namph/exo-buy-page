@@ -67,6 +67,7 @@
                         <!-- message callback -->
                         <div class="alert alert-dismissible" id="buypage-alert-coupon" role="alert" style="display: none">
                             <div></div>
+                            <div class="msg"></div>
                         </div>
                         <p>Do you have any coupon code? Use it here.</p>
                         <div class="input-group">
@@ -84,6 +85,7 @@
                     <div class="bp-content" id="billingForm">
                         <!-- message callback -->
                         <div class="alert alert-warning" id="buypage-alert-billing" style="display: none;">
+                            <div class="msg"></div>
                         </div>
                         <div class="form-group required ">
                             <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" value="">
@@ -129,7 +131,7 @@
                     <div class="bp-content">
                         <!-- message callback -->
                         <div class="alert alert-dismissible" id="buypage-alert-credit" role="alert" style="display: none">
-                            <div></div>
+                            <div class="msg mgT10"></div>
                         </div>
                         <!-- credit js -->
 

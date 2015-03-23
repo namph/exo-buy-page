@@ -148,7 +148,7 @@ public class ServiceImpl implements IService {
 
     Result<Customer> customerResult = createOrUpdateCustomer(customerId, subsCustomer);
     if (!customerResult.isSuccess()) {
-      result.put("msg", CommonUtils.getMessageByBTCode(getCustomerRequestError(customerResult)));
+      result.put("msg", getCustomerRequestError(customerResult));
       return result;
     }
     // return userID
@@ -247,22 +247,24 @@ public class ServiceImpl implements IService {
   }
 
   private String getCustomerRequestError(Result<Customer> requestError) {
-    String result = null;
+    String result = "<div>The transaction has been declined several times by our payment gateway:</div>";
     List<ValidationError> errors = requestError.getErrors().getAllDeepValidationErrors();
     if (errors.size() == 0){
-      result = requestError.getMessage();
-      if (result.contains("Rejected: cvv")){
-        return "2010";
+      if (requestError.getMessage().contains("Rejected: cvv")){
+        result +="<div class=\"mgL15\">- "+ CommonUtils.getMessageByBTCode("2010")+"</div>";
       }
     }
     for (ValidationError error : errors) {
       if (error.getCode().toString().contains("CREDIT_CARD_NUMBER")) {
-        result = "2005";
+        result +="<div class=\"mgL15\">- "+ CommonUtils.getMessageByBTCode("2005")+"</div>";
       } else if (error.getCode().toString().contains("CREDIT_CARD_EXPIRATION_DATE")) {
-        result = "2006";
+        result +="<div class=\"mgL15\">- "+ CommonUtils.getMessageByBTCode("2006")+"</div>";
       } else if (error.getCode().toString().contains("CREDIT_CARD_CVV")) {
-        result = "2010";
+        result +="<div class=\"mgL15\">- "+ CommonUtils.getMessageByBTCode("2010")+"</div>";
       }
+    }
+    if ("".equals(result)){
+      result = CommonUtils.getMessageByBTCode("0");
     }
     return result;
   }

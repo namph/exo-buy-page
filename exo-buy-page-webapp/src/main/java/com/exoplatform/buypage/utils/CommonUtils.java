@@ -36,7 +36,7 @@ public class CommonUtils {
       case 2015:
         return "Transaction Not Allowed";
       default:
-        return "We are unable to process your credit card payment, please verify the information you entered is correct. If the problem persists, contact us to complete your order.";
+        return "We are unable to process your credit card payment, please verify the information you entered is correct. If the problem persists, <a href='http://www.exoplatform.com/company/en/company/contact-us' target='_blank'>contact us</a> to complete your order.";
     }
   }
 
